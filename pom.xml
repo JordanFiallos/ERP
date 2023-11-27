@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.veterinari.petit</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>Petit</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Veterinari_Petit</name>
 	<description>Demo project for Spring Boot</description>
