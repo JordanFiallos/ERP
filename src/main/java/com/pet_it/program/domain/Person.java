@@ -4,10 +4,38 @@
  */
 package com.pet_it.program.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  *
- * @author Jordan
+ * @author Ricard
  */
+@Entity
+@Getter
+@Setter
 public class Person {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
+    @Column(name = "firstname")
+    private String firstname;
+    
+    @Column(name = "lastname")
+    private String lastname;
+    
+    @Column(name = "email")
+    private String email;
+    
+    @Column(name = "phone")
+    private String phone;
+    
+    @Column(name = "adress")
+    private String adress;
 }
