@@ -4,10 +4,13 @@
  */
 package com.pet_it.program.DAO;
 
+import com.pet_it.program.domain.employees;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
  *
  * @author Jordan
  */
-public interface employeeDAO {
-    
+public interface employeeDAO extends JpaRepository<employees, Integer> {
+
 }
