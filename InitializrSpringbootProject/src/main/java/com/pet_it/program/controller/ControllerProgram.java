@@ -4,9 +4,13 @@
  */
 package com.pet_it.program.controller;
 
+import com.pet_it.program.domain.Person;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -15,6 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @Slf4j
 public class ControllerProgram {
+   
+    private int errores = 3;
     
     @GetMapping("/admin")
     public String admin(){

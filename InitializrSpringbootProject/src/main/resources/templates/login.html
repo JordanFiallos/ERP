@@ -59,6 +59,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         </style>
     </head>
     <body>
+        <div th:if="${param.error}">
+            <div class="alert alert-danger">El usuario o contrasenya es incorrecto</div>
+        </div>
         <div  class="login-container">
             <img class="login-image" src="images/Logo.jpg" />
             <form method="POST" th:action="@{/login}" class="login-form">
