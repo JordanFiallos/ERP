@@ -1,15 +1,26 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Information</title>
+</head>
+<body>
+
+<h2>Customer Information</h2>
+
+<p th:if="${customer}">
+    <strong>ID:</strong> <span th:text="${customer.id}"></span><br>
+    <strong>First Name:</strong> <span th:text="${customer.firstname}"></span><br>
+    <strong>Last Name:</strong> <span th:text="${customer.lastname}"></span><br>
+    <strong>Email:</strong> <span th:text="${customer.email}"></span><br>
+    <strong>Phone:</strong> <span th:text="${customer.phone}"></span><br>
+    <strong>Address:</strong> <span th:text="${customer.address}"></span><br>
+    <!-- Display other customer attributes -->
+</p>
+
+<p th:unless="${customer}">Customer not found</p>
+
+</body>
 </html>
