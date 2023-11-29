@@ -4,7 +4,7 @@
  */
 package com.pet_it.program.DAO;
 
-import com.pet_it.program.domain.Person;
+import com.pet_it.program.domain.employees;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +13,6 @@ import org.springframework.stereotype.Service;
  * @author Ruben
  */
 
-public interface usersDAO extends JpaRepository<Person,Long>{
-    Person findByUsername(String username);
+public interface usersDAO extends JpaRepository<employees,Long>{
+    employees findByUsername(String username);
 }

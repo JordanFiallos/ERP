@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  *
@@ -35,15 +36,17 @@ public class AutenticacioConfiguracio {
         
         return http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/images/**").permitAll()
+                .requestMatchers("//**").permitAll()
                 .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                 .requestMatchers("/employee/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
                 .requestMatchers("/user/**").hasAnyAuthority("ADMIN", "EMPLOYEE", "USER").anyRequest().authenticated())
                 
                 .formLogin((form) -> form
                 .loginPage("/login").permitAll())
-                
+                .logout((logout) -> logout.deleteCookies("JSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/"))
                 .exceptionHandling((exception) -> exception.accessDeniedPage("/errors/error403")).build();
                 
+        
                 
         
         

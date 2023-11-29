@@ -7,6 +7,7 @@ package com.pet_it.program.services;
 import com.pet_it.program.DAO.usersDAO;
 import com.pet_it.program.domain.Person;
 import com.pet_it.program.domain.Role;
+import com.pet_it.program.domain.employees;
 import java.util.ArrayList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class usuariService implements UserDetailsService{
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         
-       Person persona = personDao.findByUsername(username);
+       employees persona = personDao.findByUsername(username);
         
        if(persona == null){
            throw new UsernameNotFoundException(username);

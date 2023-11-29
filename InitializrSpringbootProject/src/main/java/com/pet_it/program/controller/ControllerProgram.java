@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @Slf4j
 public class ControllerProgram {
-   
-    private int errores = 3;
     
     @GetMapping("/admin")
     public String admin(){
@@ -44,4 +42,6 @@ public class ControllerProgram {
     public String login(){
         return "login";
     }
+    
+    
 }

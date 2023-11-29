@@ -9,8 +9,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.io.Serializable;
+import java.sql.Date;
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -19,15 +22,20 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name="rols")
-public class Role implements Serializable{
-    
-    private static final long serialVersionUID=1L;
+@Table(name = "employees")
+public class employees {
 
-    @Id 
-    @GeneratedValue(strategy=GenerationType.IDENTITY) 
-    private long idRol;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String username;
+    private String password;
+
+    @Column(name = "nextAvailableWorkTime")
+    private Date nextAvailableWorkTime;
     
-    @Column(name = "nom")
-    private String nom;
+    @OneToMany 
+    @JoinColumn(name="id_usuari") 
+    private List<Role> rols;
+    
 }
