@@ -20,19 +20,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Slf4j
 public class ControllerProgram {
     
-    @GetMapping("/admin")
-    public String admin(){
-        return "admin";
+    @GetMapping("/inicio")
+    public String inicio(){
+        return "inicio";
     }
     
-    @GetMapping("/user")
-    public String user(){
-        return "user";
+    @GetMapping("/accounting")
+    public String accounting(){
+        return "accounting";
     }
     
-    @GetMapping("/employee")
-    public String employee(){
-        return "employee";
+    @GetMapping("/commercial")
+    public String commercial(){
+        return "commercial";
+    }
+    
+    @GetMapping("/human_resources")
+    public String human_resources(){
+        return "human_resources";
     }
     @GetMapping("/")
     public String index(){
@@ -41,6 +46,19 @@ public class ControllerProgram {
     @GetMapping("/login")
     public String login(){
         return "login";
+    }
+    
+    @GetMapping("/purchase")
+    public String purchase(){
+        return "purchase";
+    }
+    @GetMapping("/seller")
+    public String seller(){
+        return "seller";
+    }
+    @GetMapping("/veterinarian")
+    public String veterinarian(){
+        return "veterinarian";
     }
     
     
