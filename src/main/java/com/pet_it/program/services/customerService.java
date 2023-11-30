@@ -1,13 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package com.pet_it.program.services;
 
 /**
  *
- * @author Jordan
+ * @author Houssam
  */
+import com.pet_it.program.domain.Customer;
+import java.util.List;
+
 public interface customerService {
-    
+    List<Customer> getAllCustomers();
+    Customer getCustomerById(Long customerId);
+    Customer addCustomer(Customer customer);
+    Customer updateCustomer(Long customerId, Customer updatedCustomer);
+    void deleteCustomer(Long customerId);
 }

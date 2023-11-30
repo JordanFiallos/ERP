@@ -4,10 +4,13 @@
  */
 package com.pet_it.program.DAO;
 
+import com.pet_it.program.domain.Customer;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
  *
  * @author Jordan
  */
-public interface customerDAO {
+public interface CustomerDAO extends JpaRepository<Customer, Long> {
     
 }

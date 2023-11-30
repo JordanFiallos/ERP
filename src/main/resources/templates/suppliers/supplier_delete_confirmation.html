@@ -11,7 +11,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     </head>
     <body>
         <div>
-            <h2>Supplier Information</h2>
+            <h2>Delete Supplier Confirmation</h2>
+        </div>
+        <div>
+            <p>Are you sure you want to delete the Supplier?</p>
         </div>
         <div>
             <p>First Name:<span th:text="${supplier.firstname}"></span></p>
@@ -22,9 +25,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <p>Bureao:<span th:text="${supplier.bureao}"></span></p>
             <p>Delivery Date:<span th:text="${supplier.aproachDeliveryInt}"></span></p>
         </div>
-        <br>
         <div>
-            <a th:href="@{'/supplier'}">Go to list</a>
+            <a th:href="@{'/deleteOK/' + ${person.id}}">Delete</a>
+            <a th:href="@{'/persons'}">Cancel</a>
         </div>
     </body>
 </html>
