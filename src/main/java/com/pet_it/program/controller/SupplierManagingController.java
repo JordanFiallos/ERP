@@ -7,8 +7,6 @@ package com.pet_it.program.controller;
 import com.pet_it.program.domain.Supplier;
 import com.pet_it.program.services.supplierService;
 import java.util.List;
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
