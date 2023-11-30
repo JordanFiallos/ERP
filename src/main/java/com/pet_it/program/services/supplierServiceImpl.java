@@ -33,7 +33,20 @@ public class supplierServiceImpl implements supplierService {
     @Override
     public List<Supplier> getAllPersons() {
         List<Supplier> listaSuppliers = supplierDAO.findAllSuppliersAndApplyDate();
-        applyDateAll(listaSuppliers);
+        for(Supplier supplier : listaSuppliers){
+            Date deliveryDate = supplier.getDeliveryDate();
+            System.out.println("Atencion al listado fechas: "+ supplier.toString());
+            //LocalDate localDate1 = deliveryDate.toLocalDate();
+        }
+        
+        //return supplierDAO.findAllSuppliersAndApplyDate();
+        /*List<Supplier> listaSuppliers = supplierDAO.findAll();
+        for(Supplier supplier : listaSuppliers){
+            Long id = supplier.getId();
+            Supplier supplierObjetivo = supplierDAO.findSupplierByIdAndApplyDate(id);
+            Date deliveryDate = supplierObjetivo.getDeliveryDate();
+            //transformar a string
+        }*/
         
         return supplierDAO.findAll();
     }
@@ -66,12 +79,15 @@ public class supplierServiceImpl implements supplierService {
         }
         return options;
     }
-    
-    private void applyDateAll(List<Supplier> listaSuppliers){
-        for(Supplier supplier : listaSuppliers){
-            Date deliveryDate = supplier.getDeliveryDate();
-            //System.out.println("Atencion al listado fechas: "+ supplier.toString());
-            //LocalDate localDate1 = deliveryDate.toLocalDate();
-        }
-    }
+    /*
+    @Override
+    public Date sumWeeksDelivery(int weeks) {
+        Calendar calendar = Calendar.getInstance();
+        Date fecha = new Date();
+        
+        calendar.setTime(fecha);
+        calendar.add(Calendar.DAY_OF_YEAR, weeks);
+        
+        return calendar.getTime();
+    }*/
 }

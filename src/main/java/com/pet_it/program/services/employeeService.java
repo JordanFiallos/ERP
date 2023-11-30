@@ -19,5 +19,5 @@ public interface employeeService {
 
     void eliminarUsuari(employees employee); //Metodo para eliminar Personas tipo Empleados
 
-    public employees FindUsuari(employees employee); //Metodo para buscar Personas tipo Empleados
+    employees cercarUsuari(employees employee); //Metodo para buscar Personas tipo Empleados
 }
