@@ -1,52 +1,112 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>List Employees</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lista Empleados</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <style>
+            .employee {
+                padding: 10px;
+                border: 1px solid #ddd;
+                margin-bottom: 10px;
+            }
+            .employee:hover {
+                background-color: #f1f1f1;
+            }
+            .employee .name {
+                font-weight: bold;
+            }
+            .employee .add,
+            .employee .remove {
+                cursor: pointer;
+                margin-left: 10px;
+            }
+        </style>
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+            <a th:href="@{employee_form}" class="btn navbar-brand">Inicio</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Stocks</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Mascotas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Facturas</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">SIGN OUT</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <div class="container">
-            <h1 class="text-center mt-4 mb-4">List Employees</h1>
-
-            <h1 class="text-center mt-4 mb-4">
-                <a th:href="@{employee_form}" class="btn btn-secondary btn-sm">Inicio</a>
-            </h1>
-
-
-            <div>
-                <table class="table table-bordered table-striped">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Available Work Time</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="employee : ${employees}">
-                            <td th:text="${employee.id}"></td>
-                            <td th:text="${employee.username}"></td>
-                            <td th:text="${employee.nextAvailableWorkTime}"></td>
-                            <td>
-                                <a th:href="@{'/update/' + ${employee.id}}" class="btn btn-primary btn-sm">Update</a>
-                                <br></br>
-                                <a th:href="@{'/delete/' + ${employee.id}}" class="btn btn-danger btn-sm mt-2">Delete</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Lista Empleados</h2>
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Available Work Time</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="employee : ${employees}">
+                                <td th:text="${employee.id}"></td>
+                                <td th:text="${employee.username}"></td>
+                                <td th:text="${employee.nextAvailableWorkTime}"></td>
+                                <td>
+                                    <button class="btn btn-success btn-sm add">
+                                        <a th:href="@{'/update/' + ${employee.id}}">Update</a>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm remove" data-toggle="modal" data-target="#confirmDeleteModal" data-id="${employee.id}">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </body>
 
+        <!-- Modal -->
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro de que deseas eliminar a este empleado?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <a id="confirmDeleteButton" class="btn btn-danger">Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{js/myjs.js}"></script>
+    </body>
 </html>
