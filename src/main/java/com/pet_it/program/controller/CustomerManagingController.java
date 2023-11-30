@@ -25,23 +25,23 @@ public class CustomerManagingController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/customers/form")
+    @GetMapping("/customer/form")
     public String showCustomerForm(Model model) {
         model.addAttribute("customer", new Customer());
-        return "customer/customers_form";
+        return "customers/customers_form";
     }
 
-    @PostMapping("/customers/form")
+    @PostMapping("/customer/form")
     public String addCustomer(@ModelAttribute Customer customer) {
         customerService.addCustomer(customer);
-        return "redirect:/customers_list";
+        return "redirect:/customers/customers_list";
     }
 
-    @GetMapping("/list")
+    @GetMapping("/customer")
     public String showCustomerList(Model model) {
         List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
-        return "customer_list";
+        return "customers/customers_list";
     }
 
     @GetMapping("/{id}")
