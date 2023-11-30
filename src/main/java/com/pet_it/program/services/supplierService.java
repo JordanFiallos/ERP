@@ -19,5 +19,4 @@ public interface supplierService {
     public Supplier findPerson(Supplier supplier);
     public void deletePerson(Long id);
     public List<String> getOpcionsDelivery();
-    //public Date sumWeeksDelivery(int weeks);
 }

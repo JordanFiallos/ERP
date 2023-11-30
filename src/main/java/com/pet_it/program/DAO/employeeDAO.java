@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Jordan
  */
-public interface employeeDAO extends JpaRepository<employees, Integer> {
+public interface employeeDAO extends JpaRepository<employees, Long> {
 
 }
