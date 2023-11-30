@@ -4,10 +4,13 @@
  */
 package com.pet_it.program.domain;
 
+import jakarta.persistence.Entity;
+
 /**
  *
  * @author Administrador
  */
+@Entity
 public class Customer extends Person {
     
 }

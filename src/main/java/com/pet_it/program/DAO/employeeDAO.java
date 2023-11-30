@@ -13,4 +13,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface employeeDAO extends JpaRepository<employees, Integer> {
 
+    employees findByUsername(String username);
+
 }
