@@ -10,7 +10,7 @@
 
 <h2>Add Customer</h2>
 
-<form th:action="@{/customers}" th:object="${customer}" method="post">
+<form th:action="@{/customer}" th:object="${form}" method="post">
     <label for="firstname">First Name:</label>
     <input type="text" id="firstname" th:field="*{firstname}" required>
     <br>
@@ -31,7 +31,6 @@
     <input type="text" id="address" th:field="*{address}" required>
     <br>
 
-    <!-- Add other customer attributes as needed -->
 
     <button type="submit">Add Customer</button>
 </form>

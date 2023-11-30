@@ -11,14 +11,47 @@ import com.pet_it.program.services.customerService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
-@RestController
-@RequestMapping("/customers")
+@Controller
 public class CustomerManagingController {
+    
     @Autowired
-    private customerService customerService;
+    private final customerService customerService;
 
-    @GetMapping
+    @Autowired
+    public CustomerManagingController(customerService customerService) {
+        this.customerService = customerService;
+    }
+
+    @GetMapping("/customers/form")
+    public String showCustomerForm(Model model) {
+        model.addAttribute("customer", new Customer());
+        return "customer/customers_form";
+    }
+
+    @PostMapping("/customers/form")
+    public String addCustomer(@ModelAttribute Customer customer) {
+        customerService.addCustomer(customer);
+        return "redirect:/customers_list";
+    }
+
+    @GetMapping("/list")
+    public String showCustomerList(Model model) {
+        List<Customer> customers = customerService.getAllCustomers();
+        model.addAttribute("customers", customers);
+        return "customer_list";
+    }
+
+    @GetMapping("/{id}")
+    public String showCustomerInfo(@PathVariable Long id, Model model) {
+        Customer customer = customerService.getCustomerById(id);
+        model.addAttribute("customer", customer);
+        return "customer_info";
+    }
+
+    @GetMapping("/")
     public List<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }
@@ -28,8 +61,8 @@ public class CustomerManagingController {
         return customerService.getCustomerById(customerId);
     }
 
-    @PostMapping
-    public Customer addCustomer(@RequestBody Customer customer) {
+    @PostMapping("/{customerId}")
+    public Customer addCustomerr(@RequestBody Customer customer) {
         return customerService.addCustomer(customer);
     }
 

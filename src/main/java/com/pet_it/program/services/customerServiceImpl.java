@@ -4,7 +4,7 @@ package com.pet_it.program.services;
  *
  * @author Houssam
  */
-import com.pet_it.program.DAO.CustomerDAO;
+import com.pet_it.program.DAO.customerDAO;
 import com.pet_it.program.domain.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class customerServiceImpl implements customerService {
     @Autowired
-    private CustomerDAO customerRepository;
+    private customerDAO customerRepository;
 
     @Override
     public List<Customer> getAllCustomers() {

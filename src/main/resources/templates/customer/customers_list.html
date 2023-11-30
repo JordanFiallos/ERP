@@ -19,7 +19,6 @@
         <th>Email</th>
         <th>Phone</th>
         <th>Address</th>
-        <!-- Add other customer attributes as needed -->
         <th>Action</th>
     </tr>
     </thead>
@@ -31,7 +30,6 @@
         <td th:text="${customer.email}"></td>
         <td th:text="${customer.phone}"></td>
         <td th:text="${customer.address}"></td>
-        <!-- Display other customer attributes -->
         <td>
             <a th:href="@{/customers/{id}(id=${customer.id})}">View</a>
             <a th:href="@{/customers/{id}/edit(id=${customer.id})}">Edit</a>
