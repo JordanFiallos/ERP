@@ -73,6 +73,7 @@
                                     <th>ID</th>
                                     <th>Username</th>
                                     <th>Available Work Time</th>
+                                    <th>Acttions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,24 +81,24 @@
                                     <td th:text="${employee.id}"></td>
                                     <td th:text="${employee.username}"></td>
                                     <td th:text="${employee.nextAvailableWorkTime}"></td>
+                                    <td>
+                                        <button class="btn btn-success btn-sm add mx-2" data-toggle="modal" data-target="#confirmUpdateModal" th:data-id="${employee.id}">
+                                            Update
+                                        </button>
+                                        <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${employee.id}">
+                                            Delete
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <tr th:each="employee : ${employees}">
-                            <td>
-                                <div class="d-flex justify-content-center">
-                                    <button class="btn btn-success btn-sm add mx-2">
-                                        <a th:href="@{employee_form}" th:style="'text-decoration: none; color: inherit;'">Insert Employeed</a>
-                                    </button>
-                                    <button class="btn btn-success btn-sm add mx-2" data-toggle="modal" data-target="#confirmUpdateModal" th:data-id="${employee.id}">
-                                        Update
-                                    </button>
-                                    <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${employee.id}">
-                                        Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-success btn-sm add mx-2">
+                                    <a th:href="@{employee_form}" th:style="'text-decoration: none; color: inherit;'">Insert Employeed</a>
+                                </button>
+                            </div>
+                        </td>
                     </table>
                 </div>
             </div>
