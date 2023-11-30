@@ -26,15 +26,15 @@ public class CustomerManagingController {
     }
 
     @GetMapping("/customer/form")
-    public String showCustomerForm(Model model) {
-        model.addAttribute("customer", new Customer());
+    public String showCustomerForm(Customer customer ,Model model) {
+        model.addAttribute("customer", customer);
         return "customers/customers_form";
     }
 
     @PostMapping("/customer/form")
     public String addCustomer(@ModelAttribute Customer customer) {
         customerService.addCustomer(customer);
-        return "redirect:/customers/customers_list";
+        return "redirect:/customer";
     }
 
     @GetMapping("/customer")
@@ -44,36 +44,22 @@ public class CustomerManagingController {
         return "customers/customers_list";
     }
 
-    @GetMapping("/{id}")
-    public String showCustomerInfo(@PathVariable Long id, Model model) {
-        Customer customer = customerService.getCustomerById(id);
-        model.addAttribute("customer", customer);
-        return "customer_info";
+    @GetMapping("/customer_select/{id}")
+    public String getCustomerById(@PathVariable Long customerId) {
+        customerService.getCustomerById(customerId);
+        return "customers_info";
     }
 
-    @GetMapping("/")
-    public List<Customer> getAllCustomers() {
-        return customerService.getAllCustomers();
+    @PutMapping("/customer_update/{id}")
+    public String updateCustomer(@PathVariable Long customerId, @RequestBody Customer updatedCustomer) {
+        customerService.updateCustomer(customerId, updatedCustomer);
+        return "customers/customers_form";
     }
 
-    @GetMapping("/{customerId}")
-    public Customer getCustomerById(@PathVariable Long customerId) {
-        return customerService.getCustomerById(customerId);
-    }
-
-    @PostMapping("/{customerId}")
-    public Customer addCustomerr(@RequestBody Customer customer) {
-        return customerService.addCustomer(customer);
-    }
-
-    @PutMapping("/{customerId}")
-    public Customer updateCustomer(@PathVariable Long customerId, @RequestBody Customer updatedCustomer) {
-        return customerService.updateCustomer(customerId, updatedCustomer);
-    }
-
-    @DeleteMapping("/{customerId}")
-    public void deleteCustomer(@PathVariable Long customerId) {
+    @DeleteMapping("/customer_delete/{id}")
+    public String deleteCustomer(@PathVariable Long customerId) {
         customerService.deleteCustomer(customerId);
+        return "redirect:/customer";
     }
 
 
