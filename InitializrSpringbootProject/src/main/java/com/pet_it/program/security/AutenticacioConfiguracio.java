@@ -36,14 +36,10 @@ public class AutenticacioConfiguracio {
         
         return http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/images/**").permitAll()
-                .requestMatchers("/inicio/**").permitAll()
-                .requestMatchers("/accounting/**").hasAnyAuthority("ACCOUNTING")
-                .requestMatchers("/commercial/**").hasAnyAuthority("COMMERCIAL")
-                .requestMatchers("/seller/**").hasAnyAuthority("SELLER")
-                .requestMatchers("/human_resources/**").hasAnyAuthority("HUMAN")
-                .requestMatchers("/veterinarian/**").hasAnyAuthority("VETERINARIAN")
-                .requestMatchers("/purchase/**").hasAnyAuthority("PURCHASE")
-                .anyRequest().authenticated())
+                .requestMatchers("//**").permitAll()
+                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                .requestMatchers("/employee/**").hasAnyAuthority("ADMIN", "EMPLOYEE")
+                .requestMatchers("/user/**").hasAnyAuthority("ADMIN", "EMPLOYEE", "USER").anyRequest().authenticated())
                 
                 .formLogin((form) -> form
                 .loginPage("/login").permitAll())
