@@ -8,10 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-import java.sql.Date;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  *
@@ -28,5 +25,5 @@ public class Supplier extends Person{
     private int aproachDeliveryInt;
     
     @Transient
-    @Getter @Setter private Date deliveryDate;
+    private String deliveryDateString;
 }
