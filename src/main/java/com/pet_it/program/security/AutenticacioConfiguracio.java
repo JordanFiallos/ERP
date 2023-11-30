@@ -40,7 +40,7 @@ public class AutenticacioConfiguracio {
                 .requestMatchers("/accounting/**").hasAnyAuthority("ACCOUNTING")
                 .requestMatchers("/commercial/**").hasAnyAuthority("COMMERCIAL")
                 .requestMatchers("/seller/**").hasAnyAuthority("SELLER")
-                .requestMatchers("/human_resources/**").hasAnyAuthority("HUMAN")
+                .requestMatchers("/employee_list/**").hasAnyAuthority("HUMAN")
                 .requestMatchers("/veterinarian/**").hasAnyAuthority("VETERINARIAN")
                 .requestMatchers("/purchase/**").hasAnyAuthority("PURCHASE")
                 .anyRequest().authenticated())
