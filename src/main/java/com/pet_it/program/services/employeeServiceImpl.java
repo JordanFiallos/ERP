@@ -5,7 +5,6 @@
 package com.pet_it.program.services;
 
 import com.pet_it.program.DAO.employeeDAO;
-import com.pet_it.program.domain.Person;
 import com.pet_it.program.domain.employees;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class employeeServiceImpl implements employeeService {
     }
 
     @Override
-    public employees FindUsuari(employees employee) {
+    public employees cercarUsuari(employees employee) {
 
         return employeedao.findById(employee.getId()).orElse(null);
     }

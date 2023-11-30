@@ -16,9 +16,9 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface supplierDAO  extends JpaRepository<Supplier, Long>{
     
-    @Query(value="SELECT * , DATE_ADD(NOW(), INTERVAL aproach_delivery_int WEEK) AS deliveryDate FROM veterinarypetit.suppliers",nativeQuery=true)
+    @Query(value="SELECT * , DATE_ADD(NOW(), INTERVAL aproach_delivery_int WEEK) AS deliveryDate FROM vetitdb.supplier",nativeQuery=true)
     List<Supplier> findAllSuppliersAndApplyDate();
     
-    @Query(value="SELECT * , DATE_ADD(NOW(), INTERVAL aproach_delivery_int WEEK) AS deliveryDate FROM veterinarypetit.suppliers WHERE id = ?1",nativeQuery=true)
+    @Query(value="SELECT * , DATE_ADD(NOW(), INTERVAL aproach_delivery_int WEEK) AS deliveryDate FROM vetitdb.supplier WHERE id = ?1",nativeQuery=true)
     Supplier findSupplierByIdAndApplyDate(Long id);
 }

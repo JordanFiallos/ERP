@@ -20,12 +20,12 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "employees")
-public class employees extends Person {
+public class employees {
 
-    @Column(name = "username")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String username;
-
-    @Column(name = "password")
     private String password;
 
     @Column(name = "nextAvailableWorkTime")
