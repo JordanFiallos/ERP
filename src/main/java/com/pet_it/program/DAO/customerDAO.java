@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Jordan
  */
-public interface CustomerDAO extends JpaRepository<Customer, Long> {
+public interface customerDAO extends JpaRepository<Customer, Long> {
     
 }
