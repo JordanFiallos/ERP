@@ -18,7 +18,7 @@
         <th>Last Name</th>
         <th>Email</th>
         <th>Phone</th>
-        <th>Address</th>
+        <th>Adress</th>
         <th>Action</th>
     </tr>
     </thead>
@@ -29,7 +29,7 @@
         <td th:text="${customer.lastname}"></td>
         <td th:text="${customer.email}"></td>
         <td th:text="${customer.phone}"></td>
-        <td th:text="${customer.address}"></td>
+        <td th:text="${customer.adress}"></td>
         <td>
             <a th:href="@{'/customer_select/' + ${customer.id}}">View</a>
             <a th:href="@{'/customer_update/' + ${customer.id}}">Edit</a>
