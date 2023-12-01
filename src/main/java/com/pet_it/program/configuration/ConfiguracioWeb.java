@@ -17,8 +17,8 @@ public class ConfiguracioWeb implements WebMvcConfigurer {
     
     @Override
     public void addViewControllers(ViewControllerRegistry registre){
-        registre.addViewController("/").setViewName("index");
-        registre.addViewController("/login");
-        registre.addViewController("/errors/error403").setViewName("/errors/error403");
+        registre.addViewController("/").setViewName("inicio");
+        //registre.addViewController("/login");
+        //registre.addViewController("/errors/error403").setViewName("/errors/error403");
     }
 }

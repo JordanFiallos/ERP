@@ -39,10 +39,12 @@ public class ControllerProgram {
     public String human_resources(){
         return "human_resources";
     }
+    /*
     @GetMapping("/")
     public String index(){
         return "index";
     }
+    */
     @GetMapping("/login")
     public String login(){
         return "login";

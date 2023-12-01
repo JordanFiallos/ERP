@@ -4,8 +4,9 @@
  */
 package com.pet_it.program.controller;
 
-import com.pet_it.program.domain.employees;
+import com.pet_it.program.domain.Employee;
 import com.pet_it.program.services.employeeServiceImpl;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,34 +24,35 @@ public class UserManagingController {
     private employeeServiceImpl employeeservicelmpl;
 
     @GetMapping("/employee_form")
-    public String ShowForm(employees employe) {
+    public String ShowForm(Employee employee) {
         return "employees/employee_form";
     }
 
     @PostMapping("/SaveEmployees")
-    public String ShowResult(employees employe) {
+    public String ShowResult(Employee employee) {
 
-        employeeservicelmpl.afegirUsuari(employe);
+        employeeservicelmpl.afegirUsuari(employee);
 
         return "employees/employee_info";
     }
 
     @GetMapping("/employee_list")
     public String ListEmployees(Model model) {
-        model.addAttribute("employees", employeeservicelmpl.llistarUsuaris());
+        List<Employee> employees = employeeservicelmpl.llistarUsuaris();
+        model.addAttribute("employees", employees);
         return "employees/employee_list";
     }
 
     @GetMapping("/update/{id}")
-    public String Update(employees employe, Model model) {
+    public String Update(Employee employee, Model model) {
 
-        model.addAttribute("employee_form", employeeservicelmpl.cercarUsuari(employe));
+        model.addAttribute("employee_form", employeeservicelmpl.cercarUsuari(employee));
         return "employees/employee_form";
     }
 
     @GetMapping("/delete/{id}")
-    public String Delete(employees employe) {
-        employeeservicelmpl.eliminarUsuari(employe);
+    public String Delete(Employee employee) {
+        employeeservicelmpl.eliminarUsuari(employee);
         return "redirect:/employee_list";
     }
 }
