@@ -4,13 +4,15 @@
  */
 package com.pet_it.program.DAO;
 
-import com.pet_it.program.domain.employees;
+import com.pet_it.program.domain.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Jordan
  */
-public interface employeeDAO extends JpaRepository<employees, Integer> {
+public interface employeeDAO extends JpaRepository<Employee, Long> {
+
+    Employee findByUsername(String username);
 
 }

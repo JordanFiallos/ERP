@@ -16,7 +16,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="container mt-5">
             <h2 class="text-center">Insert Info</h2>
 
-            <form th:object="${employees}" th:action="@{/SaveEmployees}" method="post">
+            <form th:object="${employee}" th:action="@{/SaveEmployees}" method="post">
 
                 <div class="form-group">
                     <label for="username">Username: </label>
@@ -36,13 +36,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </div>
 
                 <h1 class="text-center">
+                    <input type="hidden" id="id" th:field="*{id}">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </h1>
 
                 <h1 class="text-center mt-4 mb-4">
-                    <a th:href="@{employee_list}" class="btn btn-secondary btn-sm">List Employees</a>
+                    <a th:href="@{/employee_list}" class="btn btn-secondary btn-sm">List Employees</a>
                 </h1>
-
             </form>
         </div>
     </body>

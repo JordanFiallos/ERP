@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ErppetitApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ErppetitApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ErppetitApplication.class, args);
+    }
 
 }
