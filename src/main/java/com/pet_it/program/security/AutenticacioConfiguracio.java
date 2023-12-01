@@ -39,10 +39,10 @@ public class AutenticacioConfiguracio {
                 .requestMatchers("/inicio/**").permitAll()
                 .requestMatchers("/accounting/**").hasAnyAuthority("ACCOUNTING")
                 .requestMatchers("/commercial/**").hasAnyAuthority("COMMERCIAL")
-                .requestMatchers("/seller/**").hasAnyAuthority("SELLER")
+                .requestMatchers("/customer/**").hasAnyAuthority("SELLER")
                 .requestMatchers("/employee_list/**").hasAnyAuthority("HUMAN")
                 .requestMatchers("/veterinarian/**").hasAnyAuthority("VETERINARIAN")
-                .requestMatchers("/purchase/**").hasAnyAuthority("PURCHASE")
+                .requestMatchers("/supplier/**").hasAnyAuthority("PURCHASE")
                 .anyRequest().authenticated())
                 
                 .formLogin((form) -> form
