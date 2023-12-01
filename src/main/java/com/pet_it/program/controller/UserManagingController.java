@@ -45,8 +45,8 @@ public class UserManagingController {
 
     @GetMapping("/update/{id}")
     public String Update(Employee employee, Model model) {
-
-        model.addAttribute("employee_form", employeeservicelmpl.cercarUsuari(employee));
+        employee = employeeservicelmpl.cercarUsuari(employee);
+        model.addAttribute("employee", employee);
         return "employees/employee_form";
     }
 
