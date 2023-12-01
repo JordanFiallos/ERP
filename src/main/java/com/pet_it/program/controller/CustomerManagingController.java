@@ -37,8 +37,13 @@ public class CustomerManagingController {
     }
 
     @GetMapping("/customer_select/{id}")
+    public String CustomerById(Model model, @PathVariable Long customerId) {
+        model.addAttribute("customer",customerService.getCustomerById(customerId));
+        return "customers_info";
+    }
+    @PostMapping("/customer_select/{id}")
     public String getCustomerById(Model model, @PathVariable Long customerId) {
-        model.addAttribute(customerService.getCustomerById(customerId));
+        model.addAttribute("customer",customerService.getCustomerById(customerId));
         return "customers_info";
     }
 
