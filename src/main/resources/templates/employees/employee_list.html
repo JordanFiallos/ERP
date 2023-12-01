@@ -88,17 +88,16 @@
                                         <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${employee.id}">
                                             Delete
                                         </button>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <td>
-                            <div class="d-flex justify-content-center">
-                                <button class="btn btn-success btn-sm add mx-2">
-                                    <a th:href="@{employee_form}" th:style="'text-decoration: none; color: inherit;'">Insert Employeed</a>
-                                </button>
-                            </div>
-                        </td>
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-success btn-sm add mx-2">
+                                <a th:href="@{employee_form}" th:style="'text-decoration: none; color: inherit;'">Insert Employeed</a>
+                            </button>
+                        </div>
                     </table>
                 </div>
             </div>
