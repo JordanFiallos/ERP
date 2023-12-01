@@ -31,13 +31,15 @@
         <td th:text="${customer.phone}"></td>
         <td th:text="${customer.address}"></td>
         <td>
-            <a th:href="@{/customer_select/{id}(id=${customer.id})}">View</a>
-            <a th:href="@{/customer_update/{id}(id=${customer.id})}">Edit</a>
-            <a th:href="@{/customer_delete/{id}(id=${customer.id})}">Delete</a>
+            <a th:href="@{'/customer_select/' + ${customer.id}}">View</a>
+            <a th:href="@{'/customer_update/' + ${customer.id}}">Edit</a>
+            <a th:href="@{'/customer_delete/' + ${customer.id}}">Delete</a>
         </td>
     </tr>
     </tbody>
 </table>
+        <br>
+        <a th:href="@{'/customer/form'}">Go to customer form</a>
 
 </body>
 </html>

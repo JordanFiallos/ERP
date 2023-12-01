@@ -4,10 +4,9 @@ package com.pet_it.program.controller;
  *
  * @author Houssam
  */
-
 import com.pet_it.program.domain.Customer;
 import com.pet_it.program.services.customerService;
-    import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import org.springframework.ui.Model;
 
 @Controller
 public class CustomerManagingController {
-    
+
     @Autowired
     private final customerService customerService;
 
@@ -26,7 +25,7 @@ public class CustomerManagingController {
     }
 
     @GetMapping("/customer/form")
-    public String showCustomerForm(Customer customer ,Model model) {
+    public String showCustomerForm(Customer customer, Model model) {
         model.addAttribute("customer", customer);
         return "customers/customers_form";
     }
@@ -34,20 +33,25 @@ public class CustomerManagingController {
     @PostMapping("/customer/form")
     public String addCustomer(@ModelAttribute Customer customer) {
         customerService.addCustomer(customer);
-        return "redirect:/customer";
-    }
-
-    @GetMapping("/customer")
-    public String showCustomerList(Model model) {
-        List<Customer> customers = customerService.getAllCustomers();
-        model.addAttribute("customers", customers);
         return "customers/customers_list";
     }
 
     @GetMapping("/customer_select/{id}")
-    public String getCustomerById(@PathVariable Long customerId) {
-        customerService.getCustomerById(customerId);
+    public String getCustomerById(Model model, @PathVariable Long customerId) {
+        model.addAttribute(customerService.getCustomerById(customerId));
         return "customers_info";
+    }
+
+    @GetMapping("/customer/list")
+    public String CustomerList(Model model) {
+        return "customers/customers_list";
+    }
+    
+    @PostMapping("/customer/list")
+    public String showCustomerList(Model model) {
+        List<Customer> customers = customerService.getAllCustomers();
+        model.addAttribute("customers", customers);
+        return "customers/customers_list";
     }
 
     @PutMapping("/customer_update/{id}")
@@ -59,8 +63,7 @@ public class CustomerManagingController {
     @DeleteMapping("/customer_delete/{id}")
     public String deleteCustomer(@PathVariable Long customerId) {
         customerService.deleteCustomer(customerId);
-        return "redirect:/customer";
+        return "customers/customers_list";
     }
-
 
 }
