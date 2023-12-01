@@ -8,12 +8,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <title>Suppliers</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <div>
-            <h2>Supplier Information</h2>
-        </div>
-        <div>
+        <div class="container">
+            <h2 class="text-center mt-4 mb-4">Supplier Information</h2>
             <p>First Name:<span th:text="${supplier.firstname}"></span></p>
             <p>Last Name:<span th:text="${supplier.lastname}"></span></p>
             <p>Email:<span th:text="${supplier.email}"></span></p>
@@ -23,8 +25,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <p>Delivery Date:<span th:text="${supplier.aproachDeliveryInt}"></span></p>
         </div>
         <br>
-        <div>
-            <a th:href="@{'/supplier'}">Go to list</a>
+        <div class="text-center mt-4 mb-4">
+            <a class="btn btn-secondary btn-sm" th:href="@{'/supplier'}">Go to list</a>
         </div>
     </body>
 </html>
