@@ -5,7 +5,9 @@
 package com.pet_it.program.controller;
 
 import com.pet_it.program.domain.Employee;
+import com.pet_it.program.domain.Role;
 import com.pet_it.program.services.employeeServiceImpl;
+import com.pet_it.program.services.roleService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ public class UserManagingController {
 
     @Autowired
     private employeeServiceImpl employeeservicelmpl;
+    private roleService roleService;
 
     @GetMapping("/employee_form")
     public String ShowForm(Employee employee) {
@@ -49,10 +52,17 @@ public class UserManagingController {
         model.addAttribute("employee", employee);
         return "employees/employee_form";
     }
-
-    @GetMapping("/delete/{id}")
+    
+    @GetMapping("/employee_list/delete/{id}")
     public String Delete(Employee employee) {
         employeeservicelmpl.eliminarUsuari(employee);
         return "redirect:/employee_list";
+    }
+    
+    @GetMapping("/employee/roles_update/{id}")
+    public String updateRole(Employee employee, Model model){
+        List<Role> roles = roleService.getAllRolesOfEmployee(employee);
+        model.addAttribute("roles", roles);
+        return "roles_form";
     }
 }
