@@ -42,7 +42,8 @@ public class employeeServiceImpl implements employeeService {
     }
 
     @Override
-    public void eliminarUsuari(Employee employee) {
+    public void eliminarUsuari(Long id) {
+        Employee employee = getPersonById(id);
         employeedao.delete(employee);
     }
 }

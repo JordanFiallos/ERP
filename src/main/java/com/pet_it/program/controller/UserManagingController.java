@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -24,6 +25,8 @@ public class UserManagingController {
 
     @Autowired
     private employeeServiceImpl employeeservicelmpl;
+    
+    @Autowired
     private roleService roleService;
 
     @GetMapping("/employee_form")
@@ -54,15 +57,16 @@ public class UserManagingController {
     }
     
     @GetMapping("/employee_list/delete/{id}")
-    public String Delete(Employee employee) {
-        employeeservicelmpl.eliminarUsuari(employee);
+    public String Delete(@PathVariable Long id) {
+        roleService.deleteRolesById(id);
+        employeeservicelmpl.eliminarUsuari(id);
         return "redirect:/employee_list";
     }
     
     @GetMapping("/employee/roles_update/{id}")
-    public String updateRole(Employee employee, Model model){
-        List<Role> roles = roleService.getAllRolesOfEmployee(employee);
+    public String updateRole(@PathVariable Long id, Model model){
+        List<Role> roles = roleService.getAllRolesById(id);
         model.addAttribute("roles", roles);
-        return "roles_form";
+        return "roles/roles_form";
     }
 }

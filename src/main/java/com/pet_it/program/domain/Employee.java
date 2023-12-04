@@ -29,7 +29,6 @@ public class Employee extends Person {
     private Date nextAvailableWorkTime;
     
     @OneToMany
-    @JoinColumn(name="id_usuari") 
+    @JoinColumn(name="id_usuari")
     private List<Role> rols;
-    
 }

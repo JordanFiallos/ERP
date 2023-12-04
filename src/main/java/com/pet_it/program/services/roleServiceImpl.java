@@ -21,17 +21,30 @@ public class roleServiceImpl implements roleService {
     @Autowired
     private roleDAO roleDAO;
     
+    @Autowired
+    private employeeService employeeservice;
+    
     @Override
-    public List<Role> getAllRolesOfEmployee(Employee employee){
-        Long id = employee.getId();
-        System.out.println("atencion "+ id);
-        //int numeroRoles = roleDAO.countRolesWithId(id);
-        List<Role> roles = roleDAO.findListOfRolesWithId(id);
+    public List<Role> getAllRolesById(Long id){
+        Employee employee = employeeservice.getPersonById(id);
+        System.out.println("atencion "+ employee.getId());
+        List<Role> roles = employee.getRols();
+        //Long id = employee.getId();
+        //System.out.println("atencion "+ id);
+        //List<Role> roles = roleDAO.findListOfRolesWithId(id);
+        for(Role rol : roles) {
+            System.out.println(rol.getNom());
+        }
         return roles;
     }
     
     @Override
     public Role getRoleById(Long id) {
         return roleDAO.findById(id).orElse(null);
+    }
+
+    @Override
+    public void deleteRolesById(Long id) {
+        roleDAO.deleteRolesWithId(id);
     }
 }
