@@ -33,10 +33,11 @@ public class AutenticacioConfiguracio {
 
     @Bean
     public SecurityFilterChain security(HttpSecurity http) throws Exception {
-        
+
         return http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/images/**").permitAll()
                 .requestMatchers("/inicio/**").permitAll()
+                .requestMatchers("/api/bills/**").hasAnyAuthority("ACCOUNTING")
                 .requestMatchers("/accounting/**").hasAnyAuthority("ACCOUNTING")
                 .requestMatchers("/commercial/**").hasAnyAuthority("COMMERCIAL")
                 .requestMatchers("/customer/list/**").hasAnyAuthority("SELLER")
@@ -44,16 +45,11 @@ public class AutenticacioConfiguracio {
                 .requestMatchers("/veterinarian/**").hasAnyAuthority("VETERINARIAN")
                 .requestMatchers("/supplier/**").hasAnyAuthority("PURCHASE")
                 .anyRequest().authenticated())
-                
                 .formLogin((form) -> form
                 .loginPage("/login").permitAll())
                 .logout((logout) -> logout.deleteCookies("JSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/inicio"))
                 .exceptionHandling((exception) -> exception.accessDeniedPage("/errors/error403")).build();
-                
-        
-                
-        
-        
+
         
     }
 
