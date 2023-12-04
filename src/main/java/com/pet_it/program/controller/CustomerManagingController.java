@@ -38,6 +38,8 @@ public class CustomerManagingController {
 
     @GetMapping("/customer/list")
     public String CustomerList(Model model) {
+        List<Customer> customers = customerService.getAllCustomers();
+        model.addAttribute("customers", customers);
         return "customers/customers_list";
     }
 

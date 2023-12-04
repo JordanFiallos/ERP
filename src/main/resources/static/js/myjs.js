@@ -12,8 +12,11 @@ $(document).ready(function () {
 $(document).ready(function () {
     // Set the employee ID when the modal is shown
     $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+        const currentUrl = window.location.href;
+        
         var button = $(event.relatedTarget);
-        var employeeId = button.data('id');
-        $('#confirmDeleteButton').attr('href', '/delete/' + employeeId);
+        var id = button.data('id');
+        //$('#confirmDeleteButton').attr('href', '/delete/' + employeeId);
+        $('#confirmDeleteButton').attr('href', currentUrl + '/delete/' + id);
     });
 });

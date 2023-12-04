@@ -4,10 +4,15 @@
  */
 package com.pet_it.program.services;
 
+import com.pet_it.program.domain.Employee;
+import com.pet_it.program.domain.Role;
+import java.util.List;
+
 /**
  *
- * @author Jordan
+ * @author Ricard
  */
 public interface roleService {
-    
+    public List<Role> getAllRolesOfEmployee(Employee employee);
+    public Role getRoleById(Long id);
 }
