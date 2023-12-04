@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package com.pet_it.program.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  *
- * @author Ruben
+ * @author Houssam
  */
 @Configuration
 @EnableWebSecurity
@@ -35,7 +39,7 @@ public class AutenticacioConfiguracio {
                 .requestMatchers("/inicio/**").permitAll()
                 .requestMatchers("/accounting/**").hasAnyAuthority("ACCOUNTING")
                 .requestMatchers("/commercial/**").hasAnyAuthority("COMMERCIAL")
-                .requestMatchers("/customer/**").hasAnyAuthority("SELLER")
+                .requestMatchers("/customer/list/**").hasAnyAuthority("SELLER")
                 .requestMatchers("/employee_list/**").hasAnyAuthority("HUMAN")
                 .requestMatchers("/veterinarian/**").hasAnyAuthority("VETERINARIAN")
                 .requestMatchers("/supplier/**").hasAnyAuthority("PURCHASE")

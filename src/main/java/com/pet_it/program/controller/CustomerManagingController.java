@@ -36,27 +36,23 @@ public class CustomerManagingController {
         return "customers/customers_list";
     }
 
-    @GetMapping("/customer_select/{id}")
-    public String CustomerById(Model model, @PathVariable Long customerId) {
-        model.addAttribute("customer",customerService.getCustomerById(customerId));
-        return "customers_info";
-    }
-    @PostMapping("/customer_select/{id}")
-    public String getCustomerById(Model model, @PathVariable Long customerId) {
-        model.addAttribute("customer",customerService.getCustomerById(customerId));
-        return "customers_info";
-    }
-
     @GetMapping("/customer/list")
     public String CustomerList(Model model) {
         return "customers/customers_list";
     }
-    
+
     @PostMapping("/customer/list")
     public String showCustomerList(Model model) {
         List<Customer> customers = customerService.getAllCustomers();
         model.addAttribute("customers", customers);
         return "customers/customers_list";
+    }
+
+    @GetMapping("/customer_select/{id}")
+    public String showCustomerInfo(Model model, @PathVariable Long id) {
+        Customer customer = customerService.getCustomerById(id);
+        model.addAttribute("customer", customer);
+        return "customers/customers_info";
     }
 
     @PutMapping("/customer_update/{id}")

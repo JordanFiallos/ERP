@@ -1,67 +1,28 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Customer Information</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    </head>
-    <body>
-        <div class="container">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Information</title>
+</head>
+<body>
 
-            <h2 class="text-center mt-4 mb-4">Customer Information</h2>
-            <h2 class="text-center mt-4 mb-4">
-                <a th:href="@{customers_list}" class="btn btn-secondary btn-sm">Inicio</a>
-            </h2>
-            <div>
-                <table  th:if="${customer}" class="table table-bordered table-striped">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th><strong>ID:</strong> </th>
-                            <th><strong>First Name:</strong></th>
-                            <th><strong>Last Name:</strong></th>
-                            <th><strong>Email:</strong> </th>
-                            <th><strong>Phone:</strong>  </th>
-                            <th><strong>Address:</strong> </th>
-                            <th><strong>Action</strong> </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td th:text="${customer.id}"></td>
-                            <td th:text="${customer.firstname}"></td>
-                            <td th:text="${customer.lastname}"></td>
-                            <td th:text="${customer.email}"></td>
-                            <td th:text="${customer.phone}"></td>
-                            <td th:text="${customer.adress}"></td>
-                            <td>
-                                <a th:href="@{'/customer_select/' + ${customer.id}}">View</a>
-                                <a th:href="@{'/customer_update/' + ${customer.id}}">Edit</a>
-                                <a th:href="@{'/customer_delete/' + ${customer.id}}">Delete</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+<h2>Customer Information</h2>
 
-            <p th:if="${customer}">
-                <strong>ID:</strong> <span th:text="${customer.id}"></span><br>
-                <strong>First Name:</strong> <span th:text="${customer.firstname}"></span><br>
-                <strong>Last Name:</strong> <span th:text="${customer.lastname}"></span><br>
-                <strong>Email:</strong> <span th:text="${customer.email}"></span><br>
-                <strong>Phone:</strong> <span th:text="${customer.phone}"></span><br>
-                <strong>Address:</strong> <span th:text="${customer.address}"></span><br>
-            </p>
+<p th:if="${customer}">
+    <strong>ID:</strong> <span th:text="${customer.id}"></span><br>
+    <strong>First Name:</strong> <span th:text="${customer.firstname}"></span><br>
+    <strong>Last Name:</strong> <span th:text="${customer.lastname}"></span><br>
+    <strong>Email:</strong> <span th:text="${customer.email}"></span><br>
+    <strong>Phone:</strong> <span th:text="${customer.phone}"></span><br>
+    <strong>Address:</strong> <span th:text="${customer.address}"></span><br>
+</p>
 
-            <p th:unless="${customer}">Customer not found</p>
+<p th:unless="${customer}">Customer not found</p>
 
-            <br/><!-- comment -->
-            <a th:href="@{'/customer'}">Go to customer list</a>
+<br/><!-- comment -->
+<a th:href="@{'/customer/list'}">Go to customer list</a>
 
-        </div>
-    </body>
+</body>
 </html>
