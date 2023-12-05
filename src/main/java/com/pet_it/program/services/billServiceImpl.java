@@ -12,12 +12,15 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Jordan
  */
-public class billServiceImpl {
+@Service
+public class billServiceImpl implements billService {
+
     @Autowired
     private billDAO billRepository;
 
@@ -41,4 +44,13 @@ public class billServiceImpl {
         List<Bill> bills = billRepository.findByIssueDateBetween(startOfMonth, endOfMonth);
         return bills.stream().map(Bill::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
+
+    public List<Bill> getBillsForMonth() {
+        // Assuming your Bill entity has a date field and you want bills for the current month
+        LocalDate startOfMonth = LocalDate.now().withDayOfMonth(1);
+        LocalDate endOfMonth = LocalDate.now().withDayOfMonth(LocalDate.now().lengthOfMonth());
+
+        return billRepository.findByIssueDateBetween(startOfMonth, endOfMonth);
+    }
+
 }

@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,11 +26,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class BillController {
 
     @Autowired
-    private billService billService;
+    private billService billservice;
     
     @Autowired
     private customerService customerService;
 
+    
+    @GetMapping("/generate")
+    public String generateBills(Model model) {
+        List<Bill> bills = billService.getBillsForMonth(); 
+
+        BigDecimal totalForMonth = billService.getTotalBillsForMonth();
+
+        model.addAttribute("bills", bills);
+        model.addAttribute("totalForMonth", totalForMonth);
+
+        return "bills/bills";
+    }
+    
     @PostMapping("/generate")
     public ResponseEntity<Bill> generateBill(@RequestParam Long customerId, @RequestParam BigDecimal amount) {
         Customer customer = customerService.getCustomerById(customerId);
@@ -37,7 +51,7 @@ public class BillController {
             return ResponseEntity.notFound().build();
         }
 
-        Bill bill = billService.generateBill(customer, amount);
+        Bill bill = billservice.generateBill(customer, amount);
         return ResponseEntity.ok(bill);
     }
 
@@ -48,13 +62,13 @@ public class BillController {
             return ResponseEntity.notFound().build();
         }
 
-        List<Bill> bills = billService.getBillsByCustomer(customer);
+        List<Bill> bills = billservice.getBillsByCustomer(customer);
         return ResponseEntity.ok(bills);
     }
 
     @GetMapping("/total-month")
     public ResponseEntity<BigDecimal> getTotalBillsForMonth() {
-        BigDecimal total = billService.getTotalBillsForMonth();
+        BigDecimal total = billservice.getTotalBillsForMonth();
         return ResponseEntity.ok(total);
     }
 }
