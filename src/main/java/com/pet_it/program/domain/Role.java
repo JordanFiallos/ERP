@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 //import java.io.Serializable;
 import lombok.Data;
 
@@ -36,4 +37,19 @@ public class Role /*implements Serializable*/{
     @ManyToOne
     @JoinColumn(name="id_usuari")
     private Employee id;
+    
+    @Transient
+    private boolean active;
+    
+    public String getNom(){
+        return this.nom;
+    }
+    
+    public boolean getActive(){
+        return this.active;
+    }
+
+    public void setId(Employee employee) {
+        this.id = employee;
+    }
 }

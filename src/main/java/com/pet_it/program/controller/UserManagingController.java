@@ -9,18 +9,13 @@ import com.pet_it.program.domain.Role;
 import com.pet_it.program.services.employeeServiceImpl;
 import com.pet_it.program.services.roleService;
 import jakarta.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
-import org.springframework.aop.framework.AopProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -42,7 +37,6 @@ public class UserManagingController {
 
     @PostMapping("/SaveEmployees")
     public String ShowResult(Employee employee) {
-
         employeeservicelmpl.afegirUsuari(employee);
 
         return "employees/employee_info";
@@ -71,17 +65,22 @@ public class UserManagingController {
     
     @GetMapping("/employee/roles_form/{id}")
     public String formRole(@PathVariable Long id, Model model){
-        List<Role> roles = roleService.getAllRolesById(id);
-        HashMap<String,String> rolesDisponibles =  roleService.listaRolesChecked(roles);
-        model.addAttribute("id", id);
-        model.addAttribute("rolesDisponibles", rolesDisponibles);
+        Employee employee = employeeservicelmpl.getPersonById(id);
+        Employee newRolesEmployee = roleService.listaRolesChecked(employee);
+        //List<Role> roles = roleService.getAllRolesById(id);
+        //HashMap<String,String> rolesDisponibles = roleService.listaRolesChecked(roles);
+        //model.addAttribute("id", id);
+        //model.addAttribute("rolesDisponibles", rolesDisponibles);
+        model.addAttribute("employee", newRolesEmployee);
+        //model.addAttribute("roles", newRolesEmployee.getRols());
         return "roles/roles_form";
     }
     
     @PostMapping("/employee/roles_update")
-    public String updateRole(/*@RequestParam(name = "id") Long id, Model model*/ HttpServletRequest request){
-        System.out.println("-------ALERTA             "+request.getParameter("HUMAN")+request.getParameter("VETERINARIAN"));
-        //roleService.updateRolesWithId(id, request);
-        return "";
+    public String updateRole(Employee employee, Model model){
+        System.out.println("atenciooooon         "+employee.getId());
+        
+        roleService.updateRoles(employee);
+        return "redirect:/employee_list";
     }
 }

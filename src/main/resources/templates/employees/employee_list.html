@@ -85,8 +85,9 @@
                                         <button class="btn btn-success btn-sm add mx-2">
                                             <a th:href="@{'/employee/roles_form/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Roles</a>
                                         </button>
-                                        <button class="btn btn-success btn-sm add mx-2">
-                                            <a th:href="@{'/update/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Update</a>
+                                        <button class="btn btn-success btn-sm add mx-2" data-toggle="modal"  data-target="#confirmUpdateModal" th:data-id="${employee.id}">
+                                            <!--a th:href="@{'/update/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Update</a-->
+                                            Update
                                         </button>
                                         <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${employee.id}">
                                             Delete
@@ -95,17 +96,18 @@
                                     </td>
                                 </tr>
                             </tbody>
-                        <td>
-                            <div class="d-flex justify-content-center">
-                                <button class="btn btn-success btn-sm add mx-2">
-                                    <a th:href="@{employee_form}" th:style="'text-decoration: none; color: inherit;'">Insert Employeed</a>
-                                </button>
-                                <button class="btn btn-secondary btn-sm add mx-2">
-                                    <a th:href="@{/}" th:style="'text-decoration: none; color: inherit;'">Go back</a>
-                                </button>
-                            </div>
-                        </td>
+                        </table>
                     </table>
+                    <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-success btn-sm add mx-2">
+                                <a th:href="@{employee_form}" th:style="'text-decoration: none; color: inherit;'">Insert Employeed</a>
+                            </button>
+                            <button class="btn btn-secondary btn-sm add mx-2">
+                                <a th:href="@{/}" th:style="'text-decoration: none; color: inherit;'">Go back</a>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

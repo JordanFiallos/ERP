@@ -12,15 +12,18 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Jordan
+ * @author Houssam
  */
-public class billServiceImpl {
+@Service
+public class billServiceImpl implements billService {
     @Autowired
     private billDAO billRepository;
 
+    @Override
     public Bill generateBill(Customer customer, BigDecimal amount) {
         Bill bill = new Bill();
         bill.setCustomer(customer);
@@ -29,10 +32,12 @@ public class billServiceImpl {
         return billRepository.save(bill);
     }
 
+    @Override
     public List<Bill> getBillsByCustomer(Customer customer) {
         return billRepository.findByCustomer(customer);
     }
 
+    @Override
     public BigDecimal getTotalBillsForMonth() {
         LocalDate now = LocalDate.now();
         LocalDate startOfMonth = now.withDayOfMonth(1);
