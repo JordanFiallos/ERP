@@ -18,7 +18,7 @@ public interface employeeService {
 
     void afegirUsuari(Employee employee); //Metodo para añadir Personas tipo Empleados
 
-    void eliminarUsuari(Employee employee); //Metodo para eliminar Personas tipo Empleados
+    void eliminarUsuari(Long id); //Metodo para eliminar Personas tipo Empleados
     
     public Employee getPersonById(Long id);
     

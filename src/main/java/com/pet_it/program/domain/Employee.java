@@ -24,12 +24,11 @@ public class Employee extends Person {
     
     private String username;
     private String password;
-
+    
     @Column(name = "nextAvailableWorkTime")
     private Date nextAvailableWorkTime;
     
     @OneToMany
-    @JoinColumn(name="id_usuari") 
+    @JoinColumn(name="id_usuari")
     private List<Role> rols;
-    
 }

@@ -6,6 +6,7 @@ package com.pet_it.program.services;
 
 import com.pet_it.program.domain.Employee;
 import com.pet_it.program.domain.Role;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -13,6 +14,9 @@ import java.util.List;
  * @author Ricard
  */
 public interface roleService {
-    public List<Role> getAllRolesOfEmployee(Employee employee);
+    public List<Role> getAllRolesById(Long id);
     public Role getRoleById(Long id);
+    public void deleteRolesById(Long id);
+    public Employee listaRolesChecked(Employee employee);
+    public void updateRoles(Employee employee);
 }
