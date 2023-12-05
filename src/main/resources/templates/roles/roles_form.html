@@ -12,44 +12,35 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <body>
         <h2 class="text-center">Update Roles information</h2>
         <form th:action="@{/employee/roles_update}" method="post">
-            <!--div th:block class="mr-2" th:each="role : ${roles}">
+            <div th:each="role : ${rolesDisponibles}">
                 <div class="col-6">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="idsHabilidadesRequire[]" th:value="${role.idRol}" th:id="|id-${role.idRol}-habilidad|"/>
-                        <label th:for="|id-${role.idRol}-habilidad|" class="custom-control-label" th:text="${role.nom}"/>
+                        <label class="custom-control-label" th:text="${role.key}"/>
+                        <input class="custom-control-input" th:name="${role.key}" th:id="${role.key}" type="checkbox" th:checked="${false ? true: role.value}"/>
+                    </div>
+                </div>
+            </div>
+            
+            <!--div th:block class="mr-2" th:each="roleIndividual : ${rolesDisponibles}">
+                <div class="col-6">
+                    <div class="custom-control custom-checkbox">
+            <!--input type="checkbox" class="custom-control-input" name="idsHabilidadesRequire[]" th:value="${role.idRol}" th:id="|id-${role.idRol}-habilidad|"/>
+            <label th:for="|id-${role.idRol}-habilidad|" class="custom-control-label" th:text="${role.nom}"/-->
+                        <!--input type="checkbox" class="custom-control-input"  th:id="${roleIndividual}" th:checked="${roleIndividual} == " />
+                        <label class="custom-control-label" th:text="${roleIndividual}"/>
                     </div>
                 </div>
             </div-->
 
-            
-            
-            <!--label>
-                <input type="checkbox" th:checked="${flag ? false: true}"/>ACCOUNTING
-            </label>
-            <label>
-                <input type="checkbox" th:checked="${flag ? false: true}"/>COMMERCIAL
-            </label>
-            <label>
-                <input type="checkbox" th:checked="${flag ? false: true}"/>SELLER
-            </label>
-            <label>
-                <input type="checkbox" th:checked="${flag ? false: true}"/>HUMAN
-            </label>
-            <label>
-                <input type="checkbox" th:checked="${flag ? false: true}"/>VETERINARIAN
-            </label>
-            <label>
-                <input type="checkbox" th:checked="${flag ? false: true}"/>PURCHASE
-            </label-->
-            
-            
-
             <br>
             <div class="text-center">
-                <input type="hidden" id="id" th:field="*{id}">
+                <input type="hidden" id="id" name="id" th:field="*{id}">
                 <button class="btn btn-primary" type="submit">Submit</button>
+                <button class="btn btn-secondary add mx-2">
+                    <a th:href="@{/employee_list}" th:style="'text-decoration: none; color: inherit;'">Go back</a>
+                </button>
             </div>
-
+            
         </form>
     </body>
 </html>

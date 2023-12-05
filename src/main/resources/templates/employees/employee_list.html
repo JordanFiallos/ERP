@@ -83,7 +83,7 @@
                                     <td th:text="${employee.nextAvailableWorkTime}"></td>
                                     <td>
                                         <button class="btn btn-success btn-sm add mx-2">
-                                            <a th:href="@{'/employee/roles_update/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Roles</a>
+                                            <a th:href="@{'/employee/roles_form/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Roles</a>
                                         </button>
                                         <button class="btn btn-success btn-sm add mx-2">
                                             <a th:href="@{'/update/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Update</a>

@@ -24,7 +24,7 @@ public class Employee extends Person {
     
     private String username;
     private String password;
-
+    
     @Column(name = "nextAvailableWorkTime")
     private Date nextAvailableWorkTime;
     

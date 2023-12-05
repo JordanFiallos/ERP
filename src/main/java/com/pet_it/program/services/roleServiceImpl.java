@@ -7,6 +7,9 @@ package com.pet_it.program.services;
 import com.pet_it.program.DAO.roleDAO;
 import com.pet_it.program.domain.Employee;
 import com.pet_it.program.domain.Role;
+import jakarta.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,14 +30,7 @@ public class roleServiceImpl implements roleService {
     @Override
     public List<Role> getAllRolesById(Long id){
         Employee employee = employeeservice.getPersonById(id);
-        System.out.println("atencion "+ employee.getId());
         List<Role> roles = employee.getRols();
-        //Long id = employee.getId();
-        //System.out.println("atencion "+ id);
-        //List<Role> roles = roleDAO.findListOfRolesWithId(id);
-        for(Role rol : roles) {
-            System.out.println(rol.getNom());
-        }
         return roles;
     }
     
@@ -46,5 +42,49 @@ public class roleServiceImpl implements roleService {
     @Override
     public void deleteRolesById(Long id) {
         roleDAO.deleteRolesWithId(id);
+    }
+    
+    @Override
+    public HashMap<String,String> listaRolesChecked(List<Role> roles){
+        HashMap<String,String> listaUnAndChecked  = new HashMap<>();
+        boolean bo = false;
+        List<String> rolesDisponibles = listaRoles();
+        for (String nombre : rolesDisponibles) {
+            for (Role rol : roles) {
+                if (nombre.equals(rol.getNom())) {
+                    bo = true;
+                }
+            }
+            
+            if(!bo) {
+                listaUnAndChecked.put(nombre,null);
+            } else {
+                listaUnAndChecked.put(nombre,"checked");
+            }
+            bo = false;
+        }
+        return listaUnAndChecked;
+    }
+    
+    @Override
+    public void updateRolesWithId(Long id,HttpServletRequest request){
+        List<String> rolesDisponibles = listaRoles();
+        for (String nombre : rolesDisponibles) {
+            if (request.getParameter(nombre) != null){
+                System.out.println("usuario: "+id+" guardar rol: "+nombre);
+            }
+        }
+        
+    }
+    
+    private List<String> listaRoles(){
+        List<String> listaDeRoles= new ArrayList<>();
+        listaDeRoles.add("ACCOUNTING");
+        listaDeRoles.add("COMMERCIAL");
+        listaDeRoles.add("SELLER");
+        listaDeRoles.add("HUMAN");
+        listaDeRoles.add("VETERINARIAN");
+        listaDeRoles.add("PURCHASE");
+        return listaDeRoles;
     }
 }

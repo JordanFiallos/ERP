@@ -12,22 +12,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.io.Serializable;
+//import java.io.Serializable;
 import lombok.Data;
 
 /**
  *
- * @author Jordan
+ * @author Ricard
  */
 @Data
 @Entity
 @Table(name="rols")
-public class Role implements Serializable{
+public class Role /*implements Serializable*/{
     
-    private static final long serialVersionUID=1L;
+    /*private static final long serialVersionUID=1L;*/
 
-    @Id 
-    @GeneratedValue(strategy=GenerationType.IDENTITY) 
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long idRol;
     
     @Column(name = "nom")
