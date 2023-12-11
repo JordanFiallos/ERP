@@ -19,4 +19,7 @@ public interface billDAO extends JpaRepository<Bill, Long>  {
     List<Bill> findByCustomer(Customer customer);
 
     List<Bill> findByIssueDateBetween(LocalDate startDate, LocalDate endDate);
+    List<Bill> findByCostEffectivenessCategory(String costEffectivenessCategory);
+    List<Bill> findByOperativePlanningCategory(String operativePlanningCategory);
+    List<Bill> findByViabilityCategory(String viabilityCategory);
 }
