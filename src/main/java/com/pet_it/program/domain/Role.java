@@ -9,25 +9,47 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.io.Serializable;
+import jakarta.persistence.Transient;
+//import java.io.Serializable;
 import lombok.Data;
 
 /**
  *
- * @author Jordan
+ * @author Ricard
  */
 @Data
 @Entity
 @Table(name="rols")
-public class Role implements Serializable{
+public class Role /*implements Serializable*/{
     
-    private static final long serialVersionUID=1L;
+    /*private static final long serialVersionUID=1L;*/
 
-    @Id 
-    @GeneratedValue(strategy=GenerationType.IDENTITY) 
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long idRol;
     
     @Column(name = "nom")
     private String nom;
+    
+    @ManyToOne
+    @JoinColumn(name="id_usuari")
+    private Employee id;
+    
+    @Transient
+    private boolean active;
+    
+    public String getNom(){
+        return this.nom;
+    }
+    
+    public boolean getActive(){
+        return this.active;
+    }
+
+    public void setId(Employee employee) {
+        this.id = employee;
+    }
 }

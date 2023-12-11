@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
  *
  * @author Houssam
  */
+<<<<<<< 35b8b504eb0bb5ea2e88554ec7b154ce424c466d
 
+=======
+//@Service
+>>>>>>> c6327644694c8f8e49a62ef55195affb0709a2f3
 public interface billService {
     
     public Bill generateBill(Customer customer, BigDecimal amount);

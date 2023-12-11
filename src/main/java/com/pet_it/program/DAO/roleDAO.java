@@ -14,9 +14,12 @@ import org.springframework.data.jpa.repository.Query;
  * @author Ricard
  */
 public interface roleDAO  extends JpaRepository<Role, Long>{
-    @Query(value="SELECT * FROM vetitdb.role WHERE id_rol = ?1",nativeQuery=true)
-    List<Role> findListOfRolesWithId(Long id);
+    //@Query(value="SELECT * FROM vetitdb.rols WHERE id_usuari = ?1",nativeQuery=true)
+    //List<Role> findListOfRolesWithId(Long id);
     
-    @Query(value="SELECT count(id_rol) FROM vetitdb.role WHERE id_rol = ?1",nativeQuery=true)
+    @Query(value="SELECT count(id_rol) FROM vetitdb.rols WHERE id_usuari = ?1",nativeQuery=true)
     int countRolesWithId(Long id);
+    
+    @Query(value="DELETE FROM vetitdb.rols WHERE id_usuari = ?1",nativeQuery=true)
+    int deleteRolesWithId(Long id);
 }

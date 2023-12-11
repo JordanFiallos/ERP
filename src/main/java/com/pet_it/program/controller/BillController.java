@@ -8,7 +8,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+<<<<<<< 35b8b504eb0bb5ea2e88554ec7b154ce424c466d
 import org.springframework.ui.Model;
+=======
+import org.springframework.stereotype.Controller;
+>>>>>>> c6327644694c8f8e49a62ef55195affb0709a2f3
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Houssam
  */
 
-@RestController
+@Controller
+//@RestController
 @RequestMapping("/api/bills")
 public class BillController {
 
