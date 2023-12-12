@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container p-3 my-3 border">
+            <form method="POST" th:action="@{/pet/pet_form}" th:object="${pets}" class="form-group">
+                <div>
+                    <input type="hidden" id="id" name="id" th:field="*{id}"/>
+                </div>
+                <div class="form-group">
+                    <label for="name">Nombre:</label>
+                    <input type="text" name="name" id="name" class="form-control"  th:field="*{name}" required/></input>
+                </div>
+                <div class="form-group">
+                    <label for="species">Especie:</label>
+                    <input type="text" name="species" id="species" class="form-control" th:field="*{species}" required></input>
+                </div>
+                <div class="form-check">
+                    <label for="dob">Fecha de nacimiento:</label>
+                    <input type="date" name="dob" id="dob" th:field="*{dob}" required/></input>
+                </div>
+                <div class="form-group">
+                    <label for="pet">Customers disponibles per seleccionar:</label>
+                    <select class="form-control" id="customers" name="customers" th:field="*{customers}">
+                        <option value="0">Selecciona una opcio</option>
+                        <option th:each="option: ${customers}" th:value="${option.id}" th:text="${option.firstname}" id="customers" name="customers"></option>  
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Actualizar</button>
+            </form>
+        </div>
+    </body>
+</html>
