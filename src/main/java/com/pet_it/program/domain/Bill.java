@@ -28,5 +28,7 @@ public class Bill {
     private BigDecimal amount;
 
     private LocalDate issueDate;
+    
+    private BigDecimal revenue;
 
 }
