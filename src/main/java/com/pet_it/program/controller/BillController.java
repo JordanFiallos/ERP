@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,11 +28,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class BillController {
 
     @Autowired
-    private billService billService;
+    private billService billservice;
     
     @Autowired
     private customerService customerService;
 
+    
+    @GetMapping("/generate")
+    public String generateBills(Model model) {
+        List<Bill> bills = billservice.getBillsForMonth(); 
+
+        BigDecimal totalForMonth = billservice.getTotalBillsForMonth();
+
+        model.addAttribute("bills", bills);
+        model.addAttribute("totalForMonth", totalForMonth);
+
+        return "bills/bills";
+    }
+    
     @PostMapping("/generate")
     public ResponseEntity<Bill> generateBill(@RequestParam Long customerId, @RequestParam BigDecimal amount) {
         Customer customer = customerService.getCustomerById(customerId);
@@ -39,7 +53,7 @@ public class BillController {
             return ResponseEntity.notFound().build();
         }
 
-        Bill bill = billService.generateBill(customer, amount);
+        Bill bill = billservice.generateBill(customer, amount);
         return ResponseEntity.ok(bill);
     }
 
@@ -50,13 +64,46 @@ public class BillController {
             return ResponseEntity.notFound().build();
         }
 
-        List<Bill> bills = billService.getBillsByCustomer(customer);
+        List<Bill> bills = billservice.getBillsByCustomer(customer);
         return ResponseEntity.ok(bills);
     }
 
     @GetMapping("/total-month")
     public ResponseEntity<BigDecimal> getTotalBillsForMonth() {
-        BigDecimal total = billService.getTotalBillsForMonth();
+        BigDecimal total = billservice.getTotalBillsForMonth();
         return ResponseEntity.ok(total);
+    }
+    
+    @GetMapping("/cost-effective")
+    public String showCostEffectiveBills(Model model) {
+        List<Bill> costEffectiveBills = billservice.getBillsForCostEffectiveness();
+        BigDecimal totalCost = billservice.calculateTotalForCostEffectiveness();
+
+        model.addAttribute("bills", costEffectiveBills);
+        model.addAttribute("totalCost", totalCost);
+
+        return "bills/bills_cost-effective";
+    }
+
+    @GetMapping("/operative-planning")
+    public String showOperativePlanningBills(Model model) {
+        List<Bill> operativePlanningBills = billservice.getBillsForOperativePlanning();
+        BigDecimal totalCost = billservice.calculateTotalForOperativePlanning();
+
+        model.addAttribute("bills", operativePlanningBills);
+        model.addAttribute("totalCost", totalCost);
+
+        return "bills/bills_operative-planning";
+    }
+
+    @GetMapping("/viability")
+    public String showViabilityBills(Model model) {
+        List<Bill> viabilityBills = billservice.getBillsForViability();
+        BigDecimal totalCost = billservice.calculateTotalForViability();
+
+        model.addAttribute("bills", viabilityBills);
+        model.addAttribute("totalCost", totalCost);
+
+        return "bills/bills_viability";
     }
 }
