@@ -74,7 +74,7 @@ public class BillController {
         return ResponseEntity.ok(total);
     }
     
-    @GetMapping("/bills/cost-effective")
+    @GetMapping("/cost-effective")
     public String showCostEffectiveBills(Model model) {
         List<Bill> costEffectiveBills = billservice.getBillsForCostEffectiveness();
         BigDecimal totalCost = billservice.calculateTotalForCostEffectiveness();
@@ -82,10 +82,10 @@ public class BillController {
         model.addAttribute("bills", costEffectiveBills);
         model.addAttribute("totalCost", totalCost);
 
-        return "bills_cost-effective";
+        return "bills/bills_cost-effective";
     }
 
-    @GetMapping("/bills/operative-planning")
+    @GetMapping("/operative-planning")
     public String showOperativePlanningBills(Model model) {
         List<Bill> operativePlanningBills = billservice.getBillsForOperativePlanning();
         BigDecimal totalCost = billservice.calculateTotalForOperativePlanning();
@@ -93,10 +93,10 @@ public class BillController {
         model.addAttribute("bills", operativePlanningBills);
         model.addAttribute("totalCost", totalCost);
 
-        return "bills_operative-planning";
+        return "bills/bills_operative-planning";
     }
 
-    @GetMapping("/bills/viability")
+    @GetMapping("/viability")
     public String showViabilityBills(Model model) {
         List<Bill> viabilityBills = billservice.getBillsForViability();
         BigDecimal totalCost = billservice.calculateTotalForViability();
@@ -104,6 +104,6 @@ public class BillController {
         model.addAttribute("bills", viabilityBills);
         model.addAttribute("totalCost", totalCost);
 
-        return "bills_viability";
+        return "bills/bills_viability";
     }
 }

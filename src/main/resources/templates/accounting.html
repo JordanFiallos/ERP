@@ -1,16 +1,40 @@
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Accounting</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            .employee {
+                padding: 10px;
+                border: 1px solid #ddd;
+                margin-bottom: 10px;
+            }
+            .employee:hover {
+                background-color: #f1f1f1;
+            }
+            .employee .name {
+                font-weight: bold;
+            }
+            .employee .add,
+            .employee .remove {
+                cursor: pointer;
+                margin-left: 10px;
+            }
+            .custom-table tbody {
+                background-color: #f8f9fa; /* Color gris claro */
+            }
+            .bg-light-blue {
+                background-color: #4BA2CD; /* Utiliza el código de color que desees */
+            }
+
+        </style>
     </head>
-    <body>
+    <body class="bg-light-blue">
         <div>Accounting</div>
+        <a th:href="@{/api/bills/generate}">genarate bills</a>
+        <a th:href="@{/api/bills/cost-effective}">bills cost-effective</a>
+        <a th:href="@{/api/bills/operative-planning}">bills operative planning</a>
+        <a th:href="@{/api/bills/viability}">bills viability</a>
         <a th:href="@{/logout}">Salir</a>
     </body>
 </html>
