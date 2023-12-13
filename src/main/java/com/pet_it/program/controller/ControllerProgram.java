@@ -4,6 +4,7 @@
  */
 package com.pet_it.program.controller;
 
+import com.pet_it.program.DAO.petDAO;
 import com.pet_it.program.domain.Customer;
 import com.pet_it.program.domain.Pet;
 import com.pet_it.program.services.customerServiceImpl;
@@ -26,7 +27,10 @@ public class ControllerProgram {
 
     @Autowired
     private petServiceImpl petService;
-
+    
+    @Autowired
+    private petDAO petDao;
+    
     @Autowired
     private customerServiceImpl customerService;
 
@@ -78,7 +82,7 @@ public class ControllerProgram {
 
     @GetMapping("/pet/pet-inicio")
     public String veterinarian(Model model) {
-        List<Pet> pets = petService.llistarPets();
+        List<Pet> pets = petDao.llistaPetsHabilitats();
         model.addAttribute("pets", pets);
         return "pet/pet-inicio";
     }
@@ -92,13 +96,16 @@ public class ControllerProgram {
 
     @PostMapping("/pet/pet_form")
     public String formulariPets2(Pet pets) {
+        pets.setEstat("true");
         petService.afegirPets(pets);
         return "redirect:/pet/pet-inicio";
     }
 
     @GetMapping("/delete/{id}")
     public String eliminarPet(Pet pets) {
-        petService.eliminarPets(pets);
+        pets = petService.getPetById(pets.getId());
+        pets.setEstat("false");
+        petDao.save(pets);
         return "redirect:/pet/pet-inicio";
     }
 
