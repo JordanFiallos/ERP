@@ -42,7 +42,7 @@ public class AutenticacioConfiguracio {
                 .requestMatchers("/commercial/**").hasAnyAuthority("COMMERCIAL")
                 .requestMatchers("/customer/list/**").hasAnyAuthority("SELLER")
                 .requestMatchers("/employee_list/**").hasAnyAuthority("HUMAN")
-                .requestMatchers("/pet-inicio/**").hasAnyAuthority("VETERINARIAN")
+                .requestMatchers("/pet/pet-inicio/**").hasAnyAuthority("VETERINARIAN")
                 .requestMatchers("/visits/visits_form/**").hasAnyAuthority("VETERINARIAN")
                 .requestMatchers("/supplier/**").hasAnyAuthority("PURCHASE")
                 .anyRequest().authenticated())
@@ -53,5 +53,4 @@ public class AutenticacioConfiguracio {
 
         
     }
-
 }
