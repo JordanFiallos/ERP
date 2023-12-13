@@ -5,10 +5,8 @@
 package com.pet_it.program.controller;
 
 import com.pet_it.program.domain.Employee;
-import com.pet_it.program.domain.Role;
 import com.pet_it.program.services.employeeServiceImpl;
 import com.pet_it.program.services.roleService;
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -66,21 +65,15 @@ public class UserManagingController {
     @GetMapping("/employee/roles_form/{id}")
     public String formRole(@PathVariable Long id, Model model){
         Employee employee = employeeservicelmpl.getPersonById(id);
-        Employee newRolesEmployee = roleService.listaRolesChecked(employee);
-        //List<Role> roles = roleService.getAllRolesById(id);
-        //HashMap<String,String> rolesDisponibles = roleService.listaRolesChecked(roles);
-        //model.addAttribute("id", id);
-        //model.addAttribute("rolesDisponibles", rolesDisponibles);
-        model.addAttribute("employee", newRolesEmployee);
-        //model.addAttribute("roles", newRolesEmployee.getRols());
+        Employee employeeWithRolesList = roleService.listaRolesChecked(employee);
+        model.addAttribute("employeeUserName", employee.getUsername());
+        model.addAttribute("employee", employeeWithRolesList);
         return "roles/roles_form";
     }
     
     @PostMapping("/employee/roles_update")
-    public String updateRole(Employee employee, Model model){
-        System.out.println("atenciooooon         "+employee.getId());
-        
-        roleService.updateRoles(employee);
+    public String updateRole(Employee employee, Model model, @RequestParam(required = false, name = "roles") List<String> roles){
+        roleService.updateRoles(employee,roles);
         return "redirect:/employee_list";
     }
 }

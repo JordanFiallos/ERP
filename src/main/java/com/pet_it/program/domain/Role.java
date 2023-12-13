@@ -13,7 +13,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-//import java.io.Serializable;
 import lombok.Data;
 
 /**
@@ -23,10 +22,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="rols")
-public class Role /*implements Serializable*/{
-    
-    /*private static final long serialVersionUID=1L;*/
-
+public class Role {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long idRol;
@@ -35,8 +31,8 @@ public class Role /*implements Serializable*/{
     private String nom;
     
     @ManyToOne
-    @JoinColumn(name="id_usuari")
-    private Employee id;
+    @JoinColumn(name="id_usuari", nullable = false)
+    private Employee idEmployee;
     
     @Transient
     private boolean active;
@@ -47,9 +43,5 @@ public class Role /*implements Serializable*/{
     
     public boolean getActive(){
         return this.active;
-    }
-
-    public void setId(Employee employee) {
-        this.id = employee;
     }
 }
