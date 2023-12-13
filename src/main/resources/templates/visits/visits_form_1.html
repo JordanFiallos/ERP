@@ -28,7 +28,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 </div>
                 <div class="form-group">
                     <label for="employee">Empleats disponibles:</label>
-                    <select class="form-control" id="employee" name="employee" th:field="*{employee}">
+                    <select class="form-control" id="employee" name="employee">
                         <option value="0">Selecciona una opcio</option>
                         <option th:each="option : ${empleats}" th:value="${option.id}" th:text="${option.username}"></option>  
                     </select>
@@ -37,7 +37,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <label for="pet">Mascotes disponibles per seleccionar:</label>
                     <select class="form-control" id="pet" name="pet" th:field="*{pet}">
                         <option value="0">Selecciona una opcio</option>
-                        <option th:each="option: ${pets}" th:value="${option.id}" th:text="${option.name}" id="pet" name="pet"></option>  
+                        <option th:each="option : ${pets}" th:value="${option.id}" th:text="${option.name}" id="pet" name="pet"></option>  
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Actualizar</button>
