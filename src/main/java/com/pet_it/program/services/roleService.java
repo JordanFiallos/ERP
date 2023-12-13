@@ -18,5 +18,5 @@ public interface roleService {
     public Role getRoleById(Long id);
     public void deleteRolesById(Long id);
     public Employee listaRolesChecked(Employee employee);
-    public void updateRoles(Employee employee);
+    public void updateRoles(Employee employee, List<String> roles);
 }
