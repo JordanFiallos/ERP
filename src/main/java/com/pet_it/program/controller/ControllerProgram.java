@@ -5,15 +5,9 @@
 package com.pet_it.program.controller;
 
 import com.pet_it.program.domain.Customer;
-import com.pet_it.program.domain.Employee;
-import com.pet_it.program.domain.Person;
 import com.pet_it.program.domain.Pet;
-import com.pet_it.program.domain.Visit;
 import com.pet_it.program.services.customerServiceImpl;
-import com.pet_it.program.services.employeeServiceImpl;
-import com.pet_it.program.services.petService;
 import com.pet_it.program.services.petServiceImpl;
-import com.pet_it.program.services.visitServiceImpl;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -33,7 +26,7 @@ public class ControllerProgram {
 
     @Autowired
     private petServiceImpl petService;
-    
+
     @Autowired
     private customerServiceImpl customerService;
 
@@ -89,11 +82,11 @@ public class ControllerProgram {
         model.addAttribute("pets", pets);
         return "pet/pet-inicio";
     }
-    
+
     @GetMapping("/pet/pet_form")
     public String formulariPets(Model model) {
-        List<Customer>ListaCustomers = customerService.getAllCustomers();
-        model.addAttribute("customers",ListaCustomers);
+        List<Customer> ListaCustomers = customerService.getAllCustomers();
+        model.addAttribute("customers", ListaCustomers);
         return "pet/pet_form";
     }
 
@@ -108,17 +101,14 @@ public class ControllerProgram {
         petService.eliminarPets(pets);
         return "redirect:/pet/pet-inicio";
     }
-    
+
     @GetMapping("/pet/update/{id}")
     public String updatePet(Pet pets, Model model) {
-        List<Customer>ListaCustomers = customerService.getAllCustomers();
-        model.addAttribute("customers",ListaCustomers);
+        List<Customer> ListaCustomers = customerService.getAllCustomers();
+        model.addAttribute("customers", ListaCustomers);
         pets = petService.buscarPets(pets);
         model.addAttribute("pets", pets);
         return "pet/pet_form2";
     }
-  
-    
-    
-    
+
 }
