@@ -4,6 +4,7 @@
  */
 package com.pet_it.program.controller;
 
+import com.pet_it.program.DAO.petDAO;
 import com.pet_it.program.domain.Employee;
 import com.pet_it.program.domain.Pet;
 import com.pet_it.program.domain.Visit;
@@ -32,6 +33,9 @@ public class VisitsController {
     private visitServiceImpl visitService;
 
     @Autowired
+    private petDAO petDao;
+    
+    @Autowired
     private employeeServiceImpl employeeService;
 
     @Autowired
@@ -47,7 +51,7 @@ public class VisitsController {
     @GetMapping("/visits/visits_form")
     public String añadirVisita(Model model) {
         List<Employee> OpcionesEmpleados = employeeService.llistarUsuaris();
-        List<Pet> OpcionesPet = petService.llistarPets();
+        List<Pet> OpcionesPet = petDao.llistaPetsHabilitats();
         model.addAttribute("empleats", OpcionesEmpleados);
         model.addAttribute("pets", OpcionesPet);
         return "visits/visits_form";
@@ -72,7 +76,7 @@ public class VisitsController {
     @GetMapping("/visits/update/{id}")
     public String actualitzarVisita(Visit visita, Model model) {
         List<Employee> OpcionesEmpleados = employeeService.llistarUsuaris();
-        List<Pet> OpcionesPet = petService.llistarPets();
+        List<Pet> OpcionesPet = petDao.llistaPetsHabilitats();
         visita = visitService.getVisitById(visita.getId());
         model.addAttribute("empleats", OpcionesEmpleados);
         model.addAttribute("pets", OpcionesPet);

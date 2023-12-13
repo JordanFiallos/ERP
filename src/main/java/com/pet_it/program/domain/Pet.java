@@ -43,4 +43,6 @@ public class Pet {
     @JoinColumn(name="customers_id",unique = false)
     private Customer customers;
     
+    @Column(name="estat")
+    private String estat; 
 }
