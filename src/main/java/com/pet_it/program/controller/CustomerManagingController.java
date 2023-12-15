@@ -4,44 +4,69 @@ package com.pet_it.program.controller;
  *
  * @author Houssam
  */
-
 import com.pet_it.program.domain.Customer;
 import com.pet_it.program.services.customerService;
-    import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
-@RestController
-@RequestMapping("/customers")
+@Controller
 public class CustomerManagingController {
+
     @Autowired
-    private customerService customerService;
+    private final customerService customerService;
 
-    @GetMapping
-    public List<Customer> getAllCustomers() {
-        return customerService.getAllCustomers();
+    @Autowired
+    public CustomerManagingController(customerService customerService) {
+        this.customerService = customerService;
     }
 
-    @GetMapping("/{customerId}")
-    public Customer getCustomerById(@PathVariable Long customerId) {
-        return customerService.getCustomerById(customerId);
+    @GetMapping("/customer/form")
+    public String showCustomerForm(Customer customer, Model model) {
+        model.addAttribute("customer", customer);
+        return "customers/customers_form";
     }
 
-    @PostMapping
-    public Customer addCustomer(@RequestBody Customer customer) {
-        return customerService.addCustomer(customer);
+    @PostMapping("/customer/form")
+    public String addCustomer(@ModelAttribute Customer customer) {
+        customerService.addCustomer(customer);
+        return "customers/customers_list";
     }
 
-    @PutMapping("/{customerId}")
-    public Customer updateCustomer(@PathVariable Long customerId, @RequestBody Customer updatedCustomer) {
-        return customerService.updateCustomer(customerId, updatedCustomer);
+    @GetMapping("/customer/list")
+    public String CustomerList(Model model) {
+        List<Customer> customers = customerService.getAllCustomers();
+        model.addAttribute("customers", customers);
+        return "customers/customers_list";
     }
 
-    @DeleteMapping("/{customerId}")
-    public void deleteCustomer(@PathVariable Long customerId) {
+    @PostMapping("/customer/list")
+    public String showCustomerList(Model model) {
+        List<Customer> customers = customerService.getAllCustomers();
+        model.addAttribute("customers", customers);
+        return "customers/customers_list";
+    }
+
+    @GetMapping("/customer_select/{id}")
+    public String showCustomerInfo(Model model, @PathVariable Long id) {
+        Customer customer = customerService.getCustomerById(id);
+        model.addAttribute("customer", customer);
+        return "customers/customers_info";
+    }
+
+    @PutMapping("/customer_update/{id}")
+    public String updateCustomer(@PathVariable Long customerId, @RequestBody Customer updatedCustomer) {
+        customerService.updateCustomer(customerId, updatedCustomer);
+        return "customers/customers_form";
+    }
+
+    @DeleteMapping("/customer_delete/{id}")
+    public String deleteCustomer(@PathVariable Long customerId) {
         customerService.deleteCustomer(customerId);
+        return "customers/customers_list";
     }
-
 
 }

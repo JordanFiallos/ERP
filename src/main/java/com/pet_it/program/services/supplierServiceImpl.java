@@ -6,9 +6,8 @@ package com.pet_it.program.services;
 
 import com.pet_it.program.DAO.supplierDAO;
 import com.pet_it.program.domain.Supplier;
-import java.sql.Date;
-import java.time.LocalDate;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,23 +31,8 @@ public class supplierServiceImpl implements supplierService {
 
     @Override
     public List<Supplier> getAllPersons() {
-        List<Supplier> listaSuppliers = supplierDAO.findAllSuppliersAndApplyDate();
-        for(Supplier supplier : listaSuppliers){
-            Date deliveryDate = supplier.getDeliveryDate();
-            System.out.println("Atencion al listado fechas: "+ supplier.toString());
-            //LocalDate localDate1 = deliveryDate.toLocalDate();
-        }
-        
-        //return supplierDAO.findAllSuppliersAndApplyDate();
-        /*List<Supplier> listaSuppliers = supplierDAO.findAll();
-        for(Supplier supplier : listaSuppliers){
-            Long id = supplier.getId();
-            Supplier supplierObjetivo = supplierDAO.findSupplierByIdAndApplyDate(id);
-            Date deliveryDate = supplierObjetivo.getDeliveryDate();
-            //transformar a string
-        }*/
-        
-        return supplierDAO.findAll();
+        List<Supplier> suppliers = showDatetoString(supplierDAO.findAll());
+        return suppliers;
     }
 
     @Override
@@ -68,6 +52,11 @@ public class supplierServiceImpl implements supplierService {
         supplierDAO.delete(supplier);
     }
     
+    /**
+     * Debuelve una lista de numeros desde el min a max para el select de 
+     * semanas para la recepcion de un envio
+     * @return List<String>
+     */
     @Override
     public List<String> getOpcionsDelivery(){
         int min = 1;
@@ -79,15 +68,24 @@ public class supplierServiceImpl implements supplierService {
         }
         return options;
     }
-    /*
-    @Override
-    public Date sumWeeksDelivery(int weeks) {
-        Calendar calendar = Calendar.getInstance();
-        Date fecha = new Date();
-        
-        calendar.setTime(fecha);
-        calendar.add(Calendar.DAY_OF_YEAR, weeks);
-        
-        return calendar.getTime();
-    }*/
+    
+    /**showDatetoString
+     * Guardo como valor String la fecha en el atributo deliveryDateString de 
+     * Supplier para mostrarlo llamando el objeto
+     * @param listaSuppliers
+     * @return List<Supplier>
+     */
+    private List<Supplier> showDatetoString(List<Supplier> listaSuppliers){
+        for(Supplier supplier : listaSuppliers){
+            Long id = supplier.getId();
+            java.sql.Timestamp sqlDate = supplierDAO.findByIdASupplierDate(id);
+            
+            java.util.Date utilDate = new java.util.Date(sqlDate.getTime());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String stringDate = dateFormat.format(utilDate);
+            
+            supplier.setDeliveryDateString(stringDate);
+        }
+        return listaSuppliers;
+    }
 }

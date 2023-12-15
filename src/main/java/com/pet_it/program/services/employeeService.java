@@ -4,7 +4,8 @@
  */
 package com.pet_it.program.services;
 
-import com.pet_it.program.domain.employees;
+import com.pet_it.program.domain.Employee;
+import com.pet_it.program.domain.Supplier;
 import java.util.List;
 
 /**
@@ -13,11 +14,13 @@ import java.util.List;
  */
 public interface employeeService {
 
-    List<employees> llistarUsuaris(); //Metodo para listar Personas tipo Empleados
+    List<Employee> llistarUsuaris(); //Metodo para listar Personas tipo Empleados
 
-    void afegirUsuari(employees employee); //Metodo para añadir Personas tipo Empleados
+    void afegirUsuari(Employee employee); //Metodo para añadir Personas tipo Empleados
 
-    void eliminarUsuari(employees employee); //Metodo para eliminar Personas tipo Empleados
-
-    employees cercarUsuari(employees employee); //Metodo para buscar Personas tipo Empleados
+    void eliminarUsuari(Long id); //Metodo para eliminar Personas tipo Empleados
+    
+    public Employee getPersonById(Long id);
+    
+    Employee cercarUsuari(Employee employee); //Metodo para buscar Personas tipo Empleados
 }

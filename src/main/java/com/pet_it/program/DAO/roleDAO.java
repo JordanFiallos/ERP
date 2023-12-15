@@ -4,10 +4,15 @@
  */
 package com.pet_it.program.DAO;
 
+import com.pet_it.program.domain.Role;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
 /**
  *
- * @author Jordan
+ * @author Ricard
  */
-public interface roleDAO {
-    
+public interface roleDAO  extends JpaRepository<Role, Long>{
+    @Query(value="SELECT count(id_rol) FROM vetitdb.rols WHERE id = ?1",nativeQuery=true)
+    int countRolesWithId(Long id);
 }

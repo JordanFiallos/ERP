@@ -16,7 +16,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="container mt-5">
             <h2 class="text-center">Insert Info</h2>
 
-            <form th:object="${employees}" th:action="@{/SaveEmployees}" method="post">
+            <form th:object="${employee}" th:action="@{/SaveEmployees}" method="post">
 
                 <div class="form-group">
                     <label for="username">Username: </label>
@@ -25,24 +25,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                 <div class="form-group">
                     <label for="password">Password: </label>
-                    <input type="password" name="password" id="password" class="form-control" th:field="*{password}" required>
+                    <input type="password" name="password" id="password" class="form-control" th:value="*{password}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="nextAvailableWorkTime">Available Work Time: </label>
-                    <!-- Cambia el tipo de input a "text" y agrega el atributo "pattern" para validar el formato -->
-                    <input type="text" name="nextAvailableWorkTime" id="nextAvailableWorkTime" class="form-control" th:field="*{nextAvailableWorkTime}" 
-                           pattern="\d{4}-\d{2}-\d{2}" placeholder="yyyy-MM-dd" required>
+                    <input type="datetime-local" name="nextAvailableWorkTime" id="nextAvailableWorkTime" class="form-control" th:value="*{nextAvailableWorkTime}" required>
                 </div>
 
                 <h1 class="text-center">
+                    <input type="hidden" id="id" th:field="*{id}">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </h1>
 
                 <h1 class="text-center mt-4 mb-4">
-                    <a th:href="@{employee_list}" class="btn btn-secondary btn-sm">List Employees</a>
+                    <a th:href="@{/employee_list}" class="btn btn-secondary btn-sm">List Employees</a>
                 </h1>
-
             </form>
         </div>
     </body>

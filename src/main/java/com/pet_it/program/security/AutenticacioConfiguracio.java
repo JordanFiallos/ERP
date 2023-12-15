@@ -17,7 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  *
- * @author Ruben
+ * @author Houssam
  */
 @Configuration
 @EnableWebSecurity
@@ -33,28 +33,24 @@ public class AutenticacioConfiguracio {
 
     @Bean
     public SecurityFilterChain security(HttpSecurity http) throws Exception {
-        
+
         return http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers("/images/**").permitAll()
                 .requestMatchers("/inicio/**").permitAll()
+                .requestMatchers("/api/bills/**").hasAnyAuthority("ACCOUNTING")
                 .requestMatchers("/accounting/**").hasAnyAuthority("ACCOUNTING")
                 .requestMatchers("/commercial/**").hasAnyAuthority("COMMERCIAL")
-                .requestMatchers("/seller/**").hasAnyAuthority("SELLER")
-                .requestMatchers("/human_resources/**").hasAnyAuthority("HUMAN")
-                .requestMatchers("/veterinarian/**").hasAnyAuthority("VETERINARIAN")
-                .requestMatchers("/purchase/**").hasAnyAuthority("PURCHASE")
+                .requestMatchers("/customer/list/**").hasAnyAuthority("SELLER")
+                .requestMatchers("/employee_list/**").hasAnyAuthority("HUMAN")
+                .requestMatchers("/pet/pet-inicio/**").hasAnyAuthority("VETERINARIAN")
+                .requestMatchers("/visits/visits_form/**").hasAnyAuthority("VETERINARIAN")
+                .requestMatchers("/supplier/**").hasAnyAuthority("PURCHASE")
                 .anyRequest().authenticated())
-                
                 .formLogin((form) -> form
                 .loginPage("/login").permitAll())
                 .logout((logout) -> logout.deleteCookies("JSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/inicio"))
                 .exceptionHandling((exception) -> exception.accessDeniedPage("/errors/error403")).build();
-                
-        
-                
-        
-        
+
         
     }
-
 }

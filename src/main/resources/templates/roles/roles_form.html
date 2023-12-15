@@ -3,13 +3,29 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>TODO supply a title</title>
+        <title>Roles</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <h2 class="text-center">Update Roles information from the user [[${employeeUserName}]]</h2>
+        <form th:object="${employee}" th:action="@{/employee/roles_update}" method="post"
+>           <!--input type="text" name="username" id="id" class="form-control" th:field="*{id}" required-->
+            <div th:each="role : *{rols}">
+                <label class="custom-control-label" for="${role.nom}" th:text="${role.nom}"/>
+                <input class="custom-control-input" name="roles" th:id="${role.nom}" type="checkbox" th:checked="${role.active}" th:value="${role.nom}" />
+            </div>
+            <br>
+            <div class="text-center">
+                <input type="hidden" id="id" th:field="*{id}">
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <button class="btn btn-secondary add mx-2">
+                    <a th:href="@{/employee_list}" th:style="'text-decoration: none; color: inherit;'">Go back</a>
+                </button>
+            </div>
+            
+        </form>
     </body>
 </html>

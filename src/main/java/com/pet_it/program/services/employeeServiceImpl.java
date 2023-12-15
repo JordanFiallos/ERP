@@ -5,7 +5,7 @@
 package com.pet_it.program.services;
 
 import com.pet_it.program.DAO.employeeDAO;
-import com.pet_it.program.domain.employees;
+import com.pet_it.program.domain.Employee;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,26 +21,29 @@ public class employeeServiceImpl implements employeeService {
     private employeeDAO employeedao;
 
     @Override
-    public List<employees> llistarUsuaris() {
-        return (List<employees>) employeedao.findAll();
+    public List<Employee> llistarUsuaris() {
+        List<Employee> employees = employeedao.findAll();
+        return employees;
     }
 
     @Override
-    public void afegirUsuari(employees employee) {
-
+    public void afegirUsuari(Employee employee) {
         employeedao.save(employee);
     }
-
+    
     @Override
-    public employees cercarUsuari(employees employee) {
-
+    public Employee getPersonById(Long id) {
+        return employeedao.findById(id).orElse(null);
+    }
+    
+    @Override
+    public Employee cercarUsuari(Employee employee) {
         return employeedao.findById(employee.getId()).orElse(null);
     }
 
     @Override
-    public void eliminarUsuari(employees employee) {
+    public void eliminarUsuari(Long id) {
+        Employee employee = getPersonById(id);
         employeedao.delete(employee);
-
     }
-
 }

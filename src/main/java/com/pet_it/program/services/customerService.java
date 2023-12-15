@@ -8,9 +8,10 @@ import com.pet_it.program.domain.Customer;
 import java.util.List;
 
 public interface customerService {
-    List<Customer> getAllCustomers();
-    Customer getCustomerById(Long customerId);
-    Customer addCustomer(Customer customer);
-    Customer updateCustomer(Long customerId, Customer updatedCustomer);
-    void deleteCustomer(Long customerId);
+    public List<Customer> getAllCustomers();
+    public Customer getCustomerById(Long customerId);
+    public Customer addCustomer(Customer customer);
+    public Customer updateCustomer(Long customerId, Customer updatedCustomer);
+    public void deleteCustomer(Long customerId);
+    
 }
