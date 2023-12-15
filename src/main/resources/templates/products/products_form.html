@@ -96,33 +96,13 @@
             <a th:href="@{/customer/list}">Seller</a>
             <a th:href="@{/employee_list}">Human_resources</a>
             <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
-            <a th:href="@{/supplier}">Purchase_managment</a>
+            <a th:href="@{/supplier}">Purchase_management</a>
             <a th:href="@{/sells_listCompras}">Bills</a>
             <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
         </div>
 
         <div class="main-content">
             <div class="table-responsive">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <table class="table grid" >
-                                <table class="table table-bordered table-striped custom-table">
-                                    <tbody>
-                                        <tr>
-                                            <td><a th:href="@{/products_list}">Invoices</a></td>
-                                            <td> <a th:href="@{/products_form}">Add Products</a></td>
-                                            <td> <a th:href="@{/products_purchase}">Purchases</a></td>
-                                            <td><a href="#">Calendar</a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -155,23 +135,26 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="minimQuantity">MinimQuantity: </label>
+                                        <label for="minimQuantity">Max Quantity: </label>
                                         <input type="number" name="minimQuantity" id="minimQuantity" class="form-control"  required>
                                     </div>
 
-                                    <div class="form-group">
+                                    <!--div class="form-group">
                                         <label for="interest">Interest: </label>
                                         <input type="number" name="interest" id="interest" class="form-control" required>
-                                    </div>
+                                    </div-->
 
                                     <div class="form-group">
-                                        <label for="product">Product: </label>
+                                        <label for="product">Numero identificativo (codigo de barras): </label>
                                         <input type="number" name="product" id="product" class="form-control" required>
                                     </div>
 
                                     <h1 class="text-center">
                                         <input type="hidden" id="id" >
                                         <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button class="btn btn-secondary add mx-2">
+                                            <a th:href="@{/products_purchase}" th:style="'text-decoration: none; color: inherit;'">Go back</a>
+                                        </button>
                                     </h1>
 
                                 </form>

@@ -115,7 +115,7 @@
             <a th:href="@{/customer/list}">Seller</a>
             <a th:href="@{/employee_list}">Human_resources</a>
             <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
-            <a th:href="@{/supplier}">Purchase_managment</a>
+            <a th:href="@{/supplier}">Purchase_management</a>
             <a th:href="@{/sells_listCompras}">Bills</a>
             <div class="botonLogout">
                 <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
@@ -127,16 +127,17 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table">
-                                <table class="table table-bordered table-striped custom-table">
-                                    <thead class="thead-dark">
-                                        <tr class="text-center thead-light">
-                                            <th><a th:href="@{/products_list}">Invoices</a></th>
-                                            <th><a th:href="@{/products_form}">Add Products</a></th>
-                                            <th><a th:href="@{/products_purchase}">Purchases</a></th>
-                                            <th><a href="#">Calendar</a></th>
+                            <table class="table grid" >
+                                <table class="table table-bordered table-striped custom-table text-center">
+                                    <tbody>
+                                        <tr>
+                                            <td><a th:href="@{/supplier}">Suppliers</a></td>
+                                            <td><a th:href="@{/products_list}">Invoices</a></td>
+                                            <td> <a th:href="@{/products_form}">Add Products</a></td>
+                                            <td> <a th:href="@{/products_purchase}">Purchases</a></td>
+                                            <td><a href="#">Calendar</a></td>
                                         </tr>
-                                    </thead>
+                                    </tbody>
                                 </table>
                             </table>
                         </div>
@@ -144,15 +145,12 @@
                 </div>
             </div>
         </div>
-
-
         <div class="main-content">
             <div class="table-responsive">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table">
-                                <h2>Suppliers List</h2>
+                            <table class="table text-center">
                                 <table class="table table-bordered table-striped custom-table">
                                     <thead class="thead-dark">
                                         <tr>
