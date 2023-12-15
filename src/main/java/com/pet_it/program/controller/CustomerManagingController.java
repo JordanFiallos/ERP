@@ -31,8 +31,10 @@ public class CustomerManagingController {
     }
 
     @PostMapping("/customer/form")
-    public String addCustomer(@ModelAttribute Customer customer) {
+    public String addCustomer(Model model,Customer customer) {
         customerService.addCustomer(customer);
+        List<Customer> customers = customerService.getAllCustomers();
+        model.addAttribute("customers", customers);
         return "customers/customers_list";
     }
 
@@ -57,16 +59,19 @@ public class CustomerManagingController {
         return "customers/customers_info";
     }
 
-    @PutMapping("/customer_update/{id}")
-    public String updateCustomer(@PathVariable Long customerId, @RequestBody Customer updatedCustomer) {
-        customerService.updateCustomer(customerId, updatedCustomer);
+    @GetMapping("/customer_update/{id}")
+    public String updateCustomer( Model model,Customer updatedCustomer) {
+        updatedCustomer = customerService.getCustomerById(updatedCustomer.getId());
+        model.addAttribute("customer",updatedCustomer);
         return "customers/customers_form";
     }
+    
 
-    @DeleteMapping("/customer_delete/{id}")
-    public String deleteCustomer(@PathVariable Long customerId) {
-        customerService.deleteCustomer(customerId);
-        return "customers/customers_list";
+    @GetMapping("/customer_delete/{id}")
+    public String deleteCustomer(@PathVariable Long id) {
+        customerService.deleteCustomer(id);
+        return "redirect:/customer/list";
     }
+    
 
 }
