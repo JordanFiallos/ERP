@@ -13,6 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import java.sql.Date;
+import java.time.LocalDate;
 import lombok.Data;
 
 /**
@@ -20,40 +22,40 @@ import lombok.Data;
  * @author Jordan
  */
 @Entity
-@Table(name = "products")
+@Table(name = "sells")
 @Data
-public class Product {
+public class Sells {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "visit", nullable = true)
+    private Visit visit;
 
     @ManyToOne
-    @JoinColumn(name = "supplier") // ajusta el nombre de la columna
-    private Supplier supplier;
+    @JoinColumn(name = "product")
+    private Product product;
 
-    @Column(name = "description")
-    private String description;
+    @ManyToOne
+    @JoinColumn(name = "customer", nullable = true)
+    private Customer customer;
 
-    @Column(name = "price")
-    private double price;
+    @ManyToOne
+    @JoinColumn(name = "employee", nullable = false)
+    private Employee employee;
+
+    @Column(name = "quantity", nullable = false)
+    private int quantity;
+
+    @Column(name = "operation_date")
+    private LocalDate operationDate;
 
     @Transient
-    private Integer restminim = 0;
+    private String month;
 
-    @Column(name = "minimQuantity")
-    private int minimQuantity;
-
-    @Column(name = "interest")
-    private int interest;
-
-    @Column(name = "product")
-    private int product;
-
-    @Column(name = "quantity")
-    private int quantity;
+    @Column(name = "quantity_sold")
+    private int quantitySold;
 
 }

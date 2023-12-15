@@ -4,10 +4,13 @@
  */
 package com.pet_it.program.DAO;
 
+import com.pet_it.program.domain.Employee;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
  *
  * @author Jordan
  */
-public interface stockDAO {
+public interface stockDAO extends JpaRepository<Employee, Long>{
     
 }

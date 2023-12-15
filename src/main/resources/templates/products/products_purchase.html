@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Products List</title>
+        <title>Products Card</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
@@ -74,18 +74,14 @@
             .main-content .table-responsive {
                 text-align: center;
             }
-
-            table.grid {
-                border-spacing: 10px;
+            .shopping-cart {
+                margin-top: 20px;
             }
 
-            table.grid td {
-                padding: 15px;
-                padding-left: 120px;
-                padding-right:  120px;
-                background-color: #f0f0f0;
-                text-align: center;
+            .cart-item {
+                margin-bottom: 10px;
             }
+
         </style>
     </head>
     <div class="sidebar"></div>
@@ -98,11 +94,14 @@
             <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
             <a th:href="@{/supplier}">Purchase_managment</a>
             <a th:href="@{/sells_listCompras}">Bills</a>
-            <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
+            <div class="botonLogout">
+                <a href="@{/logout}" class="btn btn-primary">Logout</a>
+            </div>
         </div>
 
         <div class="main-content">
             <div class="table-responsive">
+
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -122,64 +121,78 @@
                     </div>
                 </div>
 
-
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <table class="table">
-                                <h2 class="text-center">Insert Products</h2>
+                                <table class="table table-bordered table-striped custom-table">
 
-                                <form th:object="${products}" th:action="@{/SaveProducts}" method="POST">
-
+                                    <!-- Search and filter section -->
                                     <div class="form-group">
-                                        <label for="name">Nom:</label> 
-                                        <input type="text" class="form-control" id="name" name="name" required>
+                                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="filterProducts()">
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="supplier">Proveedor: </label>
-                                        <select class="form-control" id="supplier" name="supplier" required>
-                                            <option value="">Selecciona un proveedor</option>
-                                            <option th:each="supplier : ${suppliers}" th:value="${supplier.id}" th:text="${supplier.firstname}"></option>
-                                        </select>
-                                    </div>
+                                    <!-- Product list -->
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Supplier</th>
+                                            <th>Desciption</th>
+                                            <th>Minim Quantity</th>
+                                            <th>Price</th>
+                                            <th> </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="productTableBody">
+                                        <tr th:each="product : ${products}">
+                                            <td><span class="productName" th:text="${product.name}"></span></td>
+                                            <td><span class="productSupplier" th:text="${product.supplier != null ? product.supplier.firstname : ''}"></span></td>
+                                            <td><span class="productDesciption" th:text="${product.description}"></span></td>
+                                            <td><span th:text="${product.minimQuantity}"></span></td>
+                                            <td><span class="productPrice" th:text="${product.price}"></span></td>
+                                            <td >
+                                                <button class="btn btn-success btn-sm add mx-2 productQuantity" onclick="confirmPurchase(this)" data-toggle="modal" data-target="#confirmUpdateModal" 
+                                                        th:data-id="${product.id}" th:data-restminim="${product.restminim}" th:disabled="${product.restminim le 0}">
+                                                    Buy
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
 
-                                    <div class="form-group">
-                                        <label for="description">Description: </label>
-                                        <input type="text" name="description" id="description" class="form-control" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="price">Price: </label>
-                                        <input type="number" name="price" id="price" class="form-control" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="minimQuantity">MinimQuantity: </label>
-                                        <input type="number" name="minimQuantity" id="minimQuantity" class="form-control"  required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="interest">Interest: </label>
-                                        <input type="number" name="interest" id="interest" class="form-control" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="product">Product: </label>
-                                        <input type="number" name="product" id="product" class="form-control" required>
-                                    </div>
-
-                                    <h1 class="text-center">
-                                        <input type="hidden" id="id" >
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </h1>
-
-                                </form>
+                                    <!-- Shopping Cart 
+                                    <div class="shopping-cart">
+                                        <h3>Shopping Cart</h3>
+                                        <ul id="cartItems" class="list-group"></ul>
+                                    </div>-->
+                                </table>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="confirmUpdateModal" tabindex="-1" role="dialog" aria-labelledby="confirmUpdateModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmUpdateModalLabel">Confirmar Compra</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Estás seguro de que deseas Comprar este Producto?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <a id="confirmUpdateButton" class="btn btn-danger">UPDATE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script th:src="@{js/shopping.js}"></script>
         </div>
     </body>
 </html>
+
+

@@ -3,45 +3,153 @@
     <head>
         <title>Suppliers</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <style>
+            .custom-table tbody {
+                background-color: #f8f9fa; /* Color gris claro */
+            }
+            .bg-light-blue {
+                background-color: #4BA2CD; /* Utiliza el código de color que desees */
+            }
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .navbar {
+                background-color: #7dacbc;
+                overflow: hidden;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+            }
+
+            .botonLogout {
+                margin-left: auto;
+            }
+
+            .navbar a {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 1vh 1vh;
+                text-decoration: none;
+            }
+
+            .navbar button {
+                margin-left: 1rem;
+            }
+
+            .sidebar {
+                width: 200px;
+                position: fixed;
+                height: 100%;
+                background-image: url("/images/i-Login.jpg");
+                background-size: cover;
+                overflow-x: hidden;
+                padding-top: 60px;
+            }
+
+            .sidebar a {
+                padding: 6px 8px 6px 16px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+            }
+
+            .sidebar a:hover {
+                color: #f1f1f1;
+                background-color: #4CAF50;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            .main-content .table-responsive {
+                text-align: center;
+            }
+
+            table.grid {
+                border-spacing: 10px;
+            }
+
+            table.grid td {
+                padding: 15px;
+                padding-left: 120px;
+                padding-right:  120px;
+                background-color: #f0f0f0;
+                text-align: center;
+            }
+        </style>
     </head>
-    <body>
-        <div class="container mt-5">
-            <h2 class="text-center">Enter Supplier Information</h2>
-            <form th:object="${supplier}" th:action="@{/supplier/form}" method="post" >
-                <label class="form-group" for="firstname">Firstname</label>
-                <input class="form-control" type="text" id="firstname" th:field="*{firstname}" required>
-                <br>
-                <label class="form-group" for="lastname">Lastname</label>
-                <input class="form-control" type="text" id="lastname" th:field="*{lastname}" required>
-                <br>
-                <label class="form-group" for="email">Email:</label>
-                <input class="form-control" type="email" id="email" th:field="*{email}" required>
-                <br>
-                <label class="form-group" for="phone">Phone:</label>
-                <input class="form-control" type="text" id="phone" th:field="*{phone}" required>
-                <br>
-                <label class="form-group" for="adress">Adress:</label>
-                <input class="form-control" type="text" id="adress" th:field="*{adress}" required>
-                <br>
-                <label class="form-group" for="bureao">Bureao</label>
-                <input class="form-control" type="text" id="bureao" th:field="*{bureao}" required>
-                <br>
-                <label class="form-group" for="aproachDeliveryInt">Number of weeks to receive shipment</label>
-                <select class="form-control" id="aproachDeliveryInt" name="aproachDeliveryInt">
-                    <option th:each="option : ${options}" th:value="${option}" th:text="${option}" th:selected = "*{aproachDeliveryInt} == ${option}"></option>
-                </select>
-                <br>
-                <div class="text-center">
-                    <input type="hidden" id="id" th:field="*{id}">
-                    <button class="btn btn-primary" type="submit">Submit</button>
-                    <button class="btn btn-secondary add mx-2">
-                        <a th:href="@{/supplier}" th:style="'text-decoration: none; color: inherit;'">Go back</a>
-                    </button>
+    <div class="sidebar"></div>
+    <body class="bg-light-blue">
+        <div class="navbar">
+            <a th:href="@{/accounting}">Accounting</a>
+            <a th:href="@{/commercial}">Commercial</a>
+            <a th:href="@{/customer/list}">Seller</a>
+            <a th:href="@{/employee_list}">Human_resources</a>
+            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
+            <a th:href="@{/supplier}">Purchase_managment</a>
+            <a th:href="@{/sells_listCompras}">Bills</a>
+            <div class="botonLogout">
+                <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="table-responsive">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <table class="table table-bordered table-striped custom-table">
+                                    <h2 class="text-center">Enter Supplier Information</h2>
+                                    <form th:object="${supplier}" th:action="@{/supplier/form}" method="post" >
+                                        <label class="form-group" for="firstname">Firstname</label>
+                                        <input class="form-control" type="text" id="firstname" th:field="*{firstname}" required>
+                                        <br>
+                                        <label class="form-group" for="lastname">Lastname</label>
+                                        <input class="form-control" type="text" id="lastname" th:field="*{lastname}" required>
+                                        <br>
+                                        <label class="form-group" for="email">Email:</label>
+                                        <input class="form-control" type="email" id="email" th:field="*{email}" required>
+                                        <br>
+                                        <label class="form-group" for="phone">Phone:</label>
+                                        <input class="form-control" type="text" id="phone" th:field="*{phone}" required>
+                                        <br>
+                                        <label class="form-group" for="adress">Adress:</label>
+                                        <input class="form-control" type="text" id="adress" th:field="*{adress}" required>
+                                        <br>
+                                        <label class="form-group" for="bureao">Bureao</label>
+                                        <input class="form-control" type="text" id="bureao" th:field="*{bureao}" required>
+                                        <br>
+                                        <label class="form-group" for="aproachDeliveryInt">Number of weeks to receive shipment</label>
+                                        <select class="form-control" id="aproachDeliveryInt" name="aproachDeliveryInt">
+                                            <option th:each="option : ${options}" th:value="${option}" th:text="${option}" th:selected = "*{aproachDeliveryInt} == ${option}"></option>
+                                        </select>
+                                        <br>
+                                        <div class="text-center">
+                                            <input type="hidden" id="id" th:field="*{id}">
+                                            <button class="btn btn-primary" type="submit">Submit</button>
+                                            <button class="btn btn-secondary add mx-2">
+                                                <a th:href="@{/supplier}" th:style="'text-decoration: none; color: inherit;'">Go back</a>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </table>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </form>
+            </div>
         </div>
     </body>
 </html>

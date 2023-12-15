@@ -1,15 +1,194 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Form Sells</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <style>
+            .custom-table tbody {
+                background-color: #f8f9fa; /* Color gris claro */
+            }
+            .bg-light-blue {
+                background-color: #4BA2CD; /* Utiliza el código de color que desees */
+            }
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .navbar {
+                background-color: #7dacbc;
+                overflow: hidden;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+            }
+
+            .botonLogout {
+                margin-left: auto;
+            }
+
+            .navbar a {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 1vh 1vh;
+                text-decoration: none;
+            }
+
+            .navbar button {
+                margin-left: 1rem;
+            }
+
+            .sidebar {
+                width: 200px;
+                position: fixed;
+                height: 100%;
+                background-image: url("images/i-Login.jpg");
+                background-size: cover;
+                overflow-x: hidden;
+                padding-top: 60px;
+            }
+
+            .sidebar a {
+                padding: 10px;
+                text-decoration: none;
+                font-size: 18px;
+                color: #fff;
+                display: block;
+                transition: background-color 0.3s;
+            }
+
+            .sidebar a:hover {
+                background-color: #4CAF50;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            .main-content .table-responsive {
+                text-align: center;
+            }
+
+            table.grid {
+                border-spacing: 10px;
+            }
+
+            table.grid td {
+                padding: 15px;
+                padding-left: 120px;
+                padding-right:  120px;
+                background-color: #f0f0f0;
+                text-align: center;
+            }
+        </style>
     </head>
-    <body>
-        <div>TODO write content</div>
+    <div class="sidebar"></div>
+    <body class="bg-light-blue">
+        <div class="navbar">
+            <a th:href="@{/accounting}">Accounting</a>
+            <a th:href="@{/commercial}">Commercial</a>
+            <a th:href="@{/customer/list}">Seller</a>
+            <a th:href="@{/employee_list}">Human_resources</a>
+            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
+            <a th:href="@{/supplier}">Purchase_managment</a>
+            <a th:href="@{/sells_listCompras}">Bills</a>
+            <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
+        </div>
+
+        <div class="main-content">
+            <div class="table-responsive">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table grid" >
+                                <table class="table table-bordered table-striped custom-table">
+                                    <thead class="thead-dark">
+                                        <tr class="text-center thead-light">
+                                            <th colspan="2"><a href="#">List</a></th>
+                                            <th><a href="#">Cost-effective</a></th>
+                                            <th colspan="2"><a href="#">Viability</a></th>
+                                            <th><a href="#">Operative Planing</a></th>
+                                        </tr>
+                                        <tr class="text-center thead-light">
+                                            <th colspan="3"><a th:href="@{/sells_listCompras}">Purchase</a></th>
+                                            <th colspan="1"><a th:href="@{/sells_form}">Add-Purcharses</a></th>
+                                            <th colspan="3"><a th:href="@{/sells_listSales}">Sale</a></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <h2 class="text-center">Insert Sells Purchases</h2>
+
+                                <form th:object="${sells}" th:action="@{/SavesellForm}" method="POST">
+
+                                    <div class="form-group">
+                                        <label for="visit">Visit: </label>
+                                        <select class="form-control" id="visit" name="visit" required>
+                                            <option value="">Selecciona una visita</option>
+                                            <option th:each="visit : ${visit}" th:value="${visit.id}" th:text="${visit.concept}"></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="product">Product: </label>
+                                        <select class="form-control" id="product" name="product" required>
+                                            <option value="">Selecciona un producto</option>
+                                            <option th:each="product : ${product}" th:value="${product.id}" th:text="${product.name}"></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="customer">Customer </label>
+                                        <select class="form-control" id="customer" name="customer" required>
+                                            <option value="">Selecciona un customer</option>
+                                            <option th:each="customer : ${customer}" th:value="${customer.id}" th:text="${customer.firstname}"></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="employee">Employee </label>
+                                        <select class="form-control" id="employee" name="employee" required>
+                                            <option value="">Selecciona un employee</option>
+                                            <option th:each="employee : ${employee}" th:value="${employee.id}" th:text="${employee.username}"></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="quantity">Quantity </label>
+                                        <input type="number" name="quantity" id="quantity" class="form-control" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="operationDate">OperationDate </label>
+                                        <input type="text" name="operationDate" id="operationDate" class="form-control" required>
+                                    </div>
+
+                                    <h1 class="text-center">
+                                        <input type="hidden" id="id" >
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </h1>
+
+                                </form>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
