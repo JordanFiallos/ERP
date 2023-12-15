@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cost-Effective Bills</title>
+        <style>
+            .employee {
+                padding: 10px;
+                border: 1px solid #ddd;
+                margin-bottom: 10px;
+            }
+            .employee:hover {
+                background-color: #f1f1f1;
+            }
+            .employee .name {
+                font-weight: bold;
+            }
+            .employee .add,
+            .employee .remove {
+                cursor: pointer;
+                margin-left: 10px;
+            }
+            .custom-table tbody {
+                background-color: #f8f9fa; /* Color gris claro */
+            }
+            .bg-light-blue {
+                background-color: #4BA2CD; /* Utiliza el código de color que desees */
+            }
+
+        </style>
+    </head>
+    <body class="bg-light-blue">
+        <div class="d-flex justify-content-center">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/accounting}">Stocks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/commercial}">Clientes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/purchase}">Mascotas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/seller}">Facturas</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/logout}">SIGN OUT</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>            
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Cost-Effective Bills</h2>
+                    <table class="table table-bordered table-striped custom-table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Bill ID</th>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Cost</th>
+                            </tr>
+                        </thead>
+                        <tr th:each="bill : ${costEffectiveBills}">
+                            <td th:text="${bill.id}"></td>
+                            <td th:text="${bill.product}"></td>
+                            <td th:text="${bill.quantity}"></td>
+                            <td th:text="${bill.cost}"></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

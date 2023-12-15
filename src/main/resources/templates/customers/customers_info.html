@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Information</title>
+</head>
+<body>
+
+<h2>Customer Information</h2>
+
+<p th:if="${customer}">
+    <strong>ID:</strong> <span th:text="${customer.id}"></span><br>
+    <strong>First Name:</strong> <span th:text="${customer.firstname}"></span><br>
+    <strong>Last Name:</strong> <span th:text="${customer.lastname}"></span><br>
+    <strong>Email:</strong> <span th:text="${customer.email}"></span><br>
+    <strong>Phone:</strong> <span th:text="${customer.phone}"></span><br>
+    <strong>Address:</strong> <span th:text="${customer.address}"></span><br>
+</p>
+
+<p th:unless="${customer}">Customer not found</p>
+
+<br/><!-- comment -->
+<a th:href="@{'/customer/list'}">Go to customer list</a>
+
+</body>
+</html>

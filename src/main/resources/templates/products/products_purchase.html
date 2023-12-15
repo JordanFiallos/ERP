@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Products Card</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <style>
+            .custom-table tbody {
+                background-color: #f8f9fa; /* Color gris claro */
+            }
+            .bg-light-blue {
+                background-color: #4BA2CD; /* Utiliza el código de color que desees */
+            }
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .navbar {
+                background-color: #7dacbc;
+                overflow: hidden;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+            }
+
+            .botonLogout {
+                margin-left: auto;
+            }
+
+            .navbar a {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 1vh 1vh;
+                text-decoration: none;
+            }
+
+            .navbar button {
+                margin-left: 1rem;
+            }
+
+            .sidebar {
+                width: 200px;
+                position: fixed;
+                height: 100%;
+                background-image: url("images/i-Login.jpg");
+                background-size: cover;
+                overflow-x: hidden;
+                padding-top: 60px;
+            }
+
+            .sidebar a {
+                padding: 10px;
+                text-decoration: none;
+                font-size: 18px;
+                color: #fff;
+                display: block;
+                transition: background-color 0.3s;
+            }
+
+            .sidebar a:hover {
+                background-color: #4CAF50;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            .main-content .table-responsive {
+                text-align: center;
+            }
+            .shopping-cart {
+                margin-top: 20px;
+            }
+
+            .cart-item {
+                margin-bottom: 10px;
+            }
+
+        </style>
+    </head>
+    <div class="sidebar"></div>
+    <body class="bg-light-blue">
+        <div class="navbar">
+            <a th:href="@{/accounting}">Accounting</a>
+            <a th:href="@{/commercial}">Commercial</a>
+            <a th:href="@{/customer/list}">Seller</a>
+            <a th:href="@{/employee_list}">Human_resources</a>
+            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
+            <a th:href="@{/supplier}">Purchase_management</a>
+            <a th:href="@{/sells_listCompras}">Bills</a>
+            <div class="botonLogout">
+                <a href="@{/logout}" class="btn btn-primary">Logout</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="table-responsive">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table grid" >
+                                <table class="table table-bordered table-striped custom-table">
+                                    <tbody>
+                                        <tr>
+                                            <td><a th:href="@{/supplier}">Suppliers</a></td>
+                                            <td><a th:href="@{/products_list}">Invoices</a></td>
+                                            <td> <a th:href="@{/products_form}">Add Products</a></td>
+                                            <td> <a th:href="@{/products_purchase}">Purchases</a></td>
+                                            <td><a href="#">Calendar</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <table class="table table-bordered table-striped custom-table">
+
+                                    <!-- Search and filter section -->
+                                    <div class="form-group">
+                                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="filterProducts()">
+                                    </div>
+
+                                    <!-- Product list -->
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Supplier</th>
+                                            <th>Desciption</th>
+                                            <th>Max Quantity</th>
+                                            <th>Price</th>
+                                            <th> </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="productTableBody">
+                                        <tr th:each="product : ${products}">
+                                            <td><span class="productName" th:text="${product.name}"></span></td>
+                                            <td><span class="productSupplier" th:text="${product.supplier != null ? product.supplier.firstname : ''}"></span></td>
+                                            <td><span class="productDesciption" th:text="${product.description}"></span></td>
+                                            <td><span th:text="${product.minimQuantity}"></span></td>
+                                            <td><span class="productPrice" th:text="${product.price}"></span></td>
+                                            <td >
+                                                <button class="btn btn-success btn-sm add mx-2 productQuantity" onclick="confirmPurchase(this)" data-toggle="modal" data-target="#confirmUpdateModal" 
+                                                        th:data-id="${product.id}" th:data-restminim="${product.restminim}" th:disabled="${product.restminim le 0}">
+                                                    Buy
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                    <!-- Shopping Cart 
+                                    <div class="shopping-cart">
+                                        <h3>Shopping Cart</h3>
+                                        <ul id="cartItems" class="list-group"></ul>
+                                    </div>-->
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="confirmUpdateModal" tabindex="-1" role="dialog" aria-labelledby="confirmUpdateModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmUpdateModalLabel">Confirmar Compra</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Estás seguro de que deseas Comprar este Producto?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <a id="confirmUpdateButton" class="btn btn-danger">UPDATE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script th:src="@{js/shopping.js}"></script>
+        </div>
+    </body>
+</html>
+
+

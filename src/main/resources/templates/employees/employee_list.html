@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Lista Empleados</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <style>
+            .employee {
+                padding: 10px;
+                border: 1px solid #ddd;
+                margin-bottom: 10px;
+            }
+            .employee:hover {
+                background-color: #f1f1f1;
+            }
+            .employee .name {
+                font-weight: bold;
+            }
+            .employee .add,
+            .employee .remove {
+                cursor: pointer;
+                margin-left: 10px;
+            }
+            .custom-table tbody {
+                background-color: #f8f9fa; /* Color gris claro */
+            }
+            .bg-light-blue {
+                background-color: #4BA2CD; /* Utiliza el código de color que desees */
+            }
+
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .navbar {
+                background-color: #7dacbc;
+                overflow: hidden;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+            }
+
+            .botonLogout {
+                margin-left: auto;
+            }
+
+            .navbar a {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 1vh 1vh;
+                text-decoration: none;
+            }
+
+            .navbar button {
+                margin-left: 1rem;
+            }
+
+            .sidebar {
+                width: 200px;
+                position: fixed;
+                height: 100%;
+                background-image: url("images/i-Login.jpg");
+                background-size: cover;
+                overflow-x: hidden;
+                padding-top: 60px;
+            }
+
+            .sidebar a {
+                padding: 10px;
+                text-decoration: none;
+                font-size: 18px;
+                color: #fff;
+                display: block;
+                transition: background-color 0.3s;
+            }
+
+            .sidebar a:hover {
+                background-color: #4CAF50;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            .main-content .table-responsive {
+                text-align: center;
+            }
+            .shopping-cart {
+                margin-top: 20px;
+            }
+
+            .cart-item {
+                margin-bottom: 10px;
+            }
+
+        </style>
+    </head>
+    <body class="bg-light-blue">
+
+        <div class="sidebar"></div>
+
+        <div class="navbar">
+            <a th:href="@{/accounting}">Accounting</a>
+            <a th:href="@{/commercial}">Commercial</a>
+            <a th:href="@{/customer/list}">Seller</a>
+            <a th:href="@{/employee_list}">Human_resources</a>
+            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
+            <a th:href="@{/supplier}">Purchase_managment</a>
+            <a th:href="@{/sells_listCompras}">Bills</a>
+            <div class="botonLogout">
+                <a href="@{/logout}" class="btn btn-primary">Logout</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="table-responsive">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <h2>Lista Empleados</h2>
+                                <table class="table table-bordered table-striped custom-table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Username</th>
+                                            <th>Available Work Time</th>
+                                            <th>Acttions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="employee : ${employees}">
+                                            <td th:text="${employee.id}"></td>
+                                            <td th:text="${employee.username}"></td>
+                                            <td th:text="${employee.nextAvailableWorkTime}"></td>
+                                            <td>
+                                                <button class="btn btn-success btn-sm add mx-2">
+                                                    <a th:href="@{'/employee/roles_form/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Roles</a>
+                                                </button>
+                                                <button class="btn btn-success btn-sm add mx-2" data-toggle="modal"  data-target="#confirmUpdateModal" th:data-id="${employee.id}">
+                                                    <!--a th:href="@{'/update/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Update</a-->
+                                                    Update
+                                                </button>
+                                                <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${employee.id}">
+                                                    Delete
+                                                </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </table>
+                            <div class="d-flex justify-content-center">
+                                <div class="d-flex justify-content-center">
+                                    <button class="btn btn-success btn-sm add mx-2">
+                                        <a th:href="@{employee_form}" th:style="'text-decoration: none; color: inherit;'">Insert Employeed</a>
+                                    </button>
+                                    <button class="btn btn-secondary btn-sm add mx-2">
+                                        <a th:href="@{/}" th:style="'text-decoration: none; color: inherit;'">Go back</a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal UPDATE -->
+        <div class="modal fade" id="confirmUpdateModal" tabindex="-1" role="dialog" aria-labelledby="confirmUpdateModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmUpdateModalLabel">Confirmar Actualización</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro de que deseas actualizar este empleado?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <a id="confirmUpdateButton" class="btn btn-danger">UPDATE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal DELETE -->
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro de que deseas eliminar a este empleado?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <a id="confirmDeleteButton" class="btn btn-danger">DELETE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{js/myjs.js}"></script>
+    </body>
+</html>

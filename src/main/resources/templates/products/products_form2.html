@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Products List</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <style>
+            .custom-table tbody {
+                background-color: #f8f9fa; /* Color gris claro */
+            }
+            .bg-light-blue {
+                background-color: #4BA2CD; /* Utiliza el código de color que desees */
+            }
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .navbar {
+                background-color: #7dacbc;
+                overflow: hidden;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+            }
+
+            .botonLogout {
+                margin-left: auto;
+            }
+
+            .navbar a {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 1vh 1vh;
+                text-decoration: none;
+            }
+
+            .navbar button {
+                margin-left: 1rem;
+            }
+
+            .sidebar {
+                width: 200px;
+                position: fixed;
+                height: 100%;
+                background-image: url("/images/i-Login.jpg");
+                background-size: cover;
+                overflow-x: hidden;
+                padding-top: 60px;
+            }
+
+            .sidebar a {
+                padding: 6px 8px 6px 16px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+            }
+
+            .sidebar a:hover {
+                color: #f1f1f1;
+                background-color: #4CAF50;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            .main-content .table-responsive {
+                text-align: center;
+            }
+
+            table.grid {
+                border-spacing: 10px;
+            }
+
+            table.grid td {
+                padding: 15px;
+                padding-left: 120px;
+                padding-right:  120px;
+                background-color: #f0f0f0;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <div class="sidebar"></div>
+    <body class="bg-light-blue">
+        <div class="navbar">
+            <a th:href="@{/accounting}">Accounting</a>
+            <a th:href="@{/commercial}">Commercial</a>
+            <a th:href="@{/customer/list}">Seller</a>
+            <a th:href="@{/employee_list}">Human_resources</a>
+            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
+            <a th:href="@{/supplier}">Purchase_management</a>
+            <a th:href="@{/sells_listCompras}">Bills</a>
+            <div class="botonLogout">
+                <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="table-responsive">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table">
+                                <table class="table table-bordered table-striped custom-table">
+
+
+                                    <h2 class="text-center">Confirm Purchase</h2>
+
+                                    <div th:if="${resultMessage}">
+                                        <div th:text="${resultMessage}" class="alert alert-danger"></div>
+                                    </div>
+
+                                    <form th:object="${products}" th:action="@{/SaveProductsEffectivePurchase}" method="POST">
+
+
+                                        <div class="form-group">
+                                            <label for="name">Nom:</label> 
+                                            <input type="text" class="form-control" id="name" name="name" th:field="*{name}" readonly>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="supplier">Supplier: </label>
+                                            <input type="text" class="form-control" id="supplier" name="supplier" th:field="*{supplier}" readonly>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="description">Description: </label>
+                                            <input type="text" name="description" id="description" class="form-control" th:field="*{description}" readonly>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="price">Price: </label>
+                                            <input type="number" name="price" id="price" class="form-control" th:field="*{price}" readonly>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="minimQuantity">Max Quantity: </label>
+                                            <input type="number" name="minimQuantity" id="minimQuantity" class="form-control" th:field="*{minimQuantity}" readonly>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label for="interest">Interest: </label>
+                                            <input type="number" name="interest" id="interest" class="form-control" th:field="*{interest}" readonly>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="product">Product: </label>
+                                            <input type="number" name="product" id="product" class="form-control" th:field="*{product}" readonly>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="quantitySumar">Quantity: </label>
+                                            <input type="hidden" name="quantity" id="quantity" class="form-control" th:field="*{quantity}" required>
+                                            <input type="number" name="quantitySumar" id="quantitySumar" class="form-control" value="0" required>
+                                            <span id="quantityErrorMessage" class="text-danger"></span>
+                                        </div>
+
+                                        <h1 class="text-center">
+                                            <input type="hidden" id="id" th:field="*{id}">
+                                            <button type="submit" class="btn btn-primary" onclick="return validarCantidad();">Submit</button>
+                                            <button class="btn btn-secondary add mx-2">
+                                                <a th:href="@{/products_purchase}" th:style="'text-decoration: none; color: inherit;'">Go back</a>
+                                            </button>
+                                        </h1>
+                                    </form>
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{js/shopping.js}"></script>
+
+    </body>
+</html>
