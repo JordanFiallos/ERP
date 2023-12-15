@@ -4,10 +4,13 @@
  */
 package com.pet_it.program.DAO;
 
+import com.pet_it.program.domain.Sells;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
  *
  * @author Jordan
  */
-public interface sellDAO {
-    
+public interface sellDAO extends JpaRepository<Sells, Long> {
+
 }

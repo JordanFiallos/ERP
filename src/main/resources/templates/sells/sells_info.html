@@ -10,6 +10,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <div class="container">
+            <!-- Itera sobre products en lugar de lowStockProducts -->
+            <th:block th:each="product : ${products}">
+                <p th:text="${product.name}"></p>
+                <p th:text="${product.quantity}"></p>
+                <a th:href="@{/sales/reduceQuantity/{productId}(productId=${product.id})}">Reduce Quantity</a>
+            </th:block>
+
+            <th:block th:each="product : ${lowStockProducts}">
+                <p th:text="${product.name}"></p>
+                <p th:text="${product.quantity}"></p>
+            </th:block>
+        </div>
     </body>
 </html>
+
