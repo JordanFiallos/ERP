@@ -39,7 +39,7 @@ public class UserManagingController {
     public String ShowResult(Employee employee) {
         employeeservicelmpl.afegirUsuari(employee);
 
-        return "employees/employee_info";
+        return "redirect:/employee_list";
     }
 
     @GetMapping("/employee_list")

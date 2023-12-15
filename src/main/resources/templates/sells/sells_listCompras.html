@@ -1,28 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Products List</title>
+        <title>Products Card</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <style>
-            .employee {
-                padding: 10px;
-                border: 1px solid #ddd;
-                margin-bottom: 10px;
-            }
-            .employee:hover {
-                background-color: #f1f1f1;
-            }
-            .employee .name {
-                font-weight: bold;
-            }
-            .employee .add,
-            .employee .remove {
-                cursor: pointer;
-                margin-left: 10px;
-            }
             .custom-table tbody {
                 background-color: #f8f9fa; /* Color gris claro */
             }
@@ -90,18 +74,14 @@
             .main-content .table-responsive {
                 text-align: center;
             }
-
-            table.grid {
-                border-spacing: 10px;
+            .shopping-cart {
+                margin-top: 20px;
             }
 
-            table.grid td {
-                padding: 15px;
-                padding-left: 120px;
-                padding-right:  120px;
-                background-color: #f0f0f0;
-                text-align: center;
+            .cart-item {
+                margin-bottom: 10px;
             }
+
         </style>
     </head>
     <div class="sidebar"></div>
@@ -111,43 +91,49 @@
             <a th:href="@{/commercial}">Commercial</a>
             <a th:href="@{/customer/list}">Seller</a>
             <a th:href="@{/employee_list}">Human_resources</a>
-            <a th:href="@{/veterinarian}">Veterinarian</a>
-            <a th:href="@{/products_list}">Purchase_managment</a>
+            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
+            <a th:href="@{/supplier}">Purchase_managment</a>
+            <a th:href="@{/sells_listCompras}">Bills</a>
             <div class="botonLogout">
-                <a href="@{/logout}" class="btn btn-primary">Logout</a>
+                <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
             </div>
         </div>
 
         <div class="main-content">
             <div class="table-responsive">
-                <table class="grid" cellspacing="0">
-                    <tbody>
-                        <tr class="row">
-                            <td colspan="4"><a th:href="@{/products_list}">Invoices</a></td>
-                            <td colspan="4"> <a th:href="@{/products_form}">Add Products</a></td>
-                            <td colspan="4"> <a th:href="@{/products_purchase}">Purchases</a></td>
-                            <td colspan="4"><a href="#">Calendar</a></td>
-                        </tr>
-                    </tbody>
-                </table>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2 class="text-center">Insert Products</h2>
-
-                            <form th:object="${products}" th:action="@{/buy}" method="POST">
-
-                                <div class="form-group">
-                                    <label for="quantity">Quantity: </label>
-                                    <input type="number" name="quantity" id="quantity" class="form-control" th:field="*{quantity}" required>
-                                </div>
-
-                                <h1 class="text-center">
-                                    <input type="hidden" id="id" th:field="*{id}">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </h1>
-
-                            </form>
+                            <!-- Product list -->
+                            <table class="table table-bordered table-striped custom-table">
+                                <thead class="thead-dark">
+                                    <tr class="text-center thead-light">
+                                        <th colspan="2"><a th:href="@{/api/bills/generate}">List</a></th>
+                                        <th><a th:href="@{/api/bills/cost-effective}">Cost-effective</a></th>
+                                        <th colspan="2"><a th:href="@{/api/bills/operative-planning}">Viability</a></th>
+                                        <th><a th:href="@{/api/bills/viability}">Operative Planing</a></th>
+                                    </tr>
+                                    <tr class="text-center thead-light">
+                                        <th colspan="3"><a th:href="@{/sells_listCompras}">Purchase</a></th>
+                                        <th colspan="1"><a th:href="@{/sells_form}">Add-Purcharses</a></th>
+                                        <th colspan="3"><a th:href="@{/sells_listSales}">Sale</a></th>
+                                    </tr>
+                                    <tr class="text-center">
+                                        <th >Month</th>
+                                        <th colspan="2">Product</th>
+                                        <th colspan="2">Quantity Purchased</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="purchase : ${purchases}" class="text-center">
+                                        <td th:text="${purchase.operationDate}"></td>
+                                        <td colspan="2" th:text="${purchase.product.name}"></td>
+                                        <td colspan="2" th:text="${purchase.product.minimQuantity}"></td>
+                                        <td th:text="${purchase.product.price}"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

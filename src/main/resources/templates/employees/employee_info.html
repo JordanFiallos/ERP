@@ -3,11 +3,6 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <html>
     <head>
         <title>List Empleados</title>
@@ -42,11 +37,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <td th:text="${employee.id}"></td>
                             <td th:text="${employee.username}"></td>
                             <td th:text="${employee.nextAvailableWorkTime}"></td>
-                            <td>
-                                <a th:href="@{'/update/' + ${employee.id}}" class="btn btn-primary btn-sm">Update</a>
-                                <br></br>
-                                <a th:href="@{'/delete/' + ${employee.id}}" class="btn btn-danger btn-sm mt-2">Delete</a>
-                            </td>
                         </tr>
                     </tbody>
                 </table>

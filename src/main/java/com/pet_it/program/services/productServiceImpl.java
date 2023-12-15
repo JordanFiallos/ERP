@@ -4,10 +4,85 @@
  */
 package com.pet_it.program.services;
 
+import com.pet_it.program.DAO.productDAO;
+import com.pet_it.program.domain.Product;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 /**
  *
  * @author Jordan
  */
-public class productServiceImpl {
-    
+@Service
+public class productServiceImpl implements productService {
+
+    @Autowired
+    private productDAO productodao;
+
+    @Override
+    public List<Product> llistarProductos() {
+
+        List<Product> product = productodao.findAll();
+
+        for (Product products : product) {
+            int quantity = products.getQuantity();
+            int minimQuantity = products.getMinimQuantity();
+
+            if (isQuantityValid(quantity, minimQuantity)) {
+                int updatedQuantity = Math.min(minimQuantity, products.getQuantity() + quantity);
+                products.setQuantity(updatedQuantity);
+
+                int updatedRestminim = products.getMinimQuantity() - quantity;
+                products.setRestminim(updatedRestminim);
+
+                this.productodao.save(products);
+
+            }
+        }
+
+        return productodao.findAll();
+    }
+
+    @Override
+    public Product afegirProducto(Product product) {
+
+        return this.productodao.save(product);
+
+    }
+
+    public String afegirProducto2(Product product) {
+        int quantity = product.getQuantity();
+        int minimQuantity = product.getMinimQuantity();
+
+        if (isQuantityValid(quantity, minimQuantity)) {
+
+            this.productodao.save(product);
+
+            return "Producto añadido exitosamente.";
+        } else {
+            return "La cantidad ingresada no es válida.";
+        }
+
+    }
+
+    @Override
+    public void eliminarProducto(Product product) {
+        this.productodao.delete(product);
+    }
+
+    @Override
+    public Product getProductoById(Long productId) {
+        return productodao.findById(productId).orElse(null);
+    }
+
+    @Override
+    public Product cercarProducto(Product product) {
+        return productodao.findById(product.getId()).orElse(null);
+    }
+
+    public boolean isQuantityValid(int quantity, int minimQuantity) {
+        return quantity >= 0 && quantity <= minimQuantity;
+    }
+
 }
