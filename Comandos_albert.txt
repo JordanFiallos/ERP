@@ -1,0 +1,5 @@
+INSERT INTO person VALUES("Employee",null,'123','123','Albert','123','123','2023-12-03','$2a$10$5nUflNki1wyMflFCQwVQouIe7eDlL9d4D8QQU1XgL7PUqKrhFqlZa','Albert',null,null);
+
+INSERT INTO rols VALUES(null,'HUMAN',1);
+
+INSERT INTO person VALUES("Customer",null,'123','123','Paco','123','123',null,null,null,null,null);
