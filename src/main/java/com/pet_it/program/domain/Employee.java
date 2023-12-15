@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
 
@@ -26,7 +26,7 @@ public class Employee extends Person {
     private String password;
     
     @Column(name = "nextAvailableWorkTime")
-    private Date nextAvailableWorkTime;
+    private LocalDateTime nextAvailableWorkTime;
     
     @OneToMany
     @JoinColumn(name="id_usuari")

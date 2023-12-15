@@ -8,6 +8,7 @@ import com.pet_it.program.DAO.roleDAO;
 import com.pet_it.program.domain.Employee;
 import com.pet_it.program.domain.Role;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class roleServiceImpl implements roleService {
     
     @Override
     public void deleteRolesById(Long id) {
-        roleDAO.deleteRolesWithId(id);
+        roleDAO.deleteById(id);
     }
     
     @Override
@@ -63,22 +64,23 @@ public class roleServiceImpl implements roleService {
     }
     
     @Override
-    public void updateRoles(Employee employee){
-        List<Role> roles = employee.getRols();
-        for (Role rol : roles) {
-            if(rol.getActive()){
-                rol.setId(employee);
-                roleDAO.save(rol);
+    public void updateRoles(Employee employee, List<String> roles) {
+        if (roles != null) {
+            if (!roles.isEmpty()) {
+                Long id = employee.getId();
+                List<Role> listaRolesEmployee = getAllRolesById(id);
+                for (Role rol : listaRolesEmployee) {
+                    deleteRolesById(rol.getIdRol());
+                }
+
+                for (String nombreRol : roles) {
+                    Role nuevoRol = new Role();
+                    nuevoRol.setNom(nombreRol);
+                    nuevoRol.setIdEmployee(employee);
+                    roleDAO.save(nuevoRol);
+                }
             }
         }
-        
-        
-        /*List<String> rolesDisponibles = listaRoles();
-        for (String nombre : rolesDisponibles) {
-            if (request.getParameter(nombre) != null){
-                System.out.println("usuario: "+id+" guardar rol: "+nombre);
-            }
-        }*/
     }
     
     private List<String> listaRoles(){
@@ -89,6 +91,8 @@ public class roleServiceImpl implements roleService {
         listaDeRoles.add("HUMAN");
         listaDeRoles.add("VETERINARIAN");
         listaDeRoles.add("PURCHASE");
+        
+        Collections.sort(listaDeRoles);
         return listaDeRoles;
     }
 }
