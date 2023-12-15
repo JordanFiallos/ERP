@@ -22,48 +22,39 @@ public class productServiceImpl implements productService {
 
     @Override
     public List<Product> llistarProductos() {
+        List<Product> listaProduct = productodao.findAll();
 
-        List<Product> product = productodao.findAll();
-
-        for (Product products : product) {
+        for (Product products : listaProduct) {
             int quantity = products.getQuantity();
             int minimQuantity = products.getMinimQuantity();
 
             if (isQuantityValid(quantity, minimQuantity)) {
-                int updatedQuantity = Math.min(minimQuantity, products.getQuantity() + quantity);
-                products.setQuantity(updatedQuantity);
-
                 int updatedRestminim = products.getMinimQuantity() - quantity;
                 products.setRestminim(updatedRestminim);
-
-                this.productodao.save(products);
-
             }
         }
-
-        return productodao.findAll();
+        return listaProduct;
     }
 
     @Override
     public Product afegirProducto(Product product) {
-
+        product.setInterest(0);
         return this.productodao.save(product);
-
     }
-
-    public String afegirProducto2(Product product) {
-        int quantity = product.getQuantity();
+    
+    public String afegirProducto2(Product product, int quantitySumar) {
         int minimQuantity = product.getMinimQuantity();
-
-        if (isQuantityValid(quantity, minimQuantity)) {
-
-            this.productodao.save(product);
-
+        
+        if (isQuantityValid(quantitySumar, minimQuantity)) {
+            int oldQuantity = product.getQuantity();
+            int quantityFinal = oldQuantity + quantitySumar ;
+            product.setQuantity(quantityFinal);
+            
+            afegirProducto(product);
             return "Producto añadido exitosamente.";
         } else {
             return "La cantidad ingresada no es válida.";
         }
-
     }
 
     @Override
