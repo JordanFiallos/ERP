@@ -92,7 +92,7 @@
             <a th:href="@{/customer/list}">Seller</a>
             <a th:href="@{/employee_list}">Human_resources</a>
             <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
-            <a th:href="@{/supplier}">Purchase_managment</a>
+            <a th:href="@{/supplier}">Purchase_management</a>
             <a th:href="@{/sells_listCompras}">Bills</a>
             <div class="botonLogout">
                 <a href="@{/logout}" class="btn btn-primary">Logout</a>
@@ -109,6 +109,7 @@
                                 <table class="table table-bordered table-striped custom-table">
                                     <tbody>
                                         <tr>
+                                            <td><a th:href="@{/supplier}">Suppliers</a></td>
                                             <td><a th:href="@{/products_list}">Invoices</a></td>
                                             <td> <a th:href="@{/products_form}">Add Products</a></td>
                                             <td> <a th:href="@{/products_purchase}">Purchases</a></td>
@@ -138,7 +139,7 @@
                                             <th>Product</th>
                                             <th>Supplier</th>
                                             <th>Desciption</th>
-                                            <th>Minim Quantity</th>
+                                            <th>Max Quantity</th>
                                             <th>Price</th>
                                             <th> </th>
                                         </tr>
