@@ -28,6 +28,7 @@ public class employeeServiceImpl implements employeeService {
 
     @Override
     public void afegirUsuari(Employee employee) {
+        //employee.getPassword();
         employeedao.save(employee);
     }
     
