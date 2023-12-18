@@ -35,4 +35,11 @@ public class Person {
     
     @Column(name = "adress")
     private String adress;
+    
+    /**
+     * State = 1 , 2 or 3 => Operative
+     * State = 0 => Blocked
+    */
+    @Column(name = "state", nullable = false) 
+    private int state = 3;
 }
