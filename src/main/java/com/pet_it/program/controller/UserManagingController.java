@@ -5,7 +5,7 @@
 package com.pet_it.program.controller;
 
 import com.pet_it.program.domain.Employee;
-import com.pet_it.program.services.employeeServiceImpl;
+import com.pet_it.program.services.employeeService;
 import com.pet_it.program.services.roleService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
- * @author Jordan
+ * @author Jordan & Ricard
  */
 @Controller
 public class UserManagingController {
 
     @Autowired
-    private employeeServiceImpl employeeservicelmpl;
+    private employeeService employeeService;
     
     @Autowired
     private roleService roleService;
@@ -36,21 +36,21 @@ public class UserManagingController {
 
     @PostMapping("/SaveEmployees")
     public String ShowResult(Employee employee) {
-        employeeservicelmpl.afegirUsuari(employee);
-
+        employee = roleService.getAllRolesWithEmployee(employee);
+        employeeService.afegirUsuari(employee);
         return "redirect:/employee_list";
     }
 
     @GetMapping("/employee_list")
     public String ListEmployees(Model model) {
-        List<Employee> employees = employeeservicelmpl.llistarUsuaris();
+        List<Employee> employees = employeeService.llistarUsuaris();
         model.addAttribute("employees", employees);
         return "employees/employee_list";
     }
 
     @GetMapping("/update/{id}")
     public String Update(Employee employee, Model model) {
-        employee = employeeservicelmpl.cercarUsuari(employee);
+        employee = employeeService.cercarUsuari(employee);
         model.addAttribute("employee", employee);
         return "employees/employee_form";
     }
@@ -58,13 +58,13 @@ public class UserManagingController {
     @GetMapping("/employee_list/delete/{id}")
     public String Delete(@PathVariable Long id) {
         roleService.deleteRolesById(id);
-        employeeservicelmpl.eliminarUsuari(id);
+        employeeService.eliminarUsuari(id);
         return "redirect:/employee_list";
     }
     
     @GetMapping("/employee/roles_form/{id}")
     public String formRole(@PathVariable Long id, Model model){
-        Employee employee = employeeservicelmpl.getPersonById(id);
+        Employee employee = employeeService.getPersonById(id);
         Employee employeeWithRolesList = roleService.listaRolesChecked(employee);
         model.addAttribute("employeeUserName", employee.getUsername());
         model.addAttribute("employee", employeeWithRolesList);
@@ -73,7 +73,8 @@ public class UserManagingController {
     
     @PostMapping("/employee/roles_update")
     public String updateRole(Employee employee, Model model, @RequestParam(required = false, name = "roles") List<String> roles){
-        roleService.updateRoles(employee,roles);
+        boolean rolesActivos = roleService.updateRoles(employee,roles);
+        //Llamar a employeeService para bloquear o desbloquear usuario segun boolean rolesActivos
         return "redirect:/employee_list";
     }
 }

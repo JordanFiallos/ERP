@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
- * localhost:8080/supplier
+ * 
  * @author Ricard
  */
 @Controller

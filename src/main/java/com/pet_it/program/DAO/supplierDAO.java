@@ -17,6 +17,6 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface supplierDAO  extends JpaRepository<Supplier, Long>{
     
-    @Query(value="SELECT DATE_ADD(NOW(), INTERVAL aproach_delivery_int WEEK) AS deliveryDate FROM petitdb.person WHERE dtype = \"Supplier\" AND id = ?1",nativeQuery=true)
+    @Query(value="SELECT DATE_ADD(NOW(), INTERVAL aproach_delivery_int WEEK) AS deliveryDate FROM person WHERE dtype = \"Supplier\" AND id = ?1",nativeQuery=true)
     Timestamp findByIdASupplierDate(Long id);
 }
