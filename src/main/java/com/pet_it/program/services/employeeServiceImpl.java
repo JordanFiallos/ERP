@@ -12,13 +12,16 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author Jordan
+ * @author Jordan & Ricard
  */
 @Service
 public class employeeServiceImpl implements employeeService {
 
     @Autowired
     private employeeDAO employeedao;
+    
+    @Autowired
+    private encriptadorService encriptadorService;
 
     @Override
     public List<Employee> llistarUsuaris() {
@@ -28,7 +31,8 @@ public class employeeServiceImpl implements employeeService {
 
     @Override
     public void afegirUsuari(Employee employee) {
-        //employee.getPassword();
+        String pass = employee.getPassword();
+        employee.setPassword(encriptadorService.encriptaPassw(pass));
         employeedao.save(employee);
     }
     
@@ -41,10 +45,15 @@ public class employeeServiceImpl implements employeeService {
     public Employee cercarUsuari(Employee employee) {
         return employeedao.findById(employee.getId()).orElse(null);
     }
-
+    
     @Override
     public void eliminarUsuari(Long id) {
         Employee employee = getPersonById(id);
         employeedao.delete(employee);
+    }
+    
+    @Override
+    public int getIntents(Employee employee){
+        return employee.getState();
     }
 }

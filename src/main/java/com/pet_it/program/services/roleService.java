@@ -15,8 +15,9 @@ import java.util.List;
  */
 public interface roleService {
     public List<Role> getAllRolesById(Long id);
+    public Employee getAllRolesWithEmployee(Employee employee);
     public Role getRoleById(Long id);
     public void deleteRolesById(Long id);
     public Employee listaRolesChecked(Employee employee);
-    public void updateRoles(Employee employee, List<String> roles);
+    public boolean updateRoles(Employee employee, List<String> roles);
 }

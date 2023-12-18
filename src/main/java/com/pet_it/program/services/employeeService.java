@@ -5,22 +5,23 @@
 package com.pet_it.program.services;
 
 import com.pet_it.program.domain.Employee;
-import com.pet_it.program.domain.Supplier;
 import java.util.List;
 
 /**
  *
- * @author Jordan
+ * @author Jordan & Ricard
  */
 public interface employeeService {
-
+    
     List<Employee> llistarUsuaris(); //Metodo para listar Personas tipo Empleados
-
+    
     void afegirUsuari(Employee employee); //Metodo para añadir Personas tipo Empleados
-
+    
     void eliminarUsuari(Long id); //Metodo para eliminar Personas tipo Empleados
     
     public Employee getPersonById(Long id);
     
-    Employee cercarUsuari(Employee employee); //Metodo para buscar Personas tipo Empleados
+    public Employee cercarUsuari(Employee employee); //Metodo para buscar Personas tipo Empleados
+    
+    public int getIntents(Employee employee);
 }

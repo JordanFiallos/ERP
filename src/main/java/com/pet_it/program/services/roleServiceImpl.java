@@ -34,6 +34,14 @@ public class roleServiceImpl implements roleService {
     }
     
     @Override
+    public Employee getAllRolesWithEmployee(Employee employee){
+        Long id = employee.getId();
+        List<Role> roles = roleDAO.findByIdEmployee(id);
+        employee.setRols(roles);
+        return employee;
+    }
+    
+    @Override
     public Role getRoleById(Long id) {
         return roleDAO.findById(id).orElse(null);
     }
@@ -64,15 +72,17 @@ public class roleServiceImpl implements roleService {
     }
     
     @Override
-    public void updateRoles(Employee employee, List<String> roles) {
+    public boolean updateRoles(Employee employee, List<String> roles) {
+        boolean rolesActivos = false;
         if (roles != null) {
             if (!roles.isEmpty()) {
                 Long id = employee.getId();
                 List<Role> listaRolesEmployee = getAllRolesById(id);
                 for (Role rol : listaRolesEmployee) {
+                    rolesActivos = true;
                     deleteRolesById(rol.getIdRol());
                 }
-
+                
                 for (String nombreRol : roles) {
                     Role nuevoRol = new Role();
                     nuevoRol.setNom(nombreRol);
@@ -81,6 +91,11 @@ public class roleServiceImpl implements roleService {
                 }
             }
         }
+        return rolesActivos;
+    }
+    
+    private int conteoDeRoles(Long id){
+        return roleDAO.countRolesByIdEmployee(id);
     }
     
     private List<String> listaRoles(){
