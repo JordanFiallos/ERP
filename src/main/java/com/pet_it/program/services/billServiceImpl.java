@@ -35,7 +35,7 @@ public class billServiceImpl implements billService {
 
     @Override
     public List<Bill> getBillsByCustomer(Customer customer) {
-        return billRepository.findByCustomer(customer);
+        return billRepository.findByCustomerId(customer.getId());
     }
 
     @Override

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Products List</title>
+        <title>Products Card</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
@@ -74,22 +74,18 @@
             .main-content .table-responsive {
                 text-align: center;
             }
-
-            table.grid {
-                border-spacing: 10px;
+            .shopping-cart {
+                margin-top: 20px;
             }
 
-            table.grid td {
-                padding: 15px;
-                padding-left: 120px;
-                padding-right:  120px;
-                background-color: #f0f0f0;
-                text-align: center;
+            .cart-item {
+                margin-bottom: 10px;
             }
+
         </style>
     </head>
+    <div class="sidebar"></div>
     <body class="bg-light-blue">
-        <div class="sidebar"></div>
         <div class="navbar">
             <a th:href="@{/accounting}">Accounting</a>
             <a th:href="@{/commercial}">Commercial</a>
@@ -105,6 +101,7 @@
 
         <div class="main-content">
             <div class="table-responsive">
+
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -124,39 +121,79 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <table class="table">
                                 <table class="table table-bordered table-striped custom-table">
+
+                                    <!-- Search and filter section -->
+                                    <div class="form-group">
+                                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="filterProducts()">
+                                    </div>
+
+                                    <!-- Product list -->
                                     <thead class="thead-dark">
-                                        <!--tr class="text-center thead-light">
-                                            <th><a th:href="@{/products_list}">Invoices</a></th>
-                                            <th><a th:href="@{/products_form}">Add Products</a></th>
-                                            <th><a th:href="@{/products_purchase}">Purchases</a></th>
-                                            <th><a href="#">Calendar</a></th>
-                                        </tr-->
                                         <tr>
-                                            <th>ID</th>
                                             <th>Product</th>
+                                            <th>Supplier</th>
+                                            <th>Desciption</th>
                                             <th>Max Quantity</th>
-                                            <th>Inventory Total Stock/Quantity</th>
+                                            <th>Price</th>
+                                            <th> </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="productTableBody">
                                         <tr th:each="product : ${products}">
-                                            <td th:text="${product.id}"></td>
-                                            <td th:text="${product.description}"></td>
-                                            <td th:text="${product.minimQuantity}"></td>
-                                            <td th:text="${product.quantity}"></td>
+                                            <td><span class="productName" th:text="${product.name}"></span></td>
+                                            <td><span class="productSupplier" th:text="${product.supplier != null ? product.supplier.firstname : ''}"></span></td>
+                                            <td><span class="productDesciption" th:text="${product.description}"></span></td>
+                                            <td><span th:text="${product.minimQuantity}"></span></td>
+                                            <td><span class="productPrice" th:text="${product.price}"></span></td>
+                                            <td >
+                                                <button class="btn btn-success btn-sm add mx-2 productQuantity" onclick="confirmPurchase(this)" data-toggle="modal" data-target="#confirmUpdateModal" 
+                                                        th:data-id="${product.id}" th:data-restminim="${product.restminim}" th:disabled="${product.restminim le 0}">
+                                                    Buy
+                                                </button>
+                                            </td>
                                         </tr>
                                     </tbody>
+
+                                    <!-- Shopping Cart 
+                                    <div class="shopping-cart">
+                                        <h3>Shopping Cart</h3>
+                                        <ul id="cartItems" class="list-group"></ul>
+                                    </div>-->
                                 </table>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="confirmUpdateModal" tabindex="-1" role="dialog" aria-labelledby="confirmUpdateModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmUpdateModalLabel">Confirmar Compra</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>¿Estás seguro de que deseas Comprar este Producto?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <a id="confirmUpdateButton" class="btn btn-danger">UPDATE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script th:src="@{js/shopping.js}"></script>
         </div>
     </body>
 </html>
+
+

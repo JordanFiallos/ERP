@@ -78,6 +78,8 @@ public class VisitsController {
         List<Employee> OpcionesEmpleados = employeeService.llistarUsuaris();
         List<Pet> OpcionesPet = petDao.llistaPetsHabilitats();
         visita = visitService.getVisitById(visita.getId());
+        String employeeUsername = visita.getEmployee().getUsername();
+        model.addAttribute("selectedUserName", employeeUsername);
         model.addAttribute("empleats", OpcionesEmpleados);
         model.addAttribute("pets", OpcionesPet);
         model.addAttribute("visits", visita);

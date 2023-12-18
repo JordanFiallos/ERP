@@ -9,5 +9,5 @@ package com.pet_it.program.services;
  * @author Jordan
  */
 public interface stockService {
-    
+
 }

@@ -5,28 +5,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <title>ERP Dashboard</title>
         <style>
-            button {
-                font-size: 1em;
-                padding: 10px;
-                color: #fff;
-                border: none;
-                cursor: pointer;
-                background-color: #415361;
-                text-align: center;
-                transition: background-color 0.3s ease;
+            .custom-table tbody {
+                background-color: #f8f9fa; /* Color gris claro */
             }
-
-            button:hover {
-                background-color: #45a049;
+            .bg-light-blue {
+                background-color: #4BA2CD; /* Utiliza el código de color que desees */
             }
-
-            button:active {
-                background-color: #3e8e41;
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-            }
-
             body {
                 margin: 0;
                 font-family: Arial, sans-serif;
@@ -39,20 +28,23 @@
                 justify-content: left;
                 align-items: center;
             }
-            .botonLogout{
-                position: relative;
-                left: 100vh;
+
+            .botonLogout {
+                margin-left: auto;
             }
 
             .navbar a {
                 float: left;
                 display: block;
-                color: black;
+                color: white;
                 text-align: center;
                 padding: 1vh 1vh;
                 text-decoration: none;
             }
 
+            .navbar button {
+                margin-left: 1rem;
+            }
 
             .sidebar {
                 width: 200px;
@@ -77,11 +69,27 @@
                 background-color: #4CAF50;
             }
 
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            .main-content .table-responsive {
+                text-align: center;
+            }
+            .shopping-cart {
+                margin-top: 20px;
+            }
+
+            .cart-item {
+                margin-bottom: 10px;
+            }
 
         </style>
     </head>
 
-    <body>
+    <body class="bg-light-blue">
+        <div class="sidebar"></div>
         <div class="navbar">
             <a th:href="@{/accounting}">Accounting</a>
             <a th:href="@{/commercial}">Commercial</a>
@@ -89,46 +97,69 @@
             <a th:href="@{/employee_list}">Human_resources</a>
             <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
             <a th:href="@{/supplier}">Purchase_managment</a>
-            <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
+            <a th:href="@{/sells_listCompras}">Bills</a>
+            <div class="botonLogout">
+                <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
+            </div>
         </div>
-        <div class="sidebar">
 
-        </div>
-        <div class="main">
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+        <div class="main-content">
+            <div class="table-responsive">
                 <div class="container">
-                    <table class="table table-striped table-bordered">
-                        <tr>
-                            <th>id</th> 
-                            <th>Concepto</th>
-                            <th>Observaciones</th> 
-                            <th>Fecha de visita</th>  
-                            <th>Id del empleado</th>
-                            <th>Id de la mascota</th>
-                            <th>Opcions</th>
-                        </tr>
-                        <tr th:each="visita : ${visits}">
-                            <th th:text="${visita.id}"></th>
-                            <th th:text="${visita.concept}"></th>
-                            <th th:text="${visita.observations}"></th>
-                            <th th:text="${visita.scheduledDate}"></th>
-                            <th th:text="${visita.employee.id}"></th>
-                            <th th:text="${visita.pet.id}"></th>
-                            <th>
-                                <a th:href="@{'/visits/update/'+${visita.id}}"><button class="button btn-primary">Update</button></a>
-                                <a th:href="@{'/visits/delete/'+${visita.id}}"><button class="button btn-danger" >Delete</button></a>
-                            </th>
-                        </tr>
-                    </table>
-                    <div>
-                        <a th:href="@{/visits/visits_form}"><button class="btn btn-success">Añadir</button></a>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table grid" >
+                                <table class="table table-bordered table-striped custom-table">
+                                    <tbody>
+                                        <tr>
+                                            <td><a th:href="@{/pet/pet-inicio}">Pets</a></td>
+                                            <td><a th:href="@{/visits/visits_list}">Visitas</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </main>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    </body>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <!-- Product list -->
+                            <table class="table table-bordered table-striped custom-table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>id</th> 
+                                        <th>Concepto</th>
+                                        <th>Observaciones</th> 
+                                        <th>Fecha de visita</th>  
+                                        <th>Id del empleado</th>
+                                        <th>Id de la mascota</th>
+                                        <th>Opcions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="visita : ${visits}">
+                                        <td th:text="${visita.id}"></td>
+                                        <td th:text="${visita.concept}"></td>
+                                        <td th:text="${visita.observations}"></td>
+                                        <td th:text="${visita.scheduledDate}"></td>
+                                        <td th:text="${visita.employee.id}"></td>
+                                        <td th:text="${visita.pet.id}"></td>
+                                        <td>
+                                            <a th:href="@{'/visits/update/'+${visita.id}}"><button class="button btn-primary">Update</button></a>
+                                            <a th:href="@{'/visits/delete/'+${visita.id}}"><button class="button btn-danger" >Delete</button></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div>
+                                <a th:href="@{/visits/visits_form}"><button class="btn btn-success">Añadir</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+        </div>
+    </body>
 </html>
