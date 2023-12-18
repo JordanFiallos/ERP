@@ -1,148 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head xmlns:th="http://www.thymeleaf.org">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERP Dashboard</title>
-    <style>
-        button {
-            font-size: 1em;
-            padding: 10px;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            background-color: #415361;
-            text-align: center;
-            transition: background-color 0.3s ease;
-        }
+    <head xmlns:th="http://www.thymeleaf.org">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ERP Dashboard</title>
+        <style>
+            button {
+                font-size: 1em;
+                padding: 10px;
+                color: #fff;
+                border: none;
+                cursor: pointer;
+                background-color: #415361;
+                text-align: center;
+                transition: background-color 0.3s ease;
+            }
 
-        button:hover {
-            background-color: #45a049;
-        }
+            button:hover {
+                background-color: #45a049;
+            }
 
-        button:active {
-            background-color: #3e8e41;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-        }
+            button:active {
+                background-color: #3e8e41;
+                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            }
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-        }
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
 
-        .navbar {
-            background-color: #7dacbc;
-            overflow: hidden;
-            display: flex;
-            justify-content: left;
-            align-items: center;
-        }
-        .botonLogout{
-            position: relative;
-            left: 100vh;
-        }
+            .navbar {
+                background-color: #7dacbc;
+                overflow: hidden;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+            }
+            .botonLogout{
+                position: relative;
+                left: 100vh;
+            }
 
-        .navbar a {
-            float: left;
-            display: block;
-            color: black;
-            text-align: center;
-            padding: 1vh 1vh;
-            text-decoration: none;
-        }
+            .navbar a {
+                float: left;
+                display: block;
+                color: black;
+                text-align: center;
+                padding: 1vh 1vh;
+                text-decoration: none;
+            }
 
 
-        .sidebar {
-            width: 200px;
-            position: fixed;
-            height: 100%;
-            background-image: url("images/i-Login.jpg");
-            background-size: cover;
-            overflow-x: hidden;
-            padding-top: 60px;
-        }
+            .sidebar {
+                width: 200px;
+                position: fixed;
+                height: 100%;
+                background-image: url("images/i-Login.jpg");
+                background-size: cover;
+                overflow-x: hidden;
+                padding-top: 60px;
+            }
 
-        .sidebar a {
-            padding: 6px 8px 6px 16px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #818181;
-            display: block;
-        }
+            .sidebar a {
+                padding: 6px 8px 6px 16px;
+                text-decoration: none;
+                font-size: 25px;
+                color: #818181;
+                display: block;
+            }
 
-        .sidebar a:hover {
-            color: #f1f1f1;
-            background-color: #4CAF50;
-        }
+            .sidebar a:hover {
+                color: #f1f1f1;
+                background-color: #4CAF50;
+            }
 
-        .main {
-            margin-left: 200px;
-            padding: 0px 10px;
-        }
+            .main {
+                margin-left: 200px;
+                padding: 0px 10px;
+            }
 
-        #calendar {
-            font-family: Arial, sans-serif;
-        }
+            #calendar {
+                font-family: Arial, sans-serif;
+            }
 
-        .day {
-            display: inline-block;
-            width: 14.28%;
-            padding: 15px;
-            text-align: center;
-            border: 1px solid #ddd;
-            position: relative;
-            font-size: 18px;
-        }
+            .day {
+                display: inline-block;
+                width: 14.28%;
+                padding: 15px;
+                text-align: center;
+                border: 1px solid #ddd;
+                position: relative;
+                font-size: 18px;
+            }
 
-        .weekend {
-            background-color: #f2f2f2;
-        }
+            .weekend {
+                background-color: #f2f2f2;
+            }
 
-        .event {
-            position: absolute;
-            bottom: 15px;
-            left: 15px;
-            background-color: #4CAF50;
-            color: white;
-            padding: 5px 10px;
-            font-size: 14px;
-            border-radius: 3px;
-        }
-    </style>
-</head>
+            .event {
+                position: absolute;
+                bottom: 15px;
+                left: 15px;
+                background-color: #4CAF50;
+                color: white;
+                padding: 5px 10px;
+                font-size: 14px;
+                border-radius: 3px;
+            }
+            .alert {
+                padding: 20px;
+                background-color: #f44336;
+                color: white;
+                opacity: 1;
+                transition: opacity 0.6s;
+                margin-bottom: 15px;
+            }
+            .alert.success {
+                background-color: #04AA6D;
+            }
+            .closebtn {
+                margin-left: 15px;
+                color: white;
+                font-weight: bold;
+                float: right;
+                font-size: 22px;
+                line-height: 20px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
 
-<body>
-    <div class="navbar">
-        <a th:href="@{/accounting}">Accounting</a>
-        <a th:href="@{/commercial}">Commercial</a>
-        <a th:href="@{/customer/list}">Seller</a>
-        <a th:href="@{/employee_list}">Human_resources</a>
-        <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
-        <a th:href="@{/supplier}">Purchase_managment</a>
-        <a th:href="@{/products_list}">Bills</a>
-        <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
-    </div>
-    <div class="sidebar">
+            .closebtn:hover {
+                color: black;
+            }
+        </style>
+    </head>
 
-    </div>
-    <div class="main">
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <section class="jumbotron text-center">
-                <div class="container">
-                    <iframe
-                        src="https://calendar.google.com/calendar/embed?src=c_8baf6049e77107a8275f14111952504ae5ed2879e8290b0082af47061f8a94a8%40group.calendar.google.com&ctz=Europe%2FMadrid"
-                        style="border: 0" height="650vh" width="1300vh" frameborder="0" scrolling="no"></iframe>
-                </div>
-            </section>
-            <section class="container">
+    <body>
+        <div class="alert success">
+            <span class="closebtn">&times;</span>  
+            <strong>Bienvenido </strong>Has iniciado session correctamente!
+        </div>
+        <div class="navbar">
+            <a th:href="@{/accounting}">Accounting</a>
+            <a th:href="@{/commercial}">Commercial</a>
+            <a th:href="@{/customer/list}">Seller</a>
+            <a th:href="@{/employee_list}">Human_resources</a>
+            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
+            <a th:href="@{/supplier}">Purchase_managment</a>
+            <a th:href="@{/products_list}">Bills</a>
+            <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
+        </div>
+        <div class="sidebar">
 
-            </section>
-        </main>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-</body>
+        </div>
+        <div class="main">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <section class="jumbotron text-center">
+                    <div class="container">
+                        <iframe
+                            src="https://calendar.google.com/calendar/embed?src=c_8baf6049e77107a8275f14111952504ae5ed2879e8290b0082af47061f8a94a8%40group.calendar.google.com&ctz=Europe%2FMadrid"
+                            style="border: 0" height="650vh" width="1300vh" frameborder="0" scrolling="no"></iframe>
+                    </div>
+                </section>
+                <section class="container">
+
+                </section>
+            </main>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <script>
+            var close = document.getElementsByClassName("closebtn");
+            var i;
+
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function () {
+                    var div = this.parentElement;
+                    div.style.opacity = "0";
+                    setTimeout(function () {
+                        div.style.display = "none";
+                    }, 600);
+                }
+            }
+        </script>
+    </body>
 
 </html>

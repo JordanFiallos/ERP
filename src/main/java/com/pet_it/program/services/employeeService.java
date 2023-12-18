@@ -24,4 +24,8 @@ public interface employeeService {
     public Employee cercarUsuari(Employee employee); //Metodo para buscar Personas tipo Empleados
     
     public int getIntents(Employee employee);
+    
+    public void actualitzaUsuariIntents(Employee employee);
+    
+    public void bloqueaPerson(Employee employee,boolean rolesActivo);
 }

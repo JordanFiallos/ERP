@@ -4,6 +4,7 @@
  */
 package com.pet_it.program.controller;
 
+import com.pet_it.program.DAO.employeeDAO;
 import com.pet_it.program.domain.Employee;
 import com.pet_it.program.services.employeeService;
 import com.pet_it.program.services.roleService;
@@ -25,6 +26,9 @@ public class UserManagingController {
 
     @Autowired
     private employeeService employeeService;
+    
+    @Autowired
+    private employeeDAO employeeDao;
     
     @Autowired
     private roleService roleService;
@@ -74,7 +78,9 @@ public class UserManagingController {
     @PostMapping("/employee/roles_update")
     public String updateRole(Employee employee, Model model, @RequestParam(required = false, name = "roles") List<String> roles){
         boolean rolesActivos = roleService.updateRoles(employee,roles);
-        //Llamar a employeeService para bloquear o desbloquear usuario segun boolean rolesActivos
+        Employee empleadoGuardado = employee;
+        employeeService.bloqueaPerson(employee, rolesActivos);
+        employeeDao.save(empleadoGuardado);
         return "redirect:/employee_list";
     }
 }
