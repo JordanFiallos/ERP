@@ -42,7 +42,8 @@ public class SupplierManagingController {
     @PostMapping("/supplier/form")
     public String submitFormSupplier(Supplier supplier, Model model) {
         supplierService.savePerson(supplier);
-        return "suppliers/suppliers_info";
+        //return "suppliers/suppliers_info";
+        return "redirect:/supplier";
     }
     
     @GetMapping("/supplier_update/{id}")

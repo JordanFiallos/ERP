@@ -99,7 +99,7 @@
             <a th:href="@{/supplier}">Purchase_managment</a>
             <a th:href="@{/sells_listCompras}">Bills</a>
             <div class="botonLogout">
-                <a th:href="@{/logout}" class="btn btn-primary">Logout</a>
+                <a th:href="@{/logout}" class="btn btn-dark">Logout</a>
             </div>
         </div>
 
@@ -110,6 +110,24 @@
                         <div class="col-md-12">
                             <!-- Product list -->
                             <table class="table table-bordered table-striped custom-table">
+
+                                <!-- Search and filter section -->
+                                <div class=" form-group row g-3">
+                                    <div class="col-md-9">
+                                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('customerFirstname')">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select id="selectInput" class="form-control">
+                                            <option value="customerFirstname" selected>First name</option>
+                                            <option value="customerLastname">Last name</option>
+                                            <option value="customerEmail">EMail</option>
+                                            <option value="customerPhone">Phone</option>
+                                            <option value="customerAdress">Adress</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <!-- Customer list -->
                                 <thead class="thead-dark">
                                 <th>ID</th>
                                 <th>First Name</th>
@@ -120,32 +138,36 @@
                                 <th>Action</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="filteredTableBody">
                                     <tr th:each="customer : ${customers}">
-                                        <td th:text="${customer.id}"></td>
-                                        <td th:text="${customer.firstname}"></td>
-                                        <td th:text="${customer.lastname}"></td>
-                                        <td th:text="${customer.email}"></td>
-                                        <td th:text="${customer.phone}"></td>
-                                        <td th:text="${customer.adress}"></td>
+                                        <td><span class="customerId" th:text="${customer.id}"></span></td>
+                                        <td><span class="customerFirstname" th:text="${customer.firstname}"></span></td>
+                                        <td><span class="customerLastname" th:text="${customer.lastname}"></span></td>
+                                        <td><span class="customerEmail" th:text="${customer.email}"></span></td>
+                                        <td><span class="customerPhone" th:text="${customer.phone}"></span></td>
+                                        <td><span class="customerAdress" th:text="${customer.adress}"></span></td>
                                         <td>
                                             <div>
-                                                <button class="btn btn-success btn-sm add mx-2">
+                                                <!--button class="btn btn-success btn-sm add mx-2">
                                                     <a th:href="@{'/customer_select/' + ${customer.id}}" th:style="'text-decoration: none; color: inherit;'">View</a>
-                                                </button>
-                                                <button class="btn btn-success btn-sm add mx-2">
+                                                </button-->
+                                                <button class="btn btn-primary btn-sm add mx-2">
                                                     <a th:href="@{'/customer_update/' + ${customer.id}}" th:style="'text-decoration: none; color: inherit;'">Edit</a>
-                                                </button><button class="btn btn-danger btn-sm add mx-2">
-                                                    <a th:href="@{'/customer_delete/' + ${customer.id}}" th:style="'text-decoration: none; color: inherit;'">Delete</a>
                                                 </button>
+                                                <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${customer.id}">
+                                                    Delete
+                                                </button>
+                                                <!--button class="btn btn-danger btn-sm add mx-2">
+                                                    <a th:href="@{'/customer_delete/' + ${customer.id}}" th:style="'text-decoration: none; color: inherit;'">Delete</a>
+                                                </button-->
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div>
-                                <button class="btn btn-success btn-sm add mx-2">
-                                    <a th:href="@{'/customer/form'}" class="botonLogout" th:style="'text-decoration: none; color: inherit;'">Go to customer form</a>
+                                <button class="btn btn-dark add mx-2">
+                                    <a th:href="@{'/customer/form'}" th:style="'text-decoration: none; color: inherit;'">Go to customer form</a>
                                 </button>
                             </div>
                         </div>
@@ -153,5 +175,28 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal DELETE -->
+        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Eliminación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro de que deseas eliminar a este customer?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <a id="confirmDeleteButton" class="btn btn-danger">DELETE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
+    <script th:src="@{../js/myjs.js}"></script>
+    <script th:src="@{../js/filter.js}"></script>
 </html>

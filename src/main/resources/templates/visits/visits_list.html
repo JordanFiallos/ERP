@@ -99,10 +99,10 @@
             <a th:href="@{/supplier}">Purchase_managment</a>
             <a th:href="@{/sells_listCompras}">Bills</a>
             <div class="botonLogout">
-                <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
+                <a th:href="@{/logout}" class="btn btn-dark">Logout</a>
             </div>
         </div>
-
+        
         <div class="main-content">
             <div class="table-responsive">
                 <div class="container">
@@ -125,20 +125,39 @@
                     <div class="row">
                         <div class="col-md-12">
                             <!-- Product list -->
+                            <table class="table">
                             <table class="table table-bordered table-striped custom-table">
+                                <!-- Search and filter section -->
+                                <div class=" form-group row g-3">
+                                    <div class="col-md-9">
+                                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('visitaObservations')">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select id="selectInput" class="form-control">
+                                            <option value="visitaConcept">Concepto</option>
+                                            <option value="visitaObservations" selected>Observaciones</option>
+                                            <option value="visitaScheduledDate">Fecha de visita</option>
+                                            <option value="visitaEmployeeId">Id del empleado</option>
+                                            <option value="visitaPetId">Id de la mascota</option>
+                                            <option value="visitaPetName">Nombre de la mascota</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <!-- Visit list -->
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>id</th> 
                                         <th>Concepto</th>
-                                        <th>Observaciones</th> 
+                                        <th>Observaciones</th>
                                         <th>Fecha de visita</th>  
                                         <th>Id del empleado</th>
                                         <th>Id de la mascota</th>
+                                        <th>Nombre de la mascota</th>
                                         <th>Opcions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="filteredTableBody">
                                     <tr th:each="visita : ${visits}">
                                         <td><span class="visitaId" th:text="${visita.id}"></span></td>
                                         <td><span class="visitaConcept" th:text="${visita.concept}"></span></td>
@@ -146,15 +165,17 @@
                                         <td><span class="visitaScheduledDate" th:text="${visita.scheduledDate}"></span></td>
                                         <td><span class="visitaEmployeeId" th:text="${visita.employee.id}"></span></td>
                                         <td><span class="visitaPetId" th:text="${visita.pet.id}"></span></td>
+                                        <td><span class="visitaPetName" th:text="${visita.pet.name}"></span></td>
                                         <td>
-                                            <a th:href="@{'/visits/update/'+${visita.id}}"><button class="button btn-primary">Update</button></a>
-                                            <a th:href="@{'/visits/delete/'+${visita.id}}"><button class="button btn-danger" >Delete</button></a>
+                                            <a th:href="@{'/visits/update/'+${visita.id}}"><button class="btn btn-primary btn-sm add mx-2">Update</button></a>
+                                            <a th:href="@{'/visits/delete/'+${visita.id}}"><button class="btn btn-danger btn-sm add mx-2">Delete</button></a>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
+                            </table>
                             <div>
-                                <a th:href="@{/visits/visits_form}"><button class="btn btn-success">Add</button></a>
+                                <a th:href="@{/visits/visits_form}"><button class="btn btn-dark add mx-2">Add</button></a>
                             </div>
                         </div>
                     </div>
@@ -162,4 +183,5 @@
             </div>
         </div>
     </body>
+    <script th:src="@{../js/filter.js}"></script>
 </html>
