@@ -126,6 +126,7 @@
                         <div class="col-md-12">
                             <!-- Product list -->
                             <table class="table table-bordered table-striped custom-table">
+                                <!-- Visit list -->
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>id</th> 
@@ -139,12 +140,12 @@
                                 </thead>
                                 <tbody>
                                     <tr th:each="visita : ${visits}">
-                                        <td th:text="${visita.id}"></td>
-                                        <td th:text="${visita.concept}"></td>
-                                        <td th:text="${visita.observations}"></td>
-                                        <td th:text="${visita.scheduledDate}"></td>
-                                        <td th:text="${visita.employee.id}"></td>
-                                        <td th:text="${visita.pet.id}"></td>
+                                        <td><span class="visitaId" th:text="${visita.id}"></span></td>
+                                        <td><span class="visitaConcept" th:text="${visita.concept}"></span></td>
+                                        <td><span class="visitaObservations" th:text="${visita.observations}"></span></td>
+                                        <td><span class="visitaScheduledDate" th:text="${visita.scheduledDate}"></span></td>
+                                        <td><span class="visitaEmployeeId" th:text="${visita.employee.id}"></span></td>
+                                        <td><span class="visitaPetId" th:text="${visita.pet.id}"></span></td>
                                         <td>
                                             <a th:href="@{'/visits/update/'+${visita.id}}"><button class="button btn-primary">Update</button></a>
                                             <a th:href="@{'/visits/delete/'+${visita.id}}"><button class="button btn-danger" >Delete</button></a>
@@ -153,13 +154,12 @@
                                 </tbody>
                             </table>
                             <div>
-                                <a th:href="@{/visits/visits_form}"><button class="btn btn-success">Añadir</button></a>
+                                <a th:href="@{/visits/visits_form}"><button class="btn btn-success">Add</button></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </body>
 </html>

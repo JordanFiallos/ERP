@@ -110,7 +110,7 @@
                                     <tbody>
                                         <tr>
                                             <td><a th:href="@{/supplier}">Suppliers</a></td>
-                                            <td><a th:href="@{/products_list}">Invoices</a></td>
+                                            <td><a th:href="@{/products_list}">Inventary</a></td>
                                             <td> <a th:href="@{/products_form}">Add Products</a></td>
                                             <td> <a th:href="@{/products_purchase}">Purchases</a></td>
                                             <td><a href="#">Calendar</a></td>
@@ -130,7 +130,7 @@
 
                                     <!-- Search and filter section -->
                                     <div class="form-group">
-                                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="filterProducts()">
+                                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('productTableBody','.productName')">
                                     </div>
 
                                     <!-- Product list -->
@@ -138,7 +138,7 @@
                                         <tr>
                                             <th>Product</th>
                                             <th>Supplier</th>
-                                            <th>Desciption</th>
+                                            <th>Description</th>
                                             <th>Max Quantity</th>
                                             <th>Price</th>
                                             <th> </th>
@@ -151,7 +151,7 @@
                                             <td><span class="productDesciption" th:text="${product.description}"></span></td>
                                             <td><span th:text="${product.minimQuantity}"></span></td>
                                             <td><span class="productPrice" th:text="${product.price}"></span></td>
-                                            <td >
+                                            <td>
                                                 <button class="btn btn-success btn-sm add mx-2 productQuantity" onclick="confirmPurchase(this)" data-toggle="modal" data-target="#confirmUpdateModal" 
                                                         th:data-id="${product.id}" th:data-restminim="${product.restminim}" th:disabled="${product.restminim le 0}">
                                                     Buy
@@ -190,10 +190,10 @@
                     </div>
                 </div>
             </div>
-
-            <script th:src="@{js/shopping.js}"></script>
         </div>
     </body>
+    <script th:src="@{js/shopping.js}"></script>
+    <script th:src="@{js/filter.js}"></script>
 </html>
 
 
