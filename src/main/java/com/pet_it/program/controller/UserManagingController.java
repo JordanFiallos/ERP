@@ -83,4 +83,12 @@ public class UserManagingController {
         employeeDao.save(empleadoGuardado);
         return "redirect:/employee_list";
     }
+    
+    @GetMapping("/desbloqueja/{id}")
+    public String desbloquejarEmpleat(@PathVariable Long id,Employee empleat){
+        employeeService.desbloquejarEmpleat(id, empleat);
+        return "redirect:/employee_list";
+        
+    }
+    
 }

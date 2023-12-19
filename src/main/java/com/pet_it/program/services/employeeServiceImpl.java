@@ -65,9 +65,16 @@ public class employeeServiceImpl implements employeeService {
 
     @Override
     public void bloqueaPerson(Employee employee, boolean rolesActivo) {
-       if(!rolesActivo){
-          employee.setState(0);
-          employeedao.save(employee);
+        if (!rolesActivo) {
+            employee.setState(0);
+            employeedao.save(employee);
         }
+    }
+
+    @Override
+    public void desbloquejarEmpleat(Long id, Employee empleat) {
+        empleat = getPersonById(id);
+        empleat.setState(3);
+        employeedao.save(empleat);
     }
 }

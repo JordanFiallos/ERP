@@ -28,4 +28,7 @@ public interface employeeService {
     public void actualitzaUsuariIntents(Employee employee);
     
     public void bloqueaPerson(Employee employee,boolean rolesActivo);
+
+    public void desbloquejarEmpleat(Long id,Employee empleat);
+
 }

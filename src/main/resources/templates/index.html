@@ -138,13 +138,8 @@
     </head>
 
     <body>
-        <div class="alert success">
-            <span class="closebtn">&times;</span>  
-            <strong>Bienvenido </strong>Has iniciado session correctamente!
-        </div>
         <div class="navbar">
             <a th:href="@{/accounting}">Accounting</a>
-            <a th:href="@{/commercial}">Commercial</a>
             <a th:href="@{/customer/list}">Seller</a>
             <a th:href="@{/employee_list}">Human_resources</a>
             <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
@@ -158,6 +153,10 @@
         <div class="main">
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <section class="jumbotron text-center">
+                    <div class="alert success">
+                        <span class="closebtn">&times;</span>  
+                        <strong>Bienvenido </strong>Has iniciado session correctamente!
+                    </div>
                     <div class="container">
                         <iframe
                             src="https://calendar.google.com/calendar/embed?src=c_8baf6049e77107a8275f14111952504ae5ed2879e8290b0082af47061f8a94a8%40group.calendar.google.com&ctz=Europe%2FMadrid"
@@ -165,7 +164,7 @@
                     </div>
                 </section>
                 <section class="container">
-
+                    
                 </section>
             </main>
         </div>
