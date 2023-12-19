@@ -66,12 +66,9 @@ public class CustomerManagingController {
         return "customers/customers_form";
     }
     
-
-    @GetMapping("/customer_delete/{id}")
+    @GetMapping("/customer/list/delete/{id}")
     public String deleteCustomer(@PathVariable Long id) {
         customerService.deleteCustomer(id);
         return "redirect:/customer/list";
     }
-    
-
 }

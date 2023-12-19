@@ -17,6 +17,7 @@ $(document).ready(function () {
         var button = $(event.relatedTarget);
         var id = button.data('id');
         //$('#confirmDeleteButton').attr('href', '/delete/' + employeeId);
+        
         $('#confirmDeleteButton').attr('href', currentUrl + '/delete/' + id);
     });
 });

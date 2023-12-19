@@ -94,7 +94,7 @@
             <a th:href="@{/supplier}">Purchase_management</a>
             <a th:href="@{/sells_listCompras}">Bills</a>
             <div class="botonLogout">
-                <a th:href="@{/logout}" class="btn btn-primary">Logout</a>
+                <a th:href="@{/logout}" class="btn btn-dark">Logout</a>
             </div>
         </div>
 
@@ -129,7 +129,7 @@
 
                                     <!-- Search and filter section -->
                                     <div class="form-group">
-                                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('productTableBody','.productName')">
+                                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('productName')">
                                     </div>
 
                                     <!-- Product list -->
@@ -143,7 +143,7 @@
                                             <th> </th>
                                         </tr>
                                     </thead>
-                                    <tbody id="productTableBody">
+                                    <tbody id="filteredTableBody">
                                         <tr th:each="product : ${products}">
                                             <td><span class="productName" th:text="${product.name}"></span></td>
                                             <td><span class="productSupplier" th:text="${product.supplier != null ? product.supplier.firstname : ''}"></span></td>
@@ -151,7 +151,7 @@
                                             <td><span th:text="${product.minimQuantity}"></span></td>
                                             <td><span class="productPrice" th:text="${product.price}"></span></td>
                                             <td>
-                                                <button class="btn btn-success btn-sm add mx-2 productQuantity" onclick="confirmPurchase(this)" data-toggle="modal" data-target="#confirmUpdateModal" 
+                                                <button class="btn btn-warning btn-sm add mx-2 productQuantity" onclick="confirmPurchase(this)" data-toggle="modal" data-target="#confirmUpdateModal" 
                                                         th:data-id="${product.id}" th:data-restminim="${product.restminim}" th:disabled="${product.restminim le 0}">
                                                     Buy
                                                 </button>
