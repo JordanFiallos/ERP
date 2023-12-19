@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.sql.Date;
+import java.time.LocalDateTime;
 import lombok.Data;
 
 /**
@@ -35,7 +36,7 @@ public class Visit {
     private String observations;
     
     @Column(name="scheduledDate")
-    private Date scheduledDate;
+    private LocalDateTime scheduledDate;
 
     @ManyToOne()
     @JoinColumn(name="pet_id",unique = false)
