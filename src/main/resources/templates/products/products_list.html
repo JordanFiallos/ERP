@@ -113,7 +113,7 @@
                                     <tbody>
                                         <tr>
                                             <td><a th:href="@{/supplier}">Suppliers</a></td>
-                                            <td><a th:href="@{/products_list}">Invoices</a></td>
+                                            <td><a th:href="@{/products_list}">Inventary</a></td>
                                             <td> <a th:href="@{/products_form}">Add Products</a></td>
                                             <td> <a th:href="@{/products_purchase}">Purchases</a></td>
                                             <td><a href="#">Calendar</a></td>
@@ -129,13 +129,14 @@
                         <div class="col-md-12">
                             <table class="table">
                                 <table class="table table-bordered table-striped custom-table">
+                                    
+                                    <!-- Search and filter section -->
+                                    <div class="form-group">
+                                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('productTableBody','.productDescription')">
+                                    </div>
+                                    
+                                    <!-- Inventary list -->
                                     <thead class="thead-dark">
-                                        <!--tr class="text-center thead-light">
-                                            <th><a th:href="@{/products_list}">Invoices</a></th>
-                                            <th><a th:href="@{/products_form}">Add Products</a></th>
-                                            <th><a th:href="@{/products_purchase}">Purchases</a></th>
-                                            <th><a href="#">Calendar</a></th>
-                                        </tr-->
                                         <tr>
                                             <th>ID</th>
                                             <th>Product</th>
@@ -143,12 +144,12 @@
                                             <th>Inventory Total Stock/Quantity</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="productTableBody">
                                         <tr th:each="product : ${products}">
-                                            <td th:text="${product.id}"></td>
-                                            <td th:text="${product.description}"></td>
-                                            <td th:text="${product.minimQuantity}"></td>
-                                            <td th:text="${product.quantity}"></td>
+                                            <td><span class="productId" th:text="${product.id}"></span></td>
+                                            <td><span class="productDescription" th:text="${product.description}"></span></td>
+                                            <td><span class="productMinimQuantity" th:text="${product.minimQuantity}"></span></td>
+                                            <td><span class="productQuantity" th:text="${product.quantity}"></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -159,4 +160,5 @@
             </div>
         </div>
     </body>
+    <script th:src="@{js/filter.js}"></script>
 </html>

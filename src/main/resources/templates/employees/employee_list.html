@@ -124,8 +124,22 @@
                     <div class="row">
                         <div class="col-md-12">
                             <table class="table">
-                                <h2>Lista Empleados</h2>
                                 <table class="table table-bordered table-striped custom-table">
+                                    
+                                    <!-- Search and filter section -->
+                                    <div class=" form-group row g-3">
+                                        <div class="col-md-9">
+                                            <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('employeeTableBody',null)">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select id="selectInput" class="form-control">
+                                                <option value="employeeUsername" selected>User name</option>
+                                                <option value="employeeNextAvailableWorkTime">Available work time</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Employee list -->
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>ID</th>
@@ -134,22 +148,23 @@
                                             <th>Acttions</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="employeeTableBody">
                                         <tr th:each="employee : ${employees}">
-                                            <td th:text="${employee.id}"></td>
-                                            <td th:text="${employee.username}"></td>
-                                            <td th:text="${employee.nextAvailableWorkTime}"></td>
+                                            <td><span class="employeeId" th:text="${employee.id}"></span></td>
+                                            <td><span class="employeeUsername" th:text="${employee.username}"></span></td>
+                                            <td><span class="employeeNextAvailableWorkTime" th:text="${employee.nextAvailableWorkTime}"></span></td>
                                             <td>
-                                                <button class="btn btn-success btn-sm add mx-2">
-                                                    <a th:href="@{'/employee/roles_form/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Roles</a>
-                                                </button>
-                                                <button class="btn btn-success btn-sm add mx-2" data-toggle="modal"  data-target="#confirmUpdateModal" th:data-id="${employee.id}">
-                                                    <!--a th:href="@{'/update/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Update</a-->
-                                                    Update
-                                                </button>
-                                                <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${employee.id}">
-                                                    Delete
-                                                </button>
+                                                <div>
+                                                    <button class="btn btn-success btn-sm add mx-2">
+                                                        <a th:href="@{'/employee/roles_form/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Roles</a>
+                                                    </button>
+                                                    <button class="btn btn-success btn-sm add mx-2" data-toggle="modal"  data-target="#confirmUpdateModal" th:data-id="${employee.id}">
+                                                        <!--a th:href="@{'/update/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Update</a-->
+                                                        Update
+                                                    </button>
+                                                    <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${employee.id}">
+                                                        Delete
+                                                    </button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -157,14 +172,12 @@
                                 </table>
                             </table>
                             <div class="d-flex justify-content-center">
-                                <div class="d-flex justify-content-center">
-                                    <button class="btn btn-success btn-sm add mx-2">
-                                        <a th:href="@{employee_form}" th:style="'text-decoration: none; color: inherit;'">Insert Employeed</a>
+                                    <button class="btn btn-success add mx-2">
+                                        <a th:href="@{employee_form}" th:style="'text-decoration: none; color: inherit;'">Add</a>
                                     </button>
-                                    <button class="btn btn-secondary btn-sm add mx-2">
+                                    <!--button class="btn btn-secondary btn-sm add mx-2">
                                         <a th:href="@{/}" th:style="'text-decoration: none; color: inherit;'">Go back</a>
-                                    </button>
-                                </div>
+                                    </button-->
                             </div>
                         </div>
                     </div>
@@ -212,7 +225,7 @@
                 </div>
             </div>
         </div>
-
-        <script th:src="@{js/myjs.js}"></script>
     </body>
+    <script th:src="@{js/myjs.js}"></script>
+    <script th:src="@{js/filter.js}"></script>
 </html>

@@ -132,7 +132,7 @@
                                     <tbody>
                                         <tr>
                                             <td><a th:href="@{/supplier}">Suppliers</a></td>
-                                            <td><a th:href="@{/products_list}">Invoices</a></td>
+                                            <td><a th:href="@{/products_list}">Inventary</a></td>
                                             <td> <a th:href="@{/products_form}">Add Products</a></td>
                                             <td> <a th:href="@{/products_purchase}">Purchases</a></td>
                                             <td><a href="#">Calendar</a></td>
@@ -143,15 +143,31 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="main-content">
-            <div class="table-responsive">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <table class="table text-center">
                                 <table class="table table-bordered table-striped custom-table">
+                                    
+                                    <!-- Search and filter section -->
+                                    <div class=" form-group row g-3">
+                                        <div class="col-md-9">
+                                            <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('supplierTableBody',null)">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select id="selectInput" class="form-control">
+                                                <option value="supplierFirstname" selected>First name</option>
+                                                <option value="supplierLastname">Last name</option>
+                                                <option value="supplierEmail">EMail</option>
+                                                <option value="supplierPhone">Phone</option>
+                                                <option value="supplierAdress">Adress</option>
+                                                <option value="supplierBureao">Bureao</option>
+                                                <option value="supplierDeliveryDateString">Delivery Date</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Supplier list -->
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Id</th>
@@ -165,24 +181,25 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="supplierTableBody">
                                         <tr th:each="supplier : ${suppliers}">
-                                            <td th:text="${supplier.id}"></td>
-                                            <td th:text="${supplier.firstname}"></td>
-                                            <td th:text="${supplier.lastname}"></td>
-                                            <td th:text="${supplier.email}"></td>
-                                            <td th:text="${supplier.phone}"></td>
-                                            <td th:text="${supplier.adress}"></td>
-                                            <td th:text="${supplier.bureao}"></td>
-                                            <td th:text="${supplier.deliveryDateString}"></td>
+                                            <td><span class="supplierId" th:text="${supplier.id}"></span></td>
+                                            <td><span class="supplierFirstname" th:text="${supplier.firstname}"></span></td>
+                                            <td><span class="supplierLastname" th:text="${supplier.lastname}"></span></td>
+                                            <td><span class="supplierEmail" th:text="${supplier.email}"></span></td>
+                                            <td><span class="supplierPhone" th:text="${supplier.phone}"></span></td>
+                                            <td><span class="supplierAdress" th:text="${supplier.adress}"></span></td>
+                                            <td><span class="supplierBureao" th:text="${supplier.bureao}"></span></td>
+                                            <td><span class="supplierDeliveryDateString" th:text="${supplier.deliveryDateString}"></span></td>
                                             <td>
-                                                <button class="btn btn-success btn-sm add mx-2">
-                                                    <a th:href="@{'/supplier_update/' + ${supplier.id}}" th:style="'text-decoration: none; color: inherit;'">Update</a>
-                                                </button>
-                                                <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${supplier.id}">
-                                                    Delete
-                                                </button>
-                                                <!--a th:href="@{'/supplier/delete/' + ${supplier.id}}">Delete</a-->
+                                                <div>
+                                                    <button class="btn btn-success btn-sm add mx-2">
+                                                        <a th:href="@{'/supplier_update/' + ${supplier.id}}" th:style="'text-decoration: none; color: inherit;'">Update</a>
+                                                    </button>
+                                                    <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${supplier.id}">
+                                                        Delete
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -190,11 +207,11 @@
                             </table>
                             <div class="d-flex justify-content-center">
                                 <button class="btn btn-success add mx-2">
-                                    <a th:href="@{/supplier/form}" th:style="'text-decoration: none; color: inherit;'">Go to form</a>
+                                    <a th:href="@{/supplier/form}" th:style="'text-decoration: none; color: inherit;'">Add</a>
                                 </button>
-                                <button class="btn btn-secondary add mx-2">
+                                <!--button class="btn btn-secondary add mx-2">
                                     <a th:href="@{/}" th:style="'text-decoration: none; color: inherit;'">Go back</a>
-                                </button>
+                                </button-->
                             </div>
                         </div>
                     </div>
@@ -222,8 +239,7 @@
                 </div>
             </div>
         </div>
-        <script th:src="@{js/myjs.js}"></script>
-
-
     </body>
+    <script th:src="@{js/myjs.js}"></script>
+    <script th:src="@{js/filter.js}"></script>
 </html>
