@@ -19,7 +19,7 @@ public class employeeServiceImpl implements employeeService {
 
     @Autowired
     private employeeDAO employeedao;
-    
+
     @Autowired
     private encriptadorService encriptadorService;
 
@@ -35,25 +35,46 @@ public class employeeServiceImpl implements employeeService {
         employee.setPassword(encriptadorService.encriptaPassw(pass));
         employeedao.save(employee);
     }
-    
+
     @Override
     public Employee getPersonById(Long id) {
         return employeedao.findById(id).orElse(null);
     }
-    
+
     @Override
     public Employee cercarUsuari(Employee employee) {
         return employeedao.findById(employee.getId()).orElse(null);
     }
-    
+
     @Override
     public void eliminarUsuari(Long id) {
         Employee employee = getPersonById(id);
         employeedao.delete(employee);
     }
-    
+
     @Override
-    public int getIntents(Employee employee){
+    public int getIntents(Employee employee) {
         return employee.getState();
+    }
+
+    @Override
+    public void actualitzaUsuariIntents(Employee employee) {
+        employee.setState(employee.getState() - 1);
+        employeedao.save(employee);
+    }
+
+    @Override
+    public void bloqueaPerson(Employee employee, boolean rolesActivo) {
+        if (!rolesActivo) {
+            employee.setState(0);
+            employeedao.save(employee);
+        }
+    }
+
+    @Override
+    public void desbloquejarEmpleat(Long id, Employee empleat) {
+        empleat = getPersonById(id);
+        empleat.setState(3);
+        employeedao.save(empleat);
     }
 }

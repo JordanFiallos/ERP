@@ -107,7 +107,6 @@
 
         <div class="navbar">
             <a th:href="@{/accounting}">Accounting</a>
-            <a th:href="@{/commercial}">Commercial</a>
             <a th:href="@{/customer/list}">Seller</a>
             <a th:href="@{/employee_list}">Human_resources</a>
             <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
@@ -154,18 +153,22 @@
                                             <td><span class="employeeUsername" th:text="${employee.username}"></span></td>
                                             <td><span class="employeeNextAvailableWorkTime" th:text="${employee.nextAvailableWorkTime}"></span></td>
                                             <td>
-                                                <div>
-                                                    <button class="btn btn-success btn-sm add mx-2">
-                                                        <a th:href="@{'/employee/roles_form/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Roles</a>
-                                                    </button>
-                                                    <button class="btn btn-success btn-sm add mx-2" data-toggle="modal"  data-target="#confirmUpdateModal" th:data-id="${employee.id}">
-                                                        <!--a th:href="@{'/update/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Update</a-->
-                                                        Update
-                                                    </button>
-                                                    <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${employee.id}">
-                                                        Delete
-                                                    </button>
-                                                </div>
+
+
+                                                <button class="btn btn-success btn-sm add mx-2">
+                                                    <a th:href="@{'/employee/roles_form/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Roles</a>
+                                                </button>
+                                                <button class="btn btn-success btn-sm add mx-2" data-toggle="modal"  data-target="#confirmUpdateModal" th:data-id="${employee.id}">
+                                                    <!--a th:href="@{'/update/' + ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Update</a-->
+                                                    Update
+                                                </button>
+                                                <button  th:disabled="${employee.state > 0}" class="btn btn-primary btn-sm add mx-2"> 
+                                                    <a  th:href="@{'/desbloqueja/'+ ${employee.id}}" th:style="'text-decoration: none; color: inherit;'">Desbloqueja</a>
+                                                </button>
+                                                <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${employee.id}">
+                                                    Delete
+                                                </button>
+
                                             </td>
                                         </tr>
                                     </tbody>
