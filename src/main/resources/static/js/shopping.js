@@ -52,6 +52,7 @@
 
 
 //FilterProduct
+/*
 function filterProducts() {
     const input = document.getElementById('searchInput');
     const filter = input.value.toUpperCase();
@@ -67,6 +68,7 @@ function filterProducts() {
         }
     }
 }
+*/
 
 // BUY PRODUCTS
 $(document).ready(function () {

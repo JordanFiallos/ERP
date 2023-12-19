@@ -128,15 +128,24 @@
                                         <td th:text="${customer.phone}"></td>
                                         <td th:text="${customer.adress}"></td>
                                         <td>
-                                            <a th:href="@{'/customer_select/' + ${customer.id}}">View</a>
-                                            <a th:href="@{'/customer_update/' + ${customer.id}}">Edit</a>
-                                            <a th:href="@{'/customer_delete/' + ${customer.id}}">Delete</a>
+                                            <div>
+                                                <button class="btn btn-success btn-sm add mx-2">
+                                                    <a th:href="@{'/customer_select/' + ${customer.id}}" th:style="'text-decoration: none; color: inherit;'">View</a>
+                                                </button>
+                                                <button class="btn btn-success btn-sm add mx-2">
+                                                    <a th:href="@{'/customer_update/' + ${customer.id}}" th:style="'text-decoration: none; color: inherit;'">Edit</a>
+                                                </button><button class="btn btn-danger btn-sm add mx-2">
+                                                    <a th:href="@{'/customer_delete/' + ${customer.id}}" th:style="'text-decoration: none; color: inherit;'">Delete</a>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div>
-                                <a th:href="@{'/customer/form'}" class="botonLogout"><button> Go to customer form</button></a>
+                                <button class="btn btn-success btn-sm add mx-2">
+                                    <a th:href="@{'/customer/form'}" class="botonLogout" th:style="'text-decoration: none; color: inherit;'">Go to customer form</a>
+                                </button>
                             </div>
                         </div>
                     </div>

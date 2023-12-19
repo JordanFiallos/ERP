@@ -144,20 +144,22 @@
                                     </thead>
                                     <tbody>
                                         <tr th:each="mascota : ${pets}">
-                                            <td th:text="${mascota.id}"></td>
-                                            <td th:text="${mascota.name}"></td>
-                                            <td th:text="${mascota.species}"></td>
-                                            <td th:text="${mascota.dob}"></td>
-                                            <td th:text="${mascota.customers.id}"></td>
+                                            <td><span class="mascotaId" th:text="${mascota.id}"></span></td>
+                                            <td><span class="mascotaName" th:text="${mascota.name}"></span></td>
+                                            <td><span class="mascotaSpecies" th:text="${mascota.species}"></span></td>
+                                            <td><span class="mascotaDob" th:text="${mascota.dob}"></span></td>
+                                            <td><span class="mascotaCustomersId" th:text="${mascota.customers.id}"></span></td>
                                             <td>
-                                                <a th:href="@{'/pet/update/' + ${mascota.id}}"><button class="button btn-primary">Update</button></a>
-                                                <a th:href="@{'/delete/' + ${mascota.id}}"><button class="button btn-danger">Delete</button></a>
+                                                <div>
+                                                    <a th:href="@{'/pet/update/' + ${mascota.id}}"><button class="button btn-primary">Update</button></a>
+                                                    <a th:href="@{'/delete/' + ${mascota.id}}"><button class="button btn-danger">Delete</button></a>
+                                                </div>
                                             </td>
                                         </tr>                                    
                                     </tbody>
                                 </table>
                                 <div>
-                                    <a th:href="@{/pet/pet_form}"><button class="btn btn-success">Añadir</button></a>
+                                    <a th:href="@{/pet/pet_form}"><button class="btn btn-success">Add</button></a>
                                 </div>
                         </div>
                         </main>
