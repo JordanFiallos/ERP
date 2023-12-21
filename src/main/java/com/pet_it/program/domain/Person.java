@@ -41,5 +41,5 @@ public class Person {
      * State = 0 => Blocked
     */
     @Column(name = "state", nullable = false) 
-    private int state = 3;
+    private int state;
 }

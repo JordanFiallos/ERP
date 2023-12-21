@@ -27,5 +27,6 @@ public class bBill {
     @JoinColumn(name="id_employee")
     private Employee employee;
     private int quantity;
+    private float total;
     private LocalDateTime operationDate;
 }
