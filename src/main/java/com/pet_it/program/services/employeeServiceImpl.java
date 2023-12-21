@@ -38,6 +38,7 @@ public class employeeServiceImpl implements employeeService {
     
     @Override
     public void actualizarUsuari(Employee employee){
+        employee = cercarUsuari(employee);
         employeedao.save(employee);
     }
 
@@ -70,6 +71,7 @@ public class employeeServiceImpl implements employeeService {
 
     @Override
     public void bloqueaPerson(Employee employee, boolean rolesActivo) {
+        employee = cercarUsuari(employee);
         if (!rolesActivo) {
             employee.setState(0);
             employeedao.save(employee);

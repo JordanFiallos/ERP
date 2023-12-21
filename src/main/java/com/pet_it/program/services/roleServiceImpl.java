@@ -74,6 +74,7 @@ public class roleServiceImpl implements roleService {
     @Override
     public boolean updateRoles(Employee employee, List<String> roles) {
         boolean rolesActivos = false;
+        employee = employeeservice.cercarUsuari(employee);
         if (roles != null) {
             if (!roles.isEmpty()) {
                 Long id = employee.getId();
