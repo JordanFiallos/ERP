@@ -5,11 +5,7 @@
 package com.pet_it.program.services;
 
 import com.pet_it.program.DAO.sellDAO;
-import com.pet_it.program.domain.Product;
 import com.pet_it.program.domain.Sells;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
