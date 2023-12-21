@@ -28,9 +28,6 @@ public class UserManagingController {
     private employeeService employeeService;
     
     @Autowired
-    private employeeDAO employeeDao;
-    
-    @Autowired
     private roleService roleService;
 
     @GetMapping("/employee_form")
@@ -80,7 +77,7 @@ public class UserManagingController {
         boolean rolesActivos = roleService.updateRoles(employee,roles);
         Employee empleadoGuardado = employee;
         employeeService.bloqueaPerson(employee, rolesActivos);
-        employeeDao.save(empleadoGuardado);
+        employeeService.actualizarUsuari(empleadoGuardado);
         return "redirect:/employee_list";
     }
     
@@ -90,5 +87,4 @@ public class UserManagingController {
         return "redirect:/employee_list";
         
     }
-    
 }
