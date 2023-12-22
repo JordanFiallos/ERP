@@ -7,15 +7,19 @@ var seleccionActual = "";
 
 selectInput.onchange = function(e) {
    seleccionActual = e.target.value;
+   generalFilter(seleccionActual);
 }
 
-function generalFilter(tableId,classFiltered) {
+function generalFilter(classFiltered) {
+    classFiltered = "." + classFiltered;
     var input = document.getElementById('searchInput');
     var filter = input.value.toUpperCase();
-    var tableBody = document.getElementById(tableId);
+    var tableBody = document.getElementById('filteredTableBody');
     var rows = tableBody.getElementsByTagName('tr');
     
-    if(classFiltered === null) {
+    if(seleccionActual == ""){
+        seleccionActual = classFiltered;
+    } else if ( seleccionActual != classFiltered ) {
        classFiltered = "." + seleccionActual;
     }
     

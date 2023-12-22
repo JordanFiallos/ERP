@@ -117,7 +117,7 @@
             <a th:href="@{/supplier}">Purchase_management</a>
             <a th:href="@{/sells_listCompras}">Bills</a>
             <div class="botonLogout">
-                <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
+                <a th:href="@{/logout}" class="btn btn-dark">Logout</a>
             </div>
         </div>
 
@@ -151,7 +151,7 @@
                                     <!-- Search and filter section -->
                                     <div class=" form-group row g-3">
                                         <div class="col-md-9">
-                                            <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('supplierTableBody',null)">
+                                            <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('supplierFirstname')">
                                         </div>
                                         <div class="col-md-3">
                                             <select id="selectInput" class="form-control">
@@ -180,7 +180,7 @@
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="supplierTableBody">
+                                    <tbody id="filteredTableBody">
                                         <tr th:each="supplier : ${suppliers}">
                                             <td><span class="supplierId" th:text="${supplier.id}"></span></td>
                                             <td><span class="supplierFirstname" th:text="${supplier.firstname}"></span></td>
@@ -192,7 +192,7 @@
                                             <td><span class="supplierDeliveryDateString" th:text="${supplier.deliveryDateString}"></span></td>
                                             <td>
                                                 <div>
-                                                    <button class="btn btn-success btn-sm add mx-2">
+                                                    <button class="btn btn-primary btn-sm add mx-2">
                                                         <a th:href="@{'/supplier_update/' + ${supplier.id}}" th:style="'text-decoration: none; color: inherit;'">Update</a>
                                                     </button>
                                                     <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="${supplier.id}">
@@ -205,7 +205,7 @@
                                 </table>
                             </table>
                             <div class="d-flex justify-content-center">
-                                <button class="btn btn-success add mx-2">
+                                <button class="btn btn-dark add mx-2">
                                     <a th:href="@{/supplier/form}" th:style="'text-decoration: none; color: inherit;'">Add</a>
                                 </button>
                                 <!--button class="btn btn-secondary add mx-2">

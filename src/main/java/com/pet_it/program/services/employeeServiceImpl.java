@@ -35,6 +35,12 @@ public class employeeServiceImpl implements employeeService {
         employee.setPassword(encriptadorService.encriptaPassw(pass));
         employeedao.save(employee);
     }
+    
+    @Override
+    public void actualizarUsuari(Employee employee){
+        employee = cercarUsuari(employee);
+        employeedao.save(employee);
+    }
 
     @Override
     public Employee getPersonById(Long id) {
@@ -65,6 +71,7 @@ public class employeeServiceImpl implements employeeService {
 
     @Override
     public void bloqueaPerson(Employee employee, boolean rolesActivo) {
+        employee = cercarUsuari(employee);
         if (!rolesActivo) {
             employee.setState(0);
             employeedao.save(employee);

@@ -37,7 +37,7 @@ public class Visit {
     
     @Column(name="scheduledDate")
     private LocalDateTime scheduledDate;
-
+    
     @ManyToOne()
     @JoinColumn(name="pet_id",unique = false)
     private Pet pet;

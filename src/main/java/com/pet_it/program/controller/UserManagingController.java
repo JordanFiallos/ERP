@@ -28,9 +28,6 @@ public class UserManagingController {
     private employeeService employeeService;
     
     @Autowired
-    private employeeDAO employeeDao;
-    
-    @Autowired
     private roleService roleService;
 
     @GetMapping("/employee_form")
@@ -78,9 +75,7 @@ public class UserManagingController {
     @PostMapping("/employee/roles_update")
     public String updateRole(Employee employee, Model model, @RequestParam(required = false, name = "roles") List<String> roles){
         boolean rolesActivos = roleService.updateRoles(employee,roles);
-        Employee empleadoGuardado = employee;
         employeeService.bloqueaPerson(employee, rolesActivos);
-        employeeDao.save(empleadoGuardado);
         return "redirect:/employee_list";
     }
     
@@ -88,7 +83,5 @@ public class UserManagingController {
     public String desbloquejarEmpleat(@PathVariable Long id,Employee empleat){
         employeeService.desbloquejarEmpleat(id, empleat);
         return "redirect:/employee_list";
-        
     }
-    
 }

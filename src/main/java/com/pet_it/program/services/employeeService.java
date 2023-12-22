@@ -13,11 +13,13 @@ import java.util.List;
  */
 public interface employeeService {
     
-    List<Employee> llistarUsuaris(); //Metodo para listar Personas tipo Empleados
+    public List<Employee> llistarUsuaris(); //Metodo para listar Personas tipo Empleados
     
-    void afegirUsuari(Employee employee); //Metodo para añadir Personas tipo Empleados
+    public void afegirUsuari(Employee employee); //Metodo para añadir Personas tipo Empleados
     
-    void eliminarUsuari(Long id); //Metodo para eliminar Personas tipo Empleados
+    public void actualizarUsuari(Employee employee);
+    
+    public void eliminarUsuari(Long id); //Metodo para eliminar Personas tipo Empleados
     
     public Employee getPersonById(Long id);
     
