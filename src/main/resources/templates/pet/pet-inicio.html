@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-
-    <head xmlns:th="http://www.thymeleaf.org">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>ERP Dashboard</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-        <title>ERP Dashboard</title>
         <style>
             .custom-table tbody {
                 background-color: #f8f9fa; /* Color gris claro */
@@ -95,13 +92,14 @@
         <div class="sidebar"></div>
         <div class="navbar">
             <a th:href="@{/accounting}">Accounting</a>
-            <a th:href="@{/commercial}">Commercial</a>
             <a th:href="@{/customer/list}">Seller</a>
             <a th:href="@{/employee_list}">Human_resources</a>
             <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
             <a th:href="@{/supplier}">Purchase_managment</a>
             <a th:href="@{/sells_listCompras}">Bills</a>
-            <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
+            <div class="botonLogout">
+                <a th:href="@{/logout}" class="btn btn-dark">Logout</a>
+            </div>
         </div>
 
         <div class="main-content">
@@ -109,38 +107,74 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
+                            <table class="table grid" >
+                                <table class="table table-bordered table-striped custom-table">
+                                    <tbody>
+                                        <tr>
+                                            <td><a th:href="@{/pet/pet-inicio}">Pets</a></td>
+                                            <td><a th:href="@{/visits/visits_list}">Visitas</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
                             <table class="table">
                                 <table class="table table-bordered table-striped custom-table">
+                                    
+                                    <!-- Search and filter section -->
+                                    <div class=" form-group row g-3">
+                                        <div class="col-md-9">
+                                            <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('mascotaName')">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select id="selectInput" class="form-control">
+                                                <option value="mascotaName" selected>Name</option>
+                                                <option value="mascotaSpecies">Species</option>
+                                                <option value="mascotaDob">Dob</option>
+                                                <option value="mascotaCustomersId">Customer id</option>
+                                                <option value="mascotaCustomersFirstName">Customer first name</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Supplier list -->
                                     <thead class="thead-dark">
-                                        <tr class="text-center thead-light">
-                                            <th colspan="6"><a th:href="@{/visits/visits_list}">Visitas</a></th>
-                                        </tr>
                                         <tr>
                                             <th>id</th> 
                                             <th>Nombre</th>
                                             <th>Especie</th> 
                                             <th>Fecha de nacimiento</th>  
                                             <th>Id de Customer</th>
+                                            <th>Nombre de Customer</th>
                                             <th>Opciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="filteredTableBody">
                                         <tr th:each="mascota : ${pets}">
-                                            <td th:text="${mascota.id}"></td>
-                                            <td th:text="${mascota.name}"></td>
-                                            <td th:text="${mascota.species}"></td>
-                                            <td th:text="${mascota.dob}"></td>
-                                            <td th:text="${mascota.customers.id}"></td>
+                                            <td><span class="mascotaId" th:text="${mascota.id}"></span></td>
+                                            <td><span class="mascotaName" th:text="${mascota.name}"></span></td>
+                                            <td><span class="mascotaSpecies" th:text="${mascota.species}"></span></td>
+                                            <td><span class="mascotaDob" th:text="${mascota.dob}"></span></td>
+                                            <td><span class="mascotaCustomersId" th:text="${mascota.customers.id}"></span></td>
+                                            <td><span class="mascotaCustomersFirstName" th:text="${mascota.customers.firstname}"></span></td>
                                             <td>
-                                                <a th:href="@{'/pet/update/' + ${mascota.id}}"><button class="button btn-primary">Update</button></a>
-                                                <a th:href="@{'/delete/' + ${mascota.id}}"><button class="button btn-danger">Delete</button></a>
+                                                <div>
+                                                    <a th:href="@{'/pet/update/' + ${mascota.id}}"><button class="btn btn-primary btn-sm add mx-2">Update</button></a>
+                                                    <a th:href="@{'/delete/' + ${mascota.id}}"><button class="btn btn-danger btn-sm add mx-2">Delete</button></a>
+                                                </div>
                                             </td>
                                         </tr>                                    
                                     </tbody>
                                 </table>
-                                <div>
-                                    <a th:href="@{/pet/pet_form}"><button class="btn btn-success">Añadir</button></a>
-                                </div>
+                            </table>
+                            <div>
+                                <a th:href="@{/pet/pet_form}"><button class="btn btn-dark">Add</button></a>
+                            </div>
                         </div>
                         </main>
                     </div>
@@ -148,5 +182,5 @@
             </div>
         </div>
     </body>
-
+    <script th:src="@{../js/filter.js}"></script>
 </html>

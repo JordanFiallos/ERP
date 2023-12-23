@@ -58,9 +58,7 @@ public class ProductManagingController {
 
     @GetMapping("/products_list")
     public String ShowList(Model model) {
-
         model.addAttribute("products", productoservicelmpl.llistarProductos());
-
         return "products/products_list";
     }
 
@@ -76,18 +74,17 @@ public class ProductManagingController {
         return "redirect:/products_list";
     }
 
-    @PostMapping("/SaveProducts2")
-    public String ShowResult2(Product products, Model model) {
-        String resultMessage = productoservicelmpl.afegirProducto2(products);
+    @PostMapping("/SaveProductsEffectivePurchase")
+    public String ShowResult2(Product products, Model model, @RequestParam(required = false, name = "quantitySumar") int quantitySumar) {
+        String resultMessage = productoservicelmpl.afegirProducto2(products,quantitySumar);
         model.addAttribute("products", resultMessage);
         return "redirect:/products_list";
     }
 
     @GetMapping("/products_purchase")
     public String ShowListPurchase(Model model) {
-
         model.addAttribute("products", productoservicelmpl.llistarProductos());
-
+        
         return "products/products_purchase";
     }
 

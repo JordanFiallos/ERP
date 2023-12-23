@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface billDAO extends JpaRepository<Bill, Long> {
 
-    List<Bill> findByCustomer(Customer customer);
+    List<Bill> findByCustomerId(Long id);
 
     List<Bill> findByIssueDateBetween(LocalDate startDate, LocalDate endDate);
 

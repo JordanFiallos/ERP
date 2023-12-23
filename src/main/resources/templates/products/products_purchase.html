@@ -88,14 +88,13 @@
     <body class="bg-light-blue">
         <div class="navbar">
             <a th:href="@{/accounting}">Accounting</a>
-            <a th:href="@{/commercial}">Commercial</a>
             <a th:href="@{/customer/list}">Seller</a>
             <a th:href="@{/employee_list}">Human_resources</a>
             <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
-            <a th:href="@{/supplier}">Purchase_managment</a>
+            <a th:href="@{/supplier}">Purchase_management</a>
             <a th:href="@{/sells_listCompras}">Bills</a>
             <div class="botonLogout">
-                <a href="@{/logout}" class="btn btn-primary">Logout</a>
+                <a th:href="@{/logout}" class="btn btn-dark">Logout</a>
             </div>
         </div>
 
@@ -109,7 +108,8 @@
                                 <table class="table table-bordered table-striped custom-table">
                                     <tbody>
                                         <tr>
-                                            <td><a th:href="@{/products_list}">Invoices</a></td>
+                                            <td><a th:href="@{/supplier}">Suppliers</a></td>
+                                            <td><a th:href="@{/products_list}">Inventary</a></td>
                                             <td> <a th:href="@{/products_form}">Add Products</a></td>
                                             <td> <a th:href="@{/products_purchase}">Purchases</a></td>
                                             <td><a href="#">Calendar</a></td>
@@ -129,7 +129,7 @@
 
                                     <!-- Search and filter section -->
                                     <div class="form-group">
-                                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="filterProducts()">
+                                        <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('productName')">
                                     </div>
 
                                     <!-- Product list -->
@@ -137,21 +137,21 @@
                                         <tr>
                                             <th>Product</th>
                                             <th>Supplier</th>
-                                            <th>Desciption</th>
-                                            <th>Minim Quantity</th>
+                                            <th>Description</th>
+                                            <th>Max Quantity</th>
                                             <th>Price</th>
                                             <th> </th>
                                         </tr>
                                     </thead>
-                                    <tbody id="productTableBody">
+                                    <tbody id="filteredTableBody">
                                         <tr th:each="product : ${products}">
                                             <td><span class="productName" th:text="${product.name}"></span></td>
                                             <td><span class="productSupplier" th:text="${product.supplier != null ? product.supplier.firstname : ''}"></span></td>
                                             <td><span class="productDesciption" th:text="${product.description}"></span></td>
                                             <td><span th:text="${product.minimQuantity}"></span></td>
                                             <td><span class="productPrice" th:text="${product.price}"></span></td>
-                                            <td >
-                                                <button class="btn btn-success btn-sm add mx-2 productQuantity" onclick="confirmPurchase(this)" data-toggle="modal" data-target="#confirmUpdateModal" 
+                                            <td>
+                                                <button class="btn btn-warning btn-sm add mx-2 productQuantity" onclick="confirmPurchase(this)" data-toggle="modal" data-target="#confirmUpdateModal" 
                                                         th:data-id="${product.id}" th:data-restminim="${product.restminim}" th:disabled="${product.restminim le 0}">
                                                     Buy
                                                 </button>
@@ -189,10 +189,10 @@
                     </div>
                 </div>
             </div>
-
-            <script th:src="@{js/shopping.js}"></script>
         </div>
     </body>
+    <script th:src="@{js/shopping.js}"></script>
+    <script th:src="@{js/filter.js}"></script>
 </html>
 
 

@@ -28,5 +28,4 @@ public class ConfiguracioWeb implements WebMvcConfigurer {
         registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
         registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
     }
-
 }

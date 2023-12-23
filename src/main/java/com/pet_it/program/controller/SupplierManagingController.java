@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
- * localhost:8080/supplier
+ * 
  * @author Ricard
  */
 @Controller
@@ -42,7 +42,8 @@ public class SupplierManagingController {
     @PostMapping("/supplier/form")
     public String submitFormSupplier(Supplier supplier, Model model) {
         supplierService.savePerson(supplier);
-        return "suppliers/suppliers_info";
+        //return "suppliers/suppliers_info";
+        return "redirect:/supplier";
     }
     
     @GetMapping("/supplier_update/{id}")

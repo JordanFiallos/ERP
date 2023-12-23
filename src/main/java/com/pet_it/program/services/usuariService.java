@@ -38,7 +38,10 @@ public class usuariService implements UserDetailsService{
        if(persona == null){
            throw new UsernameNotFoundException(username);
        }
-       
+        if(persona.getState()==0){
+            log.info("El usuario ha excedido los intentos");
+            throw new RuntimeException("Tu usuario se ha quedado sin intentos, contacte con un administrador para poder acceder");
+        }
        var rols = new ArrayList<GrantedAuthority>();
        
         for (Role rol: persona.getRols()) {

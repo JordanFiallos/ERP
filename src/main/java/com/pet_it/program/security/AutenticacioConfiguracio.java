@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -45,12 +47,26 @@ public class AutenticacioConfiguracio {
                 .requestMatchers("/pet/pet-inicio/**").hasAnyAuthority("VETERINARIAN")
                 .requestMatchers("/visits/visits_form/**").hasAnyAuthority("VETERINARIAN")
                 .requestMatchers("/supplier/**").hasAnyAuthority("PURCHASE")
+                .requestMatchers("/login/**").permitAll()
                 .anyRequest().authenticated())
+                
                 .formLogin((form) -> form
-                .loginPage("/login").permitAll())
+                .loginPage("/login").failureHandler(auth_FailureHandler()).successHandler(auth_SuccessHandler()).permitAll())
                 .logout((logout) -> logout.deleteCookies("JSESSIONID").logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/inicio"))
+                
                 .exceptionHandling((exception) -> exception.accessDeniedPage("/errors/error403")).build();
 
         
     }
+    @Bean
+    public AuthenticationFailureHandler auth_FailureHandler(){
+        return new AuthFailureHandler();
+    }
+    
+    @Bean
+    public AuthenticationSuccessHandler auth_SuccessHandler(){
+        return new AuthSuccessHandler();
+    }
+        
+
 }

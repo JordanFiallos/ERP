@@ -97,14 +97,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="sidebar"></div>
         <div class="navbar">
             <a th:href="@{/accounting}">Accounting</a>
-            <a th:href="@{/commercial}">Commercial</a>
             <a th:href="@{/customer/list}">Seller</a>
             <a th:href="@{/employee_list}">Human_resources</a>
             <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
             <a th:href="@{/supplier}">Purchase_managment</a>
             <a th:href="@{/sells_listCompras}">Bills</a>
             <div class="botonLogout">
-                <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
+                <a th:href="@{/logout}" class="btn btn-dark">Logout</a>
             </div>
         </div>
 
@@ -125,7 +124,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                                     <div class="form-group">
                                         <label for="password">Password: </label>
-                                        <input type="password" name="password" id="password" class="form-control" th:value="*{password}" required>
+                                        <input type="password" name="password" id="password" class="form-control" th:field="*{password}">
                                     </div>
 
                                     <div class="form-group">
@@ -133,14 +132,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                         <input type="datetime-local" name="nextAvailableWorkTime" id="nextAvailableWorkTime" class="form-control" th:value="*{nextAvailableWorkTime}" required>
                                     </div>
 
-                                    <h1 class="text-center">
+                                    <div class="d-flex justify-content-center">
                                         <input type="hidden" id="id" th:field="*{id}">
                                         <button type="submit" class="btn btn-primary">Submit</button>
-                                    </h1>
-
-                                    <h1 class="text-center mt-4 mb-4">
-                                        <a th:href="@{/employee_list}" class="btn btn-secondary btn-sm">List Employees</a>
-                                    </h1>
+                                        <button class="btn btn-secondary add mx-2">
+                                            <a th:href="@{/employee_list}" th:style="'text-decoration: none; color: inherit;'">List Employees</a>
+                                        </button>
+                                    </div>
                                 </form>
                             </table>
 
