@@ -6,6 +6,7 @@ package com.pet_it.program.services;
 
 import com.pet_it.program.domain.Product;
 import com.pet_it.program.domain.Sells;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -25,6 +26,6 @@ public interface sellService {
     Sells cercarSells(Sells sells);
 
     Sells afegirSells(Sells sells);
-
+    
     /* public List<Sells> obtenerComprasPorMesYProducto(List<Product> listaProductos, Sells sells);*/
 }

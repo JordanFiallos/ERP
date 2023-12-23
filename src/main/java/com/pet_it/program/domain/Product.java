@@ -13,6 +13,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import lombok.Data;
 
 /**
@@ -55,5 +57,8 @@ public class Product {
 
     @Column(name = "quantity")
     private int quantity;
+
+    @Column(name = "Datebuy")
+    private LocalDate Datebuy;
 
 }

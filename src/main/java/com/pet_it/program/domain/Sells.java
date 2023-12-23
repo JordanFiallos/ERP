@@ -39,6 +39,10 @@ public class Sells {
     private Product product;
 
     @ManyToOne
+    @JoinColumn(name = "supplier", nullable = false)
+    private Supplier supplier;
+
+    @ManyToOne
     @JoinColumn(name = "customer", nullable = true)
     private Customer customer;
 
@@ -57,5 +61,8 @@ public class Sells {
 
     @Column(name = "quantity_sold")
     private int quantitySold;
+
+    @Column(name = "deliveryDateString")
+    private String deliveryDateString;
 
 }
