@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Calendar</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <style>
+            .supplier {
+                padding: 10px;
+                border: 1px solid #ddd;
+                margin-bottom: 10px;
+            }
+            .supplier:hover {
+                background-color: #f1f1f1;
+            }
+            .supplier .name {
+                font-weight: bold;
+            }
+            .supplier .add,
+            .supplier .remove {
+                cursor: pointer;
+                margin-left: 10px;
+            }
+            .custom-table tbody {
+                background-color: #f8f9fa; /* Color gris claro */
+            }
+            .bg-light-blue {
+                background-color: #4BA2CD; /* Utiliza el código de color que desees */
+            }
+
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .navbar {
+                background-color: #7dacbc;
+                overflow: hidden;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+            }
+
+            .botonLogout {
+                margin-left: auto;
+            }
+
+            .navbar a {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 1vh 1vh;
+                text-decoration: none;
+            }
+
+            .navbar button {
+                margin-left: 1rem;
+            }
+
+            .sidebar {
+                width: 200px;
+                position: fixed;
+                height: 100%;
+                background-image: url("images/i-Login.jpg");
+                background-size: cover;
+                overflow-x: hidden;
+                padding-top: 60px;
+            }
+
+            .sidebar a {
+                padding: 10px;
+                text-decoration: none;
+                font-size: 18px;
+                color: #fff;
+                display: block;
+                transition: background-color 0.3s;
+            }
+
+            .sidebar a:hover {
+                background-color: #4CAF50;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            .main-content .table-responsive {
+                text-align: center;
+            }
+
+            table.grid {
+                border-spacing: 10px;
+            }
+
+            table.grid td {
+                padding: 15px;
+                padding-left: 120px;
+                padding-right:  120px;
+                background-color: #f0f0f0;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body class="bg-light-blue">
+
+        <div class="sidebar"></div>
+
+        <div class="navbar">
+            <a th:href="@{/accounting}">Accounting</a>
+            <a th:href="@{/customer/list}">Seller</a>
+            <a th:href="@{/employee_list}">Human_resources</a>
+            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
+            <a th:href="@{/supplier}">Purchase_management</a>
+            <a th:href="@{/sells_listCompras}">Bills</a>
+            <div class="botonLogout">
+                <a th:href="@{/logout}" class="btn btn-dark">Logout</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="table-responsive">
+                <!-- sub menu container -->
+                <!-- valores principales -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table text-center">
+                                <table class="table table-bordered table-striped custom-table">
+                                    
+                                    <!-- Search and filter section -->
+                                    <div class=" form-group row g-3">
+                                        <div class="col-md-9">
+                                            <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('calendarScheduledDate')">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select id="selectInput" class="form-control">
+                                                <option value="calendarScheduledDate" selected>scheduledDate</option>
+                                                <option value="calendarEmployeeName">employeeName</option>
+                                                <option value="calendarObjectiveName">objectiveName</option>
+                                                <option value="calendarCauseName">causeName</option>
+                                                <option value="calendarComentario">comentario</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Calendar list -->
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>scheduledDate</th>
+                                            <th>employeeName</th>
+                                            <th>objectiveName</th>
+                                            <th>causeName</th>
+                                            <th>comentario</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="filteredTableBody">
+                                        <tr th:each="calendar : ${programacionGlobal}">
+                                            <td><span class="calendarScheduledDate" th:text="${calendar.scheduledDate}"></span></td>
+                                            <td><span class="calendarEmployeeName" th:text="${calendar.employeeName}"></span></td>
+                                            <td><span class="calendarObjectiveName" th:text="${calendar.objectiveName}"></span></td>
+                                            <td><span class="calendarCauseName" th:text="${calendar.causeName}"></span></td>
+                                            <td><span class="calendarComentario" th:text="${calendar.comentario}"></span></td>
+                                            <td>
+                                                <div>
+                                                    <button class="btn btn-primary btn-sm add mx-2" th:if="${calendar.rutaModificacion != '0'}" th:disabled="false">
+                                                        <a th:href="@{${calendar.rutaModificacion}}" th:style="'text-decoration: none; color: inherit;'">Update</a>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script th:src="@{js/myjs.js}"></script>
+    <script th:src="@{js/filter.js}"></script>
+</html>

@@ -4,9 +4,6 @@
  */
 package com.pet_it.program.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import java.time.LocalDateTime;
 import lombok.Data;
 
@@ -14,10 +11,20 @@ import lombok.Data;
  *
  * @author Ricard
  */
+@Data
 public class Calendar{
     private Long id;
     private LocalDateTime scheduledDate;
-    private String comentario;
-    //arreglar columnas long y String
+    private Long employeeId;
+    private String employeeName;
     
+    private Long objectiveId;
+    private String objectiveName;
+    
+    private Long causeId;
+    private String causeName;
+    
+    private String comentario;
+    
+    private String rutaModificacion;
 }
