@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @Slf4j
 public class ControllerProgram {
+
     @GetMapping("/inicio")
     public String inicio() {
         return "inicio";
@@ -34,7 +35,7 @@ public class ControllerProgram {
     public String human_resources() {
         return "human_resources";
     }
-    
+
     @GetMapping("/login")
     public String login() {
         return "login";
@@ -53,5 +54,10 @@ public class ControllerProgram {
     @GetMapping("/veterinarian")
     public String veterinarian() {
         return "veterinarian";
+    }
+
+    @GetMapping("/Emails")
+    public String Emails() {
+        return "Emails";
     }
 }
