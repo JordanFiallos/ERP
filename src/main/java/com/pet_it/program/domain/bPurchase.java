@@ -4,6 +4,7 @@
  */
 package com.pet_it.program.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,7 +17,7 @@ import lombok.Data;
  * @author Ricard
  */
 @Entity
-@Table(name = "purchase")
+@Table(name = "Purchase")
 @Data
 public class bPurchase extends bBill {
     @ManyToOne
@@ -24,6 +25,7 @@ public class bPurchase extends bBill {
     private Product product;
     @ManyToOne
     @JoinColumn(name="id_suppler")
-    private Supplier suppler;
-    private LocalDateTime scheduledDaliveryDate;
+    private Supplier supplier;
+    @Column(name="scheduled_delivery_date")
+    private LocalDateTime scheduledDeliveryDate;
 }

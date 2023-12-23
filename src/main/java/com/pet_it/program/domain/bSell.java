@@ -15,7 +15,7 @@ import lombok.Data;
  * @author Ricard
  */
 @Entity
-@Table(name = "sell")
+@Table(name = "Sell")
 @Data
 public class bSell extends bBill {
     
