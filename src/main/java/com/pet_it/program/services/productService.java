@@ -12,14 +12,16 @@ import java.util.List;
  * @author Jordan
  */
 public interface productService {
-    
-    public  List<Product> llistarProductos();
-    
+
+    public List<Product> llistarProductos();
+
     void eliminarProducto(Product product);
-    
+
     Product getProductoById(Long productId);
-    
+
     Product cercarProducto(Product product);
-    
+
     Product afegirProducto(Product product);
+
+    public double getTotalPrice(double quantity, int price);
 }

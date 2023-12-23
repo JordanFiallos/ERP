@@ -6,9 +6,12 @@ package com.pet_it.program.services;
 
 import com.pet_it.program.DAO.productDAO;
 import com.pet_it.program.domain.Product;
+import com.pet_it.program.domain.Sells;
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 /**
  *
@@ -19,6 +22,9 @@ public class productServiceImpl implements productService {
 
     @Autowired
     private productDAO productodao;
+
+    @Autowired
+    private sellService sellservice;
 
     @Override
     public List<Product> llistarProductos() {
@@ -38,19 +44,21 @@ public class productServiceImpl implements productService {
 
     @Override
     public Product afegirProducto(Product product) {
+        product.setDatebuy(LocalDate.now());
         product.setInterest(0);
         return this.productodao.save(product);
     }
-    
+
     public String afegirProducto2(Product product, int quantitySumar) {
         int minimQuantity = product.getMinimQuantity();
-        
+
         if (isQuantityValid(quantitySumar, minimQuantity)) {
             int oldQuantity = product.getQuantity();
-            int quantityFinal = oldQuantity + quantitySumar ;
+            int quantityFinal = oldQuantity + quantitySumar;
             product.setQuantity(quantityFinal);
-            
+
             afegirProducto(product);
+
             return "Producto añadido exitosamente.";
         } else {
             return "La cantidad ingresada no es válida.";
@@ -76,4 +84,8 @@ public class productServiceImpl implements productService {
         return quantity >= 0 && quantity <= minimQuantity;
     }
 
+    @Override
+    public double getTotalPrice(double quantity, int price) {
+        return quantity * price;
+    }
 }

@@ -9,6 +9,7 @@ import com.pet_it.program.domain.Product;
 import com.pet_it.program.domain.Customer;
 import com.pet_it.program.domain.Employee;
 import com.pet_it.program.domain.Sells;
+import com.pet_it.program.domain.Supplier;
 import com.pet_it.program.services.customerService;
 import com.pet_it.program.services.employeeService;
 import com.pet_it.program.services.productServiceImpl;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.pet_it.program.services.productService;
+import com.pet_it.program.services.supplierService;
 import com.pet_it.program.services.visitService;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -51,10 +53,15 @@ public class SalesController {
     @Autowired
     private employeeService employeeservice;
 
-    @GetMapping("/sells_form")
+    @Autowired
+    private supplierService supplierservice;
+
+    /*@GetMapping("/sells_form")
     public String ShowForm(Sells sells, Model model) {
         List<Visit> visit = visitservice.llistarVisites();
         model.addAttribute("visit", visit);
+        List<Supplier> suppliers = supplierservice.getAllPersons();
+        model.addAttribute("suppliers", suppliers);
         List<Product> product = productservice.llistarProductos();
         model.addAttribute("product", product);
         List<Customer> customer = customerservice.getAllCustomers();
@@ -83,7 +90,7 @@ public class SalesController {
         return "redirect:/sells_listCompras";
     }
 
-    /*@GetMapping("/employee_list")
+    @GetMapping("/employee_list")
     public String ListEmployees(Model model) {
         List<Employee> employees = employeeservicelmpl.llistarUsuaris();
         model.addAttribute("employees", employees);
@@ -105,11 +112,11 @@ public class SalesController {
     }*/
     @GetMapping("/sells_listCompras")
     public String ShowPurchases(Model model) {
+        List<Sells> sells = sellService.getPurchases();
 
-        model.addAttribute("purchases", sellService.getPurchases());
+        model.addAttribute("sells", sells);
 
         return "sells/sells_listCompras";
-
     }
 
     @GetMapping("/sells_listSales")
