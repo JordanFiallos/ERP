@@ -1,0 +1,15 @@
+<div th:fragment="header">
+    <div class="sidebar"></div>
+    <div class="navbar">
+        <a th:href="@{/calendar}">Inicio</a>
+        <!--a th:href="@{/accounting}">Accounting</a-->
+        <a th:href="@{/customer/list}">Seller</a>
+        <a th:href="@{/employee_list}">Human_resources</a>
+        <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
+        <a th:href="@{/supplier}">Purchase_management</a>
+        <a th:href="@{/sells_listCompras}">Bills</a>
+        <div class="botonLogout">
+            <a th:href="@{/logout}" class="btn btn-dark">Logout</a>
+        </div>
+    </div>
+</div>

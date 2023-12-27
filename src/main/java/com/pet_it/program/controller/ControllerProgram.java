@@ -15,7 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @Slf4j
 public class ControllerProgram {
-
+    
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/calendar";
+    }
+    
     @GetMapping("/inicio")
     public String inicio() {
         return "inicio";
