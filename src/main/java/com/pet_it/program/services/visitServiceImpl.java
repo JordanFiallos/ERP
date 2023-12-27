@@ -6,6 +6,7 @@ package com.pet_it.program.services;
 
 import com.pet_it.program.DAO.visitDAO;
 import com.pet_it.program.domain.Visit;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,9 @@ public class visitServiceImpl implements visitService{
     public Visit getVisitById(Long id) {
         return visitDao.findById(id).orElse(null);
     }
-
-   
+    
+    @Override
+    public List<Visit> llistarVisitesDesdeFecha(LocalDateTime fecha) {
+        return visitDao.listVisitsSinceDate(fecha);
+    }
 }

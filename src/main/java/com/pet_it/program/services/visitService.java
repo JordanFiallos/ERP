@@ -5,6 +5,7 @@
 package com.pet_it.program.services;
 
 import com.pet_it.program.domain.Visit;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -16,4 +17,5 @@ public interface visitService {
     void agregarVisita(Visit visita);
     void eliminarVisita(Visit visita);
     Visit getVisitById(Long id);
+    public List<Visit> llistarVisitesDesdeFecha(LocalDateTime fecha);
 }

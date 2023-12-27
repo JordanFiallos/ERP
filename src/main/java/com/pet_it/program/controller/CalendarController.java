@@ -4,31 +4,33 @@
  */
 package com.pet_it.program.controller;
 
-import com.pet_it.program.services.calendarServiceImpl;
+import com.pet_it.program.domain.Calendar;
+import com.pet_it.program.services.calendarService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
  * @author Ricard
+ * http://localhost:8080/calendar
+ * http://localhost:8080/calendar?fecha=30/12/2023
  */
 @Controller
 public class CalendarController {
     @Autowired
-    private calendarServiceImpl calendarServiceImpl;
+    private calendarService calendarService;
     
     @GetMapping("/calendar")
-    public String showList(Model model) {
+    public String showList(@RequestParam(name="fecha", required=false, defaultValue="no") String fecha, Model model) {
+        List<Calendar> programacionDeVisitas = calendarService.listadoVisitas(fecha);
+        List<Calendar> programacionDeRecepcionProductos = calendarService.listadoPurchases(fecha);
+        List<Calendar> programacionGlobal = calendarService.caledarioGlobal(programacionDeVisitas, programacionDeRecepcionProductos);
         
-        return "";
-    }
-    
-    @PostMapping("/calendar")
-    public String showList(@PathVariable int tiempo, Model model) {
-        return "";
+        model.addAttribute("programacionGlobal",programacionGlobal);
+        return "calendar/calendar_list";
     }
 }
