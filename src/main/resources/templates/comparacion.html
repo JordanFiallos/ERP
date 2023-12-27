@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Ventas & Compras</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <style>
+            .custom-table tbody {
+                background-color: #f8f9fa; /* Color gris claro */
+            }
+            .bg-light-blue {
+                background-color: #4BA2CD; /* Utiliza el código de color que desees */
+            }
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .navbar {
+                background-color: #7dacbc;
+                overflow: hidden;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+            }
+
+            .botonLogout {
+                margin-left: auto;
+            }
+
+            .navbar a {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 1vh 1vh;
+                text-decoration: none;
+            }
+
+            .navbar button {
+                margin-left: 1rem;
+            }
+
+            .sidebar {
+                width: 200px;
+                position: fixed;
+                height: 100%;
+                background-image: url("images/i-Login.jpg");
+                background-size: cover;
+                overflow-x: hidden;
+                padding-top: 60px;
+            }
+
+            .sidebar a {
+                padding: 10px;
+                text-decoration: none;
+                font-size: 18px;
+                color: #fff;
+                display: block;
+                transition: background-color 0.3s;
+            }
+
+            .sidebar a:hover {
+                background-color: #4CAF50;
+            }
+
+            .main-content {
+                margin-left: 200px;
+                padding: 20px;
+            }
+
+            .main-content .table-responsive {
+                text-align: center;
+            }
+
+            table.grid {
+                border-spacing: 10px;
+            }
+
+            table.grid td {
+                padding: 15px;
+                padding-left: 120px;
+                padding-right:  120px;
+                background-color: #f0f0f0;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body class="bg-light-blue">
+        <div class="sidebar"></div>
+        <div class="navbar">
+            <a th:href="@{/accounting}">Accounting</a>
+            <a th:href="@{/customer/list}">Seller</a>
+            <a th:href="@{/employee_list}">Human_resources</a>
+            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
+            <a th:href="@{/supplier}">Purchase_management</a>
+            <a th:href="@{/sells_listCompras}">Bills</a>
+            <div class="botonLogout">
+                <a th:href="@{/logout}" class="btn btn-dark">Logout</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="table-responsive">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table grid" >
+                                <table class="table table-bordered table-striped custom-table">
+                                    <tbody>
+                                        <tr>
+                                            <td><a th:href="@{/supplier}">Suppliers</a></td>
+                                            <td><a th:href="@{/products_list}">Inventary</a></td>
+                                            <td> <a th:href="@{/products_form}">Add Products</a></td>
+                                            <td> <a th:href="@{/products_purchase}">Purchases</a></td>
+                                            <td><a href="#">Calendar</a></td>
+                                            <td><a th:href="@{/comparacion}">Comparacion</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <form method="POST" th:action="@{/comparacion}">
+                    <div class="form-group">
+                        <label for="semana">Semana:</label> 
+                        <input type="text" class="form-control" name="semana" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="anyo">Año:</label> 
+                        <input type="text" class="form-control" name="anyo" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Filtrar</button>
+                </form>
+                <br>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Facturas compra</h1>
+                            <table class="table">
+                                <table class="table table-bordered table-striped custom-table">
+                                    <!-- Inventary list -->
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>OperationDate</th>
+                                            <th>Total</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="filteredTableBody">
+                                        <tr th:each="bill : ${bills}">
+                                            <td><span class="productId" th:text="${bill.id}"></span></td>
+                                            <td><span class="productDescription" th:text="${bill.operationDate}"></span></td>
+                                            <td><span class="productMinimQuantity" th:text="${bill.total}"></span></td>
+                                            <td><span class="productQuantity" th:text="${bill.quantity}"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered custom-table">
+                                    <tr>
+                                        <th>Compras totales</th>
+                                        <th>Compras esta semana</th>
+                                        <th>Total gastado</th>
+                                        <th>Total gastado esta semana</th>
+                                        <th>Cantidad total</th>
+                                    </tr>
+                                    <tr>
+                                        <td><p th:text="${purchases}"></p></td>
+                                        <td><p th:text="${purchaseWeek}"></p></td>
+                                        <td><p th:text="${total}"></p></td>
+                                        <td><p th:text="${totalWeek}"></p></td>
+                                        <td><p th:text="${quantities}"></p></td>
+                                    </tr>
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Facturas Sell</h1>
+                            <table class="table">
+                                <table class="table table-bordered table-striped custom-table">
+                                    <!-- Inventary list -->
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>OperationDate</th>
+                                            <th>Total</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="filteredTableBody">
+                                        <tr th:each="sell : ${sells}">
+                                            <td><span class="productId" th:text="${sell.id}"></span></td>
+                                            <td><span class="productDescription" th:text="${sell.operationDate}"></span></td>
+                                            <td><span class="productMinimQuantity" th:text="${sell.total}"></span></td>
+                                            <td><span class="productQuantity" th:text="${sell.quantity}"></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-bordered custom-table">
+                                    <tr>
+                                        <th>Ventas totales</th>
+                                        <th>Ventas esta semana</th>
+                                        <th>Total gastado</th>
+                                        <th>Total gastado esta semana</th>
+                                        <th>Cantidad total</th>
+                                    </tr>
+                                    <tr>
+                                        <td><p th:text="${sellsTotal}"></p></td>
+                                        <td><p th:text="${sellsTotalWeek}"></p></td>
+                                        <td><p th:text="${totalSells}"></p></td>
+                                        <td><p th:text="${totalSellsWeek}"></p></td>
+                                        <td><p th:text="${sellQuantities}"></p></td>
+                                    </tr>
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
