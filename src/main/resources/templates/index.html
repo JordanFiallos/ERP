@@ -138,18 +138,7 @@
     </head>
 
     <body>
-        <div class="navbar">
-            <a th:href="@{/accounting}">Accounting</a>
-            <a th:href="@{/customer/list}">Seller</a>
-            <a th:href="@{/employee_list}">Human_resources</a>
-            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
-            <a th:href="@{/supplier}">Purchase_managment</a>
-            <a th:href="@{/products_list}">Bills</a>
-            <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
-        </div>
-        <div class="sidebar">
-
-        </div>
+        <header th:replace="fragments/header :: header"></header>
         <div class="main">
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
                 <section class="jumbotron text-center">

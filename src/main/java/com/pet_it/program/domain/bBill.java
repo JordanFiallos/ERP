@@ -29,4 +29,5 @@ public class bBill {
     private int quantity;
     private float total;
     private LocalDateTime operationDate;
+     private int semana;
 }

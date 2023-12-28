@@ -7,73 +7,6 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <style>
-            .custom-table tbody {
-                background-color: #f8f9fa; /* Color gris claro */
-            }
-            .bg-light-blue {
-                background-color: #4BA2CD; /* Utiliza el código de color que desees */
-            }
-            body {
-                margin: 0;
-                font-family: Arial, sans-serif;
-            }
-
-            .navbar {
-                background-color: #7dacbc;
-                overflow: hidden;
-                display: flex;
-                justify-content: left;
-                align-items: center;
-            }
-
-            .botonLogout {
-                margin-left: auto;
-            }
-
-            .navbar a {
-                float: left;
-                display: block;
-                color: white;
-                text-align: center;
-                padding: 1vh 1vh;
-                text-decoration: none;
-            }
-
-            .navbar button {
-                margin-left: 1rem;
-            }
-
-            .sidebar {
-                width: 200px;
-                position: fixed;
-                height: 100%;
-                background-image: url("images/i-Login.jpg");
-                background-size: cover;
-                overflow-x: hidden;
-                padding-top: 60px;
-            }
-
-            .sidebar a {
-                padding: 10px;
-                text-decoration: none;
-                font-size: 18px;
-                color: #fff;
-                display: block;
-                transition: background-color 0.3s;
-            }
-
-            .sidebar a:hover {
-                background-color: #4CAF50;
-            }
-
-            .main-content {
-                margin-left: 200px;
-                padding: 20px;
-            }
-
-            .main-content .table-responsive {
-                text-align: center;
-            }
             .shopping-cart {
                 margin-top: 20px;
             }
@@ -81,22 +14,11 @@
             .cart-item {
                 margin-bottom: 10px;
             }
-
         </style>
+        <link th:href="@{../css/main.css}" rel="stylesheet"/>
     </head>
-    <div class="sidebar"></div>
     <body class="bg-light-blue">
-        <div class="navbar">
-            <a th:href="@{/accounting}">Accounting</a>
-            <a th:href="@{/customer/list}">Seller</a>
-            <a th:href="@{/employee_list}">Human_resources</a>
-            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
-            <a th:href="@{/supplier}">Purchase_management</a>
-            <a th:href="@{/sells_listCompras}">Bills</a>
-            <div class="botonLogout">
-                <a th:href="@{/logout}" class="btn btn-dark">Logout</a>
-            </div>
-        </div>
+        <header th:replace="fragments/header :: header"></header>
 
         <div class="main-content">
             <div class="table-responsive">
@@ -112,7 +34,6 @@
                                             <td><a th:href="@{/products_list}">Inventary</a></td>
                                             <td> <a th:href="@{/products_form}">Add Products</a></td>
                                             <td> <a th:href="@{/products_purchase}">Purchases</a></td>
-                                            <td><a href="#">Calendar</a></td>
                                         </tr>
                                     </tbody>
                                 </table>

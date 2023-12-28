@@ -40,6 +40,7 @@
                                         <div class="col-md-3">
                                             <select id="selectInput" class="form-control">
                                                 <option value="calendarScheduledDate" selected>Scheduled Date</option>
+                                                <option value="calendarTipo">Tipo</option>
                                                 <option value="calendarEmployeeName">Employee</option>
                                                 <option value="calendarObjectiveName">Pet/Product</option>
                                                 <option value="calendarCauseName">Customer/Supplier</option>
@@ -52,6 +53,7 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Scheduled Date</th>
+                                            <th>Tipo</th>
                                             <th>Employee</th>
                                             <th>Pet/Product</th>
                                             <th>Customer/Supplier</th>
@@ -61,7 +63,8 @@
                                     </thead>
                                     <tbody id="filteredTableBody">
                                         <tr th:each="calendar : ${programacionGlobal}">
-                                            <td><span class="calendarScheduledDate" th:text="${calendar.scheduledDate}"></span></td>
+                                            <td><span class="calendarScheduledDate" th:text="${calendar.scheduledDateString}"></span></td>
+                                            <td><span class="calendarTipo" th:text="${calendar.tipo}"></span></td>
                                             <td><span class="calendarEmployeeName" th:text="${calendar.employeeName}"></span></td>
                                             <td><span class="calendarObjectiveName" th:text="${calendar.objectiveName}"></span></td>
                                             <td><span class="calendarCauseName" th:text="${calendar.causeName}"></span></td>
