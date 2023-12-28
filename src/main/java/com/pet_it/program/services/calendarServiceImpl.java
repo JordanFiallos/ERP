@@ -13,10 +13,12 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Service;
  * @author Ricard
  */
 @Service
+@Slf4j
 public class calendarServiceImpl implements calendarService {
     @Autowired
     private visitService visitService;
@@ -45,7 +48,9 @@ public class calendarServiceImpl implements calendarService {
             
             i++;
             visitsCalendar.setId(i);
+            visitsCalendar.setTipo("Visita");
             visitsCalendar.setScheduledDate(visita.getScheduledDate());
+            visitsCalendar.setScheduledDateString(formatDateTimeLocal(visita.getScheduledDate()));
             visitsCalendar.setEmployeeId(visita.getEmployee().getId());
             visitsCalendar.setEmployeeName(visita.getEmployee().getUsername());
             
@@ -78,8 +83,9 @@ public class calendarServiceImpl implements calendarService {
             
             i++;
             visitsCalendar.setId(i);
-            
+            visitsCalendar.setTipo("Compra");
             visitsCalendar.setScheduledDate(compra.getScheduledDeliveryDate());
+            visitsCalendar.setScheduledDateString(formatDateTimeLocal(compra.getScheduledDeliveryDate()));
             visitsCalendar.setEmployeeId(compra.getEmployee().getId());
             visitsCalendar.setEmployeeName(compra.getEmployee().getUsername());
             
@@ -122,8 +128,13 @@ public class calendarServiceImpl implements calendarService {
         try {
             return formatter.parse(dateString);
         } catch (ParseException e) {
-            e.printStackTrace();
+            log.info("Calendario. filtro fecha vacio/nulo, utilizando fecha del sistema.");
             return null;
         }
+    }
+    
+    public static String formatDateTimeLocal(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm");
+        return dateTime.format(formatter);
     }
 }
