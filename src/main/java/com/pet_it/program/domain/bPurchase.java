@@ -5,10 +5,10 @@
 package com.pet_it.program.domain;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Data;
 
@@ -17,7 +17,8 @@ import lombok.Data;
  * @author Ricard
  */
 @Entity
-@Table(name = "Purchase")
+//@Table(name = "Purchase")
+@DiscriminatorValue("Purchase")
 @Data
 public class bPurchase extends bBill {
     @ManyToOne
