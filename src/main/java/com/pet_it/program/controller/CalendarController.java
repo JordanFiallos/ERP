@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  *
  * @author Ricard
- * http://localhost:8080/calendar
- * http://localhost:8080/calendar?fecha=30/12/2023
  */
 @Controller
 public class CalendarController {
