@@ -13,6 +13,7 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Data;
 
@@ -21,6 +22,7 @@ import lombok.Data;
  * @author Ricard
  */
 @Entity
+@Table(name = "b_bill")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
 @Data
@@ -34,5 +36,5 @@ public class bBill {
     private int quantity;
     private float total;
     private LocalDateTime operationDate;
-     private int semana;
+    private int semana;
 }

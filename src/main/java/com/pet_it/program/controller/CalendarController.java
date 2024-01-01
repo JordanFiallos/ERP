@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- *
+ * Controller para mostrar el calendario.
  * @author Ricard
  */
 @Controller
@@ -22,6 +22,14 @@ public class CalendarController {
     @Autowired
     private calendarService calendarService;
     
+    /**
+     * Muestra la lista de la programacion a partir de String fecha.
+     * @param fecha
+     * String en que indicamos una fecha inicial, puede estar vacio.
+     * @param model
+     * Genera lista unificada de eventos a fechas proximas.
+     * @return html
+     */
     @GetMapping("/calendar")
     public String showList(@RequestParam(name="fecha", required=false, defaultValue="no") String fecha, Model model) {
         List<Calendar> programacionDeVisitas = calendarService.listadoVisitas(fecha);

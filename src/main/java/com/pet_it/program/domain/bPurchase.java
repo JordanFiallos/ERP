@@ -25,7 +25,7 @@ public class bPurchase extends bBill {
     @JoinColumn(name="id_product")
     private Product product;
     @ManyToOne
-    @JoinColumn(name="id_suppler")
+    @JoinColumn(name="id_supplier")
     private Supplier supplier;
     @Column(name="scheduled_delivery_date")
     private LocalDateTime scheduledDeliveryDate;
