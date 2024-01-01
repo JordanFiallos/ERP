@@ -113,8 +113,4 @@ public class bBillServiceImpl implements bBillService {
     public int ventasCantidades() {
         return sellDao.sumaCantidadVenta();
     }
-
-    
-    
-    
 }
