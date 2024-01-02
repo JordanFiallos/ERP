@@ -3,22 +3,187 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html>
-    <head xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" class="aos-init">
+    <head>
         <title>Inicio</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Enlaces a Bootstrap y otras bibliotecas -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+        <style>
+            body {
+                background: linear-gradient(135deg, #4BA2CD, #25EEAE);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+                animation: changeColor 10s infinite;
+            }
+
+            @keyframes changeColor {
+                0% {
+                    background-position: 0% 50%;
+                }
+
+                50% {
+                    background-position: 100% 50%;
+                }
+
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+
+            .login-container {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            .login-image {
+                max-width: 100%;
+                height: auto;
+                animation: fadeIn 2s ease-out;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .main-content {
+                text-align: center;
+                margin: 20px;
+            }
+
+            .main-content h1,
+            .main-content h2,
+            .main-content h3 {
+                margin-bottom: 20px;
+            }
+
+            .section-dark {
+                background-color: #333; /* Gris oscuro */
+                color: #fff; /* Texto blanco */
+                padding: 20px;
+                border-radius: 10px;
+                margin-bottom: 20px;
+            }
+
+            .feature-box {
+                border: 1px solid #ddd;
+                padding: 20px;
+                border-radius: 10px;
+                margin-bottom: 20px;
+            }
+
+            .section-light {
+                background-color: #66c2ff; /* Celeste oscuro */
+                color: #000; /* Texto negro */
+                padding: 20px;
+                border-radius: 10px;
+                margin-bottom: 20px;
+            }
+
+            .btn-bottom {
+                margin-top: 20px;
+            }
+        </style>
     </head>
+
     <body>
-        <a th:href="@{/}">Inicio</a>
-        <!--div>
-            <h1>Pagines disponibles fent login</h1>
-            <a th:href="@{/accounting}">Accounting</a>
-            <a th:href="@{/commercial}">Commercial</a>
-            <a th:href="@{/customers}">Sellemers}">Sellr</a>
-            <a th:href="@{/employee_list}">Human_resources</a>
-            <a th:href="@{/veterinarian}">Veterinarian</a>
-            <a th:href="@{/supplier}">Purchase_managment</a>
-        </div-->
+        <div class="container" data-aos="fade-up">
+            <div class="login-container">
+                <img class="login-image" src="images/OIG.png" alt="Logo">
+            </div>
+        </div>
+
+        <div class="main-content section-light" data-aos="fade-up">
+
+            <div class=" main-content section-dark" data-aos="fade-up">
+                <h1>Bienvenido a PETIT: Tu Solución Integral para la Gestión Veterinaria</h1>
+                <h3>En el corazón de la atención veterinaria se encuentra PETIT, tu aliado en la gestión integral de clínicas
+                    veterinarias. Diseñado para satisfacer las necesidades únicas de tu práctica, PETIT redefine la eficiencia y la
+                    excelencia en el cuidado de las mascotas.</h3>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>¿Qué hace a PETIT especial?</h1>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-box border border-dark">
+                        <h2>Gestión de Inventario Eficiente</h2>
+                        <p>Olvídate de las preocupaciones sobre inventarios. PETIT simplifica la gestión de existencias,
+                            ofreciendo un control en tiempo real, alertas automáticas y un seguimiento sin esfuerzo de los productos esenciales.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-box border border-dark">
+                        <h2>Gestión de Compras</h2>
+                        <p>Desde la adquisición de productos hasta la relación con proveedores, 
+                            PETIT optimiza el proceso de compras para que puedas enfocarte en lo que más importa: la atención a tus pacientes.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-box border border-dark">
+                        <h2>Gestión de Ventas</h2>
+                        <p>Con PETIT, llevar un registro detallado de las ventas y transacciones es más fácil que nunca. 
+                            Cada venta se registra de manera eficiente, proporcionándote una visión clara del rendimiento financiero.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-box border border-dark">
+                        <h2>Facturación Electrónica</h2>
+                        <p>Simplifica tus procesos administrativos con la facturación electrónica integrada en PETIT. 
+                            Agiliza la generación de facturas y mejora la eficiencia en el manejo de documentos.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-box border border-dark">
+                        <h2>Envío de Correos Electrónicos</h2>
+                        <p>La comunicación con clientes y proveedores es clave. 
+                            PETIT facilita el envío de correos electrónicos, desde recordatorios de citas hasta comunicados importantes, todo con la facilidad de un clic.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="feature-box border border-dark">
+                        <h2>Análisis de Datos Perspicaz</h2>
+                        <p> Analiza el rendimiento de tu clínica con herramientas visuales potentes. 
+                            Gráficos detallados te brindan información clave para tomar decisiones informadas y planificar el crecimiento.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content section-dark" data-aos="fade-up">
+                <h1>Únete a la Revolución de la Gestión Veterinaria con PETIT</h1>
+                <p>Haz que la gestión de tu clínica sea más fácil, eficiente y centrada en el cuidado de tus pacientes peludos.
+                    Descubre PETIT hoy y experimenta el próximo nivel de excelencia en la atención veterinaria. ¡Porque cada mascota
+                    merece lo mejor!</p>
+            </div>
+
+            <a th:href="@{/login}">
+                <button type="button" class="btn btn-primary btn-bottom">Login</button>
+            </a>
+
+        </div>           
+        <script>
+            AOS.init();
+        </script>
     </body>
 </html>
+
+
+
