@@ -5,8 +5,8 @@
 package com.pet_it.program.domain;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.Data;
 
@@ -15,7 +15,8 @@ import lombok.Data;
  * @author Ricard
  */
 @Entity
-@Table(name = "supplier")
+//@Table(name = "supplier")
+@DiscriminatorValue("Supplier")
 @Data
 public class Supplier extends Person{
     @Column(name = "bureao")

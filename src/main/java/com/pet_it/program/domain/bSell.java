@@ -4,10 +4,10 @@
  */
 package com.pet_it.program.domain;
 
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 import lombok.Data;
 
 /**
@@ -15,7 +15,8 @@ import lombok.Data;
  * @author Ricard
  */
 @Entity
-@Table(name = "sell")
+//@Table(name = "Sell")
+@DiscriminatorValue("Sell")
 @Data
 public class bSell extends bBill {
     

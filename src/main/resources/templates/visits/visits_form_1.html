@@ -12,101 +12,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-        <style>
-            .custom-table tbody {
-                background-color: #f8f9fa; /* Color gris claro */
-            }
-            .bg-light-blue {
-                background-color: #4BA2CD; /* Utiliza el código de color que desees */
-            }
-            body {
-                margin: 0;
-                font-family: Arial, sans-serif;
-            }
-
-            .navbar {
-                background-color: #7dacbc;
-                overflow: hidden;
-                display: flex;
-                justify-content: left;
-                align-items: center;
-            }
-
-            .botonLogout {
-                margin-left: auto;
-            }
-
-            .navbar a {
-                float: left;
-                display: block;
-                color: white;
-                text-align: center;
-                padding: 1vh 1vh;
-                text-decoration: none;
-            }
-
-            .navbar button {
-                margin-left: 1rem;
-            }
-
-            .sidebar {
-                width: 200px;
-                position: fixed;
-                height: 100%;
-                background-image: url("/images/i-Login.jpg");
-                background-size: cover;
-                overflow-x: hidden;
-                padding-top: 60px;
-            }
-
-            .sidebar a {
-                padding: 6px 8px 6px 16px;
-                text-decoration: none;
-                font-size: 25px;
-                color: #818181;
-                display: block;
-            }
-
-            .sidebar a:hover {
-                color: #f1f1f1;
-                background-color: #4CAF50;
-            }
-
-            .main-content {
-                margin-left: 200px;
-                padding: 20px;
-            }
-
-            .main-content .table-responsive {
-                text-align: center;
-            }
-
-            table.grid {
-                border-spacing: 10px;
-            }
-
-            table.grid td {
-                padding: 15px;
-                padding-left: 120px;
-                padding-right:  120px;
-                background-color: #f0f0f0;
-                text-align: center;
-            }
-        </style>
+        <link th:href="@{../../css/main.css}" rel="stylesheet"/>
     </head>
-    <div class="sidebar"></div>
     <body class="bg-light-blue">
-        <div class="navbar">
-            <a th:href="@{/accounting}">Accounting</a>
-            <a th:href="@{/customer/list}">Seller</a>
-            <a th:href="@{/employee_list}">Human_resources</a>
-            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
-            <a th:href="@{/supplier}">Purchase_managment</a>
-            <a th:href="@{/sells_listCompras}">Bills</a>
-            <div class="botonLogout">
-                <a th:href="@{/logout}" class="botonLogout"><button>Logout</button></a>
-            </div>
-        </div>
+        <header th:replace="fragments/header :: header"></header>
 
         <div class="main-content">
             <div class="table-responsive">

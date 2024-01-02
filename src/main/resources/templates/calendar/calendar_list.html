@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Calendar</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link th:href="@{css/main.css}" rel="stylesheet"/>
+    </head>
+    <body class="bg-light-blue">
+        <header th:replace="fragments/header :: header"></header>
+        <div class="main-content">
+            <div class="table-responsive">
+                <!-- sub menu container -->
+                <!-- valores principales -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table text-center">
+                                <table class="table table-bordered table-striped custom-table">
+
+                                    <!-- Get formulario -->
+                                    <div class=" form-group row g-3">
+                                        <form th:action="@{/calendar}" method="get" >
+                                            <div class="col-md-9">
+                                                <input class="form-control" type="text" id="fecha" name="fecha"  placeholder="DD/MM/AAAA" required>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button class="btn btn-dark btn-block" type="submit">Fecha a filtrar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <!-- Search and filter section -->
+                                    <div class=" form-group row g-3">
+                                        <div class="col-md-9">
+                                            <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('calendarScheduledDate')">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select id="selectInput" class="form-control">
+                                                <option value="calendarScheduledDate" selected>Scheduled Date</option>
+                                                <option value="calendarTipo">Tipo</option>
+                                                <option value="calendarEmployeeName">Employee</option>
+                                                <option value="calendarObjectiveName">Pet/Product</option>
+                                                <option value="calendarCauseName">Customer/Supplier</option>
+                                                <option value="calendarComentario">Comentario/Bureau</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Calendar list -->
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Scheduled Date</th>
+                                            <th>Tipo</th>
+                                            <th>Employee</th>
+                                            <th>Pet/Product</th>
+                                            <th>Customer/Supplier</th>
+                                            <th>Comentario/Bureau</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="filteredTableBody">
+                                        <tr th:each="calendar : ${programacionGlobal}">
+                                            <td><span class="calendarScheduledDate" th:text="${calendar.scheduledDateString}"></span></td>
+                                            <td><span class="calendarTipo" th:text="${calendar.tipo}"></span></td>
+                                            <td><span class="calendarEmployeeName" th:text="${calendar.employeeName}"></span></td>
+                                            <td><span class="calendarObjectiveName" th:text="${calendar.objectiveName}"></span></td>
+                                            <td><span class="calendarCauseName" th:text="${calendar.causeName}"></span></td>
+                                            <td><span class="calendarComentario" th:text="${calendar.comentario}"></span></td>
+                                            <td>
+                                                <div>
+                                                    <button class="btn btn-primary btn-sm add mx-2" th:if="${calendar.rutaModificacion != '0'}" th:disabled="false">
+                                                        <a th:href="@{${calendar.rutaModificacion}}" th:style="'text-decoration: none; color: inherit;'">Update</a>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script th:src="@{js/myjs.js}"></script>
+    <script th:src="@{js/filter.js}"></script>
+</html>
