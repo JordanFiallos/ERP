@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,8 +64,11 @@ public class ProductManagingController {
     }
 
     @GetMapping("/updateProducts/{id}")
-    public String Update(Product products, Model model) {
-        model.addAttribute("products", productoservicelmpl.cercarProducto(products));
+    public String updateProduct(@PathVariable Long id, Model model) {
+        List<Supplier> suppliers = suplierservices.getAllPersons();
+        Product product = productoservicelmpl.getProductoById(id);
+        model.addAttribute("suppliers", suppliers);
+        model.addAttribute("product", product);
         return "products/products_form";
     }
 
@@ -76,7 +80,7 @@ public class ProductManagingController {
 
     @PostMapping("/SaveProductsEffectivePurchase")
     public String ShowResult2(Product products, Model model, @RequestParam(required = false, name = "quantitySumar") int quantitySumar) {
-        String resultMessage = productoservicelmpl.afegirProducto2(products,quantitySumar);
+        String resultMessage = productoservicelmpl.afegirProducto2(products, quantitySumar);
         model.addAttribute("products", resultMessage);
         return "redirect:/products_list";
     }
@@ -84,7 +88,7 @@ public class ProductManagingController {
     @GetMapping("/products_purchase")
     public String ShowListPurchase(Model model) {
         model.addAttribute("products", productoservicelmpl.llistarProductos());
-        
+
         return "products/products_purchase";
     }
 

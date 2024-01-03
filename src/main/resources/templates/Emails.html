@@ -9,6 +9,19 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <link th:href="@{css/main.css}" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+        <style>
+            .form-group {
+                text-align: center;
+            }
+
+            .form-group input[type="file"] {
+                width: 118px;
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+        </style>
     </head>
     <body class="bg-light-blue">
         <header th:replace="fragments/header :: header"></header>
@@ -24,7 +37,7 @@
                                         <h2 class="text-center">Formulario de Envío de Correo</h2>
                                     </div>
                                     <div class="card-body">
-                                        <form id="emailForm" th:action="@{/send-email}" method="POST">
+                                        <form id="emailForm" th:action="@{/send-email}" method="POST" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label for="to">Para:</label>
                                                 <input type="email" class="form-control" id="to" name="to" required>
@@ -38,6 +51,11 @@
                                             <div class="form-group">
                                                 <label for="text">Contenido:</label>
                                                 <textarea class="form-control" id="text" name="text" required></textarea>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="attachment">Adjuntar archivo:</label>
+                                                <input type="file" id="attachment" name="attachment">
                                             </div>
 
                                             <div class="form-group text-center">
@@ -58,22 +76,22 @@
 
         <script>
             function sendEmail() {
-                var formData = {
-                    to: $("#to").val(),
-                    subject: $("#subject").val(),
-                    text: $("#text").val()
-                };
+                var formData = new FormData($("#emailForm")[0]);
 
                 $.ajax({
                     type: "POST",
                     url: "/send-email",
                     data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        console.log('Email enviado exitosamente');
+                    },
                     error: function (error) {
                         console.error('Error:', error);
                     }
                 });
             }
-
         </script>
     </body>
 </html>
