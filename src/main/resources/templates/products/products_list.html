@@ -36,12 +36,12 @@
                         <div class="col-md-12">
                             <table class="table">
                                 <table class="table table-bordered table-striped custom-table">
-                                    
+
                                     <!-- Search and filter section -->
                                     <div class="form-group">
                                         <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('productDescription')">
                                     </div>
-                                    
+
                                     <!-- Inventary list -->
                                     <thead class="thead-dark">
                                         <tr>
@@ -49,6 +49,7 @@
                                             <th>Product</th>
                                             <th>Max Quantity</th>
                                             <th>Inventory Total Stock/Quantity</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody id="filteredTableBody">
@@ -57,6 +58,13 @@
                                             <td><span class="productDescription" th:text="${product.description}"></span></td>
                                             <td><span class="productMinimQuantity" th:text="${product.minimQuantity}"></span></td>
                                             <td><span class="productQuantity" th:text="${product.quantity}"></span></td>
+                                            <td>
+                                                <div>
+                                                    <button class="btn btn-primary btn-sm add mx-2" data-toggle="modal"  data-target="#confirmUpdateModal" th:data-id="${product.id}">
+                                                        Update
+                                                    </button>
+                                                </div>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -66,6 +74,27 @@
                 </div>
             </div>
         </div>
+        <!-- Modal UPDATE -->
+        <div class="modal fade" id="confirmUpdateModal" tabindex="-1" role="dialog" aria-labelledby="confirmUpdateModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmUpdateModalLabel">Confirmar Actualización</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>¿Estás seguro de que deseas actualizar este empleado?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <a id="confirmUpdateButton" class="btn btn-danger">UPDATE</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
     <script th:src="@{js/filter.js}"></script>
+    <script th:src="@{js/Products.js}"></script>
 </html>
