@@ -19,11 +19,13 @@
                             <table class="table">
                                 <h2 class="text-center">Insert Products</h2>
 
-                                <form th:object="${products}" th:action="@{/SaveProducts}" method="POST">
+                                <form th:object="${product}" th:action="@{/SaveProducts}" method="POST">
+
+                                    <input type="hidden" name="id" th:value="${product.id}">
 
                                     <div class="form-group">
                                         <label for="name">Nom:</label> 
-                                        <input type="text" class="form-control" id="name" name="name" required>
+                                        <input type="text" class="form-control" id="name" name="name" th:value="${product.name}" required>
                                     </div>
 
                                     <div class="form-group">
@@ -36,37 +38,31 @@
 
                                     <div class="form-group">
                                         <label for="description">Description: </label>
-                                        <input type="text" name="description" id="description" class="form-control" required>
+                                        <input type="text" name="description" id="description" class="form-control" th:value="${product.description}" required>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="price">Price: </label>
-                                        <input type="number" name="price" id="price" class="form-control" required>
+                                        <input type="number" name="price" id="price" class="form-control" th:value="${product.price}" required>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="minimQuantity">Max Quantity: </label>
-                                        <input type="number" name="minimQuantity" id="minimQuantity" class="form-control"  required>
+                                        <input type="number" name="minimQuantity" id="minimQuantity" class="form-control" th:value="${product.minimQuantity}" required>
                                     </div>
-
-                                    <!--div class="form-group">
-                                        <label for="interest">Interest: </label>
-                                        <input type="number" name="interest" id="interest" class="form-control" required>
-                                    </div-->
 
                                     <div class="form-group">
                                         <label for="product">Numero identificativo (codigo de barras): </label>
-                                        <input type="number" name="product" id="product" class="form-control" required>
+                                        <input type="number" name="product" id="product" class="form-control" th:value="${product.product}" required>
                                     </div>
 
                                     <h1 class="text-center">
-                                        <input type="hidden" id="id" >
+                                        <input type="hidden" id="id" th:value="${product.id}">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                         <button class="btn btn-secondary add mx-2">
-                                            <a th:href="@{/products_purchase}" th:style="'text-decoration: none; color: inherit;'">Go back</a>
+                                            <a th:href="@{/products_list}" th:style="'text-decoration: none; color: inherit;'">Go back</a>
                                         </button>
                                     </h1>
-
                                 </form>
                             </table>
                         </div>

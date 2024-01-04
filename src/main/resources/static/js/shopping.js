@@ -53,22 +53,22 @@
 
 //FilterProduct
 /*
-function filterProducts() {
-    const input = document.getElementById('searchInput');
-    const filter = input.value.toUpperCase();
-    const tableBody = document.getElementById('productTableBody');
-    const rows = tableBody.getElementsByTagName('tr');
-
-    for (let i = 0; i < rows.length; i++) {
-        const productName = rows[i].querySelector('.productName').innerText.toUpperCase();
-        if (productName.indexOf(filter) > -1) {
-            rows[i].style.display = '';
-        } else {
-            rows[i].style.display = 'none';
-        }
-    }
-}
-*/
+ function filterProducts() {
+ const input = document.getElementById('searchInput');
+ const filter = input.value.toUpperCase();
+ const tableBody = document.getElementById('productTableBody');
+ const rows = tableBody.getElementsByTagName('tr');
+ 
+ for (let i = 0; i < rows.length; i++) {
+ const productName = rows[i].querySelector('.productName').innerText.toUpperCase();
+ if (productName.indexOf(filter) > -1) {
+ rows[i].style.display = '';
+ } else {
+ rows[i].style.display = 'none';
+ }
+ }
+ }
+ */
 
 // BUY PRODUCTS
 $(document).ready(function () {
@@ -78,6 +78,8 @@ $(document).ready(function () {
         var productId = button.data('id');
         $('#confirmUpdateButton').attr('href', '/updateProducts2/' + productId);
     });
+
+    handleStockMessagesInitial();
 });
 
 function confirmPurchase(button) {
@@ -86,22 +88,31 @@ function confirmPurchase(button) {
     if (restminim !== null) {
         var confirmButton = document.getElementById("confirmUpdateButton");
         confirmButton.disabled = restminim <= 0;
+
+    }
+    handleStockMessages(button, restminim);
+}
+
+function handleStockMessages(button, restminim) {
+    var productName = button.closest('tr').querySelector('.productName').innerText;
+    var stockMessageElement = button.closest('tr').querySelector('.stockMessage');
+
+    var stockMessage = 'Limited stock! ' + restminim + ' - ' + productName + '.';
+
+    if (restminim <= 10) {
+        stockMessageElement.innerText = stockMessage;
+    } else {
+        stockMessageElement.innerText = '';
     }
 }
 
+function handleStockMessagesInitial() {
+    // Obtener todos los botones de compra en la página
+    var purchaseButtons = document.querySelectorAll('.productQuantity');
 
-
-/*function buyItems() {
- const cartItems = document.getElementById('cartItems');
- const items = cartItems.getElementsByClassName('cart-item');
- 
- 
- for (let i = 0; i < items.length; i++) {
- const item = items[i];
- const itemName = item.getAttribute('data-product-name');
- const itemQuantity = parseInt(item.getAttribute('data-product-quantity'));
- const itemPrice = parseFloat(item.getAttribute('data-product-price'));
- }
- 
- 
- }*/
+    // Iterar sobre los botones para mostrar el mensaje inicial
+    purchaseButtons.forEach(function (button) {
+        var restminim = button.getAttribute("data-restminim");
+        handleStockMessages(button, restminim);
+    });
+}
