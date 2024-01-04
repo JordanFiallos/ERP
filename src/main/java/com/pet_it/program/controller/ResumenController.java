@@ -62,11 +62,11 @@ public class ResumenController {
     private String mostrarLista(String fecha, boolean switchView, Model model){
         int numeroSemana = resumenService.extraerWeek(fecha);
         
-        List<ResumenSemanal> listaResumenCompras = resumenService.generarResumenCompras(fecha);
+        List<ResumenSemanal> listaResumenCompras =  resumenService.generarResumenSemanal (fecha, "Compras");
         float totalCompras = resumenService.totalSemanal(listaResumenCompras);
         float porcentajeCalculadoCompras = resumenService.totalPorcentaje(listaResumenCompras);
         
-        List<ResumenSemanal> listaResumenVentas = resumenService.generarResumenVentas(fecha);
+        List<ResumenSemanal> listaResumenVentas =  resumenService.generarResumenSemanal (fecha, "Ventas");
         float totalVentas = resumenService.totalSemanal(listaResumenVentas);
         float porcentajeCalculadoVentas = resumenService.totalPorcentaje(listaResumenVentas);
         
@@ -85,7 +85,9 @@ public class ResumenController {
         }
     }
     
-    //old
+    //Muestra total y cantidad de facturas por año y semana.
+    //Funciona pero no está en uso, en el proyecto se usa el codigo de Ruben.
+    /*
     @GetMapping("/totalPorSemana")
     public String totalPorSemana(
             @RequestParam(name="fechaInicio", required=false, defaultValue="no") String fechaInicio,
@@ -97,5 +99,5 @@ public class ResumenController {
         model.addAttribute("listaResumenVentas",listaResumenVentas);
         return "resumen/totalPorSemana";
     }
-    
+    */
 }
