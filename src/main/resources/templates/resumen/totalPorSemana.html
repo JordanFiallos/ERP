@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>CostoEfecto</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link th:href="@{css/main.css}" rel="stylesheet"/>
+        <style>
+            .custom-control-input{
+                border-color: #ffc720;
+            }
+        </style>
+    </head>
+    <body class="bg-light-blue">
+        <header th:replace="fragments/header :: header"></header>
+
+        <div class="main-content">
+            <div class="table-responsive">
+                <!-- sub menu container -->
+                <!-- valores principales -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table text-center">
+                                <table class="table table-bordered table-striped custom-table">
+                                    
+                                    
+                                    <!-- Get formulario -->
+                                    <div class=" form-group row g-3">
+                                        <form th:action="@{/totalPorSemana}" method="get">
+                                            <div class="col-md-4">
+                                                <input class="form-control" type="text" id="fechaInicio" name="fechaInicio"  placeholder="DD/MM/AAAA" required>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input class="form-control" type="text" id="fechaFinal" name="fechaFinal"  placeholder="DD/MM/AAAA" required>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button class="btn btn-dark btn-block" type="submit">Fecha a filtrar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+                                    <!-- Compras list -->
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Tipo</th>
+                                            <th>Year</th>
+                                            <th>Week</th>
+                                            <th>Cantidad de Facturas</th>
+                                            <th>Total Coste</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="filteredTableBody1">
+                                        <tr th:each="resumen : ${listaResumenCompras}">
+                                            <td><span class="resumenTipo" th:text="${resumen.tipo}"></span></td>
+                                            <td><span class="" th:text="${resumen.year}"></span></td>
+                                            <td><span class="" th:text="${resumen.week}"></span></td>
+                                            <td><span class="resumenTotalCantidad" th:text="${resumen.totalCantidad}"></span></td>
+                                            <td><span class="resumenTotalCoste" th:text="${resumen.totalCoste}"></span></td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </table>
+                            <table class="table text-center">
+                                <table class="table table-bordered table-striped custom-table">
+
+                                    <!-- Ventas list -->
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Tipo</th>
+                                            <th>Year</th>
+                                            <th>Week</th>
+                                            <th>Cantidad de Facturas</th>
+                                            <th>Total Coste</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="filteredTableBody1">
+                                        <tr th:each="resumen : ${listaResumenVentas}">
+                                            <td><span class="resumenTipo" th:text="${resumen.tipo}"></span></td>
+                                            <td><span class="" th:text="${resumen.year}"></span></td>
+                                            <td><span class="" th:text="${resumen.week}"></span></td>
+                                            <td><span class="resumenTotalCantidad" th:text="${resumen.totalCantidad}"></span></td>
+                                            <td><span class="resumenTotalCoste" th:text="${resumen.totalCoste}"></span></td>
+                                        </tr>
+                                    </tbody>
+                                    
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

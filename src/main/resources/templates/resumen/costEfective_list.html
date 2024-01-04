@@ -7,11 +7,25 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link th:href="@{css/main.css}" rel="stylesheet"/>
+        <style>
+            .custom-control-input{
+                border-color: #ffc720;
+            }
+        </style>
     </head>
     <body class="bg-light-blue">
         <header th:replace="fragments/header :: header"></header>
         
         <div class="main-content">
+            <!--Change mode-->
+            <form th:action="@{/costEfective}" method="get">
+                <div class="custom-control custom-switch">
+                    <input type="hidden" name="fechaInicio" th:value="${fecha}">
+                    <input type="checkbox" class="custom-control-input" id="customSwitches" name="switchView" onChange="this.form.submit()">
+                    <label class="custom-control-label" for="customSwitches" style="color: white;">Ver gráfico</label>
+                </div>
+            </form>
+            
             <div class="table-responsive">
                 <!-- sub menu container -->
                 <!-- valores principales -->
@@ -23,7 +37,7 @@
 
                                     <!-- Get formulario -->
                                     <div class=" form-group row g-3">
-                                        <form th:action="@{/costEfective}" method="get" >
+                                        <form th:action="@{/costEfective}" method="get">
                                             <div class="col-md-9">
                                                 <input class="form-control" type="text" id="fechaInicio" name="fechaInicio"  placeholder="DD/MM/AAAA" th:value="${fecha}" required>
                                             </div>
@@ -106,7 +120,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="totales">
-                                    <td><span class="" th:text="${totalCompras + ' - 100%'}"></span></td>
+                                    <td><span class="" th:text="${totalCompras + ' || ' + porcentajeCalculadoCompras + '%'}"></span></td>
                                     </tbody>
                                 </table>
                             </table>
@@ -151,7 +165,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="totales">
-                                    <td><span class="" th:text="${totalVentas + ' - 100%'}"></span></td>
+                                    <td><span class="" th:text="${totalVentas + ' || ' + porcentajeCalculadoVentas + '%'}"></span></td>
                                     </tbody>
                                 </table>
                             </table>
@@ -161,6 +175,5 @@
             </div>
         </div>
     </body>
-    <script th:src="@{js/myjs.js}"></script>
     <script th:src="@{js/filter2tablas.js}"></script>
 </html>

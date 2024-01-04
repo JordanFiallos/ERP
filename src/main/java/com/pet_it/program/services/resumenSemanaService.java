@@ -17,4 +17,7 @@ public interface resumenSemanaService {
     public List<ResumenSemanal> generarResumenVentas (String fechaInicio);
     public String operarWeek(String fecha, String opcio);
     public float totalSemanal(List<ResumenSemanal> listaResumenes);
+    public float totalPorcentaje(List<ResumenSemanal> listaResumen);
+    public int extraerWeek(String fechaInicio);
+    public List<ResumenSemanal> generarTotalEntreFechas (String fechaInicio, String fechaFinal, String tipoFactura);
 }

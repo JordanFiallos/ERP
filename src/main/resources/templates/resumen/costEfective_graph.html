@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>CostoEfecto</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link th:href="@{css/main.css}" rel="stylesheet"/>
+        <style>
+            .custom-control-input:checked ~ .custom-control-label::before {
+                background-color: #ffca2c;
+                border-color: #ffc720;
+            }
+        </style>
+    </head>
+    <body class="bg-light-blue">
+        <header th:replace="fragments/header :: header"></header>
+        
+        <div class="main-content">
+            <!--Change mode-->
+            <form th:action="@{/costEfective}" method="get">
+                <div class="custom-control custom-switch">
+                    <input type="hidden" name="fechaInicio" th:value="${fecha}">
+                    <input type="checkbox" class="custom-control-input" id="customSwitches" name="switchView" onChange="this.form.submit()" checked>
+                    <label class="custom-control-label" for="customSwitches" style="color: white;">Ver listado</label>
+                </div>
+            </form>
+            
+            <div class="table-responsive">
+                <!-- sub menu container -->
+                <!-- valores principales -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table text-center">
+                                <table class="table table-bordered table-striped custom-table">
+
+                                    <!-- Get formulario -->
+                                    <div class=" form-group row g-3">
+                                        <form th:action="@{/costEfective}" method="get">
+                                            <input type="hidden" id="switchStringView" name="switchStringView" th:value="${tipeView}">
+                                            <div class="col-md-9">
+                                                <input class="form-control" type="text" id="fechaInicio" name="fechaInicio" placeholder="DD/MM/AAAA" th:value="${fecha}" required>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button class="btn btn-dark btn-block" type="submit">Fecha a filtrar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <!-- Get formulario -->
+                                    <div class=" form-group row g-3">
+                                        <form th:action="@{/costEfective}" method="get" >
+                                            <input type="hidden" id="switchStringView" name="switchStringView" th:value="${tipeView}">
+                                            <input type="hidden" id="fechaInicio" name="fechaInicio" th:value="${fecha}">
+                                            <input type="hidden" id="operacio" name="operacio" value="resta">
+                                            <div class="col-md-6">
+                                                <button class="btn btn-dark btn-block" type="submit"><</button>
+                                            </div>
+                                        </form>
+                                        <form th:action="@{/costEfective}" method="get" >
+                                            <input type="hidden" id="switchStringView" name="switchStringView" th:value="${tipeView}">
+                                            <input type="hidden" id="fechaInicio" name="fechaInicio" th:value="${fecha}">
+                                            <input type="hidden" id="operacio" name="operacio" value="suma">
+                                            <div class="col-md-6">
+                                                <button class="btn btn-dark btn-block" type="submit">></button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </table>
+                            </table>
+                            
+                            <!-- Compras graph -->
+                            <table class="table text-center">
+                                <table class="table table-bordered table-striped custom-table">
+                                    
+                                    <div id="chartCompras"></div>
+                                    
+                                </table>
+                            </table>
+                            <table class="table text-center">
+                                <table class="table table-bordered table-striped custom-table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Total compras</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="totales">
+                                    <td><span class="" th:text="${totalCompras + ' || ' + porcentajeCalculadoCompras + '%'}"></span></td>
+                                    </tbody>
+                                </table>
+                            </table>
+                            <!-- Ventas graph -->
+                            <table class="table text-center">
+                                <table class="table table-bordered table-striped custom-table">
+                                    
+                                    <div id="chartVentas"></div>
+                                    
+                                </table>
+                            </table>
+                            <table class="table text-center">
+                                <table class="table table-bordered table-striped custom-table">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Total ventas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="totales">
+                                    <td><span class="" th:text="${totalVentas + ' || ' + porcentajeCalculadoVentas + '%'}"></span></td>
+                                    </tbody>
+                                </table>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script th:inline="javascript">
+            (function () {
+                var pie = /*[[${listaResumenCompras}]]*/ [];
+
+                var series = [];
+                var data = [];
+                var iconoPorcentaje = '%';
+                var i = 0;
+                
+                pie.forEach(function(resumen) {
+                    var object = {};
+                    object.name = resumen.nombreProducto;
+                    object.y = resumen.porcentaje;
+                    if(object.name != "aproximado"){
+                        data.push(object);
+                    }
+                    i++;
+                });
+                
+                if(i>0){
+                    var seriesObject = {
+                    name: 'Course By Category',
+                            colorByPoint: true,
+                            data: data
+                        };
+                    
+                    series.push(seriesObject);
+                    drawPieChart(series);
+
+                    // draw the pie chart:
+                    function drawPieChart(series) {
+                        Highcharts.chart('chartCompras', {
+                            chart: {
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false,
+                                type: 'pie'
+                            },
+                            title: {
+                                text: 'Compras || semana: ' + /*[[${numeroSemana}]]*/
+                            },
+                            tooltip: {
+                                formatter: function () {
+                                    return '<strong>' + this.key + ': </strong>' + this.y;
+                                }
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '<b>{point.name}</b>: {point.y}%'
+                                    }
+                                }
+                            },
+                            // use the series data defined earlier:
+                            series: series
+                        });
+                    }
+                }
+            })();
+        </script>
+        
+        <script th:inline="javascript">
+            (function () {
+                var pie = /*[[${listaResumenVentas}]]*/ [];
+
+                var series = [];
+                var data = [];
+                var i = 0;
+                
+                pie.forEach(function(resumen) {
+                    var object = {};
+                    object.name = resumen.nombreProducto;
+                    object.y = resumen.porcentaje;
+                    if(object.name != "aproximado"){
+                        data.push(object);
+                    }
+                    i++;
+                });
+                
+                if(i>0){
+                    var seriesObject = {
+                    name: 'Course By Category',
+                            colorByPoint: true,
+                            data: data
+                        };
+                
+                    series.push(seriesObject);
+                    drawPieChart(series);
+                
+                    // draw the pie chart:
+                    function drawPieChart(series) {
+                        Highcharts.chart('chartVentas', {
+                            chart: {
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false,
+                                type: 'pie'
+                            },
+                            title: {
+                                text: 'Ventas || semana: ' + /*[[${numeroSemana}]]*/
+                            },
+                            tooltip: {
+                                formatter: function () {
+                                    return '<strong>' + this.key + ': </strong>' + this.y;
+                                }
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '<b>{point.name}</b>: {point.y}%'
+                                  }
+                               }
+                            },
+                           // use the series data defined earlier:
+                          series: series
+                        });
+                    }
+                }
+            })();
+        </script>
+    </body>
+<!--script th:src="@{js/filter2tablas.js}"></script-->
+</html>
