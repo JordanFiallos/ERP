@@ -43,4 +43,14 @@ public interface bsellDAO extends JpaRepository<bSell, Long> {
     
     @Query("SELECT SUM(b.quantity) FROM bSell b WHERE b.semana = ?1 AND YEAR(b.operationDate) = ?2")
     int sumaCantidadSemanaVenta(int semana,int año);
+    
+    
+    @Query("SELECT b FROM bSell b WHERE b.operationDate >= ?1 AND b.operationDate <= ?2 ORDER BY b.operationDate ASC ")
+    List<bSell> listaVentasRango(LocalDateTime fecha1,LocalDateTime fecha2);
+
+    @Query("SELECT COUNT(*) FROM bSell b WHERE b.semana = ?1 AND YEAR(b.operationDate) = ?2")
+    int contarVentas(int semana,int año);
+    
+    @Query("SELECT DISTINCT SUM(b.total) FROM bSell b WHERE b.semana = ?1 AND YEAR(b.operationDate) = ?2")
+    int sumaTotalesGrafico(int semana,int año);
 }

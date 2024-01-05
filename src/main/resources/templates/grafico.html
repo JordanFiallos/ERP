@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Ventas & Compras</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <style>
+            .custom-table tbody {
+                background-color: #f8f9fa; /* Color gris claro */
+            }
+            .bg-light-blue {
+                background-color: #4BA2CD; /* Utiliza el código de color que desees */
+            }
+            body {
+                margin: 0;
+                font-family: Arial, sans-serif;
+            }
+
+            .navbar {
+                background-color: #7dacbc;
+                overflow: hidden;
+                display: flex;
+                justify-content: left;
+                align-items: center;
+            }
+
+            .botonLogout {
+                margin-left: auto;
+            }
+
+            .navbar a {
+                float: left;
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 1vh 1vh;
+                text-decoration: none;
+            }
+
+            .navbar button {
+                margin-left: 1rem;
+            }
+
+            .sidebar {
+                width: 200px;
+                position: fixed;
+                height: 100%;
+                background-image: url("images/i-Login.jpg");
+                background-size: cover;
+                overflow-x: hidden;
+                padding-top: 60px;
+            }
+
+            .sidebar a {
+                padding: 10px;
+                text-decoration: none;
+                font-size: 18px;
+                color: #fff;
+                display: block;
+                transition: background-color 0.3s;
+            }
+
+            .sidebar a:hover {
+                background-color: #4CAF50;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .main-content .table-responsive {
+                text-align: center;
+            }
+
+            table.grid {
+                border-spacing: 10px;
+            }
+
+            table.grid td {
+                padding: 15px;
+                padding-left: 120px;
+                padding-right:  120px;
+                background-color: #f0f0f0;
+                text-align: center;
+            }
+
+            .grafico1 {
+                width: 100%;
+                max-width: 1000px
+            }
+            .grafico2 {
+                width: 100%;
+                max-width: 1000px;
+            }
+
+        </style>
+    </head>
+    <body class="bg-light-blue">
+        <div class="sidebar"></div>
+        <div class="navbar">
+            <a th:href="@{/accounting}">Accounting</a>
+            <a th:href="@{/customer/list}">Seller</a>
+            <a th:href="@{/employee_list}">Human_resources</a>
+            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
+            <a th:href="@{/supplier}">Purchase_management</a>
+            <a th:href="@{/sells_listCompras}">Bills</a>
+            <div class="botonLogout">
+                <a th:href="@{/logout}" class="btn btn-dark">Logout</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+                <div class="table-responsive">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table grid" >
+                                    <table class="table table-bordered table-striped custom-table">
+                                        <tbody>
+                                            <tr>
+                                                <th colspan="2"><a th:href="@{/api/bills/generate}">List</a></th>
+                                                <th colspan="2"><a th:href="@{/api/bills/cost-effective}">Cost-effective</a></th>
+                                                <th colspan="2"><a th:href="@{/api/bills/operative-planning}">Viability</a></th>
+                                                <th colspan="2"><a th:href="@{/api/bills/viability}">Operative Planing</a></th>
+                                                <th><a th:href="@{/comparacion}">Comparacion</a></th>
+                                                <th><a th:href="@{/grafico}">Grafico</a></th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <section class="jumbotron text-center">
+                        <form method="POST" th:action="@{/grafico}">
+                            <div>
+                                <label for="inicio">Fecha inicio</label>
+                                <input type="datetime-local" name="inicio"/>
+                                <label for="final">Fecha final</label>
+                                <input type="datetime-local" name="final"/>
+                                <button type="submit">Filtrar</button>
+                            </div>
+                        </form>
+                        <div class="containerGraficos">
+                            <label for="Compras/TotalCompras">Grafico Compras</label>
+                            <canvas id="Compras/TotalCompras" class="grafico1" ></canvas>
+                            <label for="Ventas/TotalVentas">Grafico Ventas</label>
+                            <canvas id="Ventas/TotalesVentas" class="grafico2" ></canvas>
+                        </div>
+                    </section>
+            </main>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+        <script th:inline="javascript" >
+            const diasCompras = [[${diasCompras
+            }
+            ]];
+            const diasVentas = [[${diasVentas
+            }
+            ]]
+
+                    const datosCompras = [[${datosDias
+                    }
+                    ]];
+            const datosVentas = [[${datosDiasVentas
+            }
+            ]];
+            const totalCompras = [[${totalCompras
+            }
+            ]];
+            const totalVentas = [[${totalVentas
+            }
+            ]];
+            new Chart("Compras/TotalCompras", {
+            type: "bar",
+                    data: {
+                    labels: diasCompras,
+                            datasets: [{label: "Compras",
+                                    fill: false,
+                                    lineTension: 0,
+                                    backgroundColor: "rgba(0,255,255,1.0)",
+                                    borderColor: "rgba(0,0,255,1.0)",
+                                    data: datosCompras
+
+                            }, {label: "Total Gastado Compras",
+                                    fill: false,
+                                    lineTension: 0,
+                                    backgroundColor: "rgba(255,0,255,1.0)",
+                                    borderColor: "rgba(255,0,0,1.0)",
+                                    data: totalCompras}]
+                    },
+                    options: {
+                    legend: {display: true},
+                            scales: {
+                            yAxes: [{ticks: {min: 0, max: 100}}],
+                            }
+                    }
+            });
+            new Chart("Ventas/TotalesVentas", {
+            type: "bar",
+                    data: {
+                    labels: diasVentas,
+                            datasets: [{label: "Ventas",
+                                    fill: false,
+                                    lineTension: 0,
+                                    backgroundColor: "rgba(255,255,255,1.0)",
+                                    borderColor: "rgba(255,130,20,1.0)",
+                                    data: datosVentas
+
+                            }, {label: "Total Ventas",
+                                    fill: false,
+                                    lineTension: 0,
+                                    backgroundColor: "rgba(0,255,0,1.0)",
+                                    borderColor: "rgba(255,60,255,1.0)",
+                                    data: totalVentas}]
+                    },
+                    options: {
+                    legend: {display: true},
+                            scales: {
+                            yAxes: [{ticks: {min: 0, max: 100}}],
+                            }
+                    }
+            });
+        </script>
+    </body>
+</html>
