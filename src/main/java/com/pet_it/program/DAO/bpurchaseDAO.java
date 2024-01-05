@@ -26,19 +26,19 @@ public interface bpurchaseDAO extends JpaRepository<bPurchase, Long> {
     @Query(value="SELECT COUNT(*) FROM b_bill b WHERE dtype = \"Purchase\"",nativeQuery=true)
     int listaFacturasCompra();
     
-    @Query(value="SELECT COUNT(*) FROM b_bill b WHERE dtype = \"Purchase\" AND b.semana = ?1 AND YEAR(b.scheduled_Delivery_Date) = ?2",nativeQuery=true)
+    @Query(value="SELECT COUNT(*) FROM b_bill b WHERE dtype = \"Purchase\" AND b.semana = ?1 AND YEAR(b.operation_date) = ?2",nativeQuery=true)
     int listaComprasSemana(int semana, int año);
     
     @Query(value="SELECT SUM(b.total) FROM b_bill b WHERE dtype = \"Purchase\"",nativeQuery=true)
     int sumaTotals();
     
-    @Query(value="SELECT SUM(b.total) FROM b_bill b WHERE dtype = \"Purchase\" AND b.semana = ?1 AND YEAR(b.scheduled_Delivery_Date) = ?2",nativeQuery=true)
+    @Query(value="SELECT SUM(b.total) FROM b_bill b WHERE dtype = \"Purchase\" AND b.semana = ?1 AND YEAR(b.operation_date) = ?2",nativeQuery=true)
     Integer sumaTotalsSemana(int semana, int año);
     
     @Query(value="SELECT SUM(b.quantity) FROM b_bill b WHERE dtype = \"Purchase\"",nativeQuery=true)
     int sumaCantidad();
     
-    @Query(value="SELECT SUM(b.quantity) FROM b_bill b WHERE dtype = \"Purchase\" AND b.semana = ?1 AND YEAR(b.scheduled_Delivery_Date) = ?2",nativeQuery=true)
+    @Query(value="SELECT SUM(b.quantity) FROM b_bill b WHERE dtype = \"Purchase\" AND b.semana = ?1 AND YEAR(b.operation_date) = ?2",nativeQuery=true)
     int sumaCantidadSemana(int semana, int año);
 
     
