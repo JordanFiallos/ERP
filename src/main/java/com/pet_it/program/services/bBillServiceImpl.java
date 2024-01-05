@@ -165,14 +165,12 @@ public class bBillServiceImpl implements bBillService {
         List<String> guardarDias = new ArrayList();
 
         for (int i = 0; i < listaCompras.size(); i++) {
-            String fecha = "Semana: " + listaCompras.get(i).getSemana() + " / " + listaCompras.get(i).getScheduledDeliveryDate().getYear();
+            String fecha = "Semana: " + listaCompras.get(i).getSemana() + " / " + listaCompras.get(i).getOperationDate().getYear();
             if (!guardarDias.contains(fecha)) {
                 guardarDias.add(fecha);
-                int numeroCompras = contarCompras(listaCompras.get(i).getSemana(), listaCompras.get(i).getScheduledDeliveryDate().getYear());
+                int numeroCompras = contarCompras(listaCompras.get(i).getSemana(), listaCompras.get(i).getOperationDate().getYear());
                 datosCompras.add(numeroCompras);
-                if (datosCompras == null) {
-                    datosCompras.add(0);
-                }
+                System.out.println(fecha);
             }
         }
         model.addAttribute("diasCompras", guardarDias);
@@ -186,12 +184,11 @@ public class bBillServiceImpl implements bBillService {
 
         for (int i = 0; i < listaVentas.size(); i++) {
             String fecha = "Semana: " + listaVentas.get(i).getSemana() + " / " + listaVentas.get(i).getOperationDate().getYear();
-            System.out.println("Venta: " + fecha);
+           
             if (!guardarDiasVentas.contains(fecha)) {
                 guardarDiasVentas.add(fecha);
                 int numeroVentas = contarVentas(listaVentas.get(i).getSemana(), listaVentas.get(i).getOperationDate().getYear());
                 datosVentas.add(numeroVentas);
-                System.out.println(datosVentas);
             }
         }
         model.addAttribute("diasVentas", guardarDiasVentas);
@@ -204,9 +201,9 @@ public class bBillServiceImpl implements bBillService {
         List<Integer> listadoCompras = new ArrayList();
 
         for (int i = 0; i < listaComprasTotalesFecha.size(); i++) {
-            int totalCompras = contarComprasTotals(listaComprasTotalesFecha.get(i).getSemana(), listaComprasTotalesFecha.get(i).getScheduledDeliveryDate().getYear());
-            String keyCompras = listaComprasTotalesFecha.get(i).getScheduledDeliveryDate().getYear() + "/" + listaComprasTotalesFecha.get(i).getSemana();
-//            System.out.println(totalCompras);
+            int totalCompras = contarComprasTotals(listaComprasTotalesFecha.get(i).getSemana(), listaComprasTotalesFecha.get(i).getOperationDate().getYear());
+            String keyCompras = listaComprasTotalesFecha.get(i).getOperationDate().getYear() + "/" + listaComprasTotalesFecha.get(i).getSemana();
+
             if (!datosComprasTotales.containsKey(keyCompras)) {
                 datosComprasTotales.put(keyCompras, totalCompras);
                 listadoCompras.add(totalCompras);
@@ -225,10 +222,7 @@ public class bBillServiceImpl implements bBillService {
             int totalVenta = contarVentasTotals(listaVentasTotalesFecha.get(i).getSemana(), listaVentasTotalesFecha.get(i).getOperationDate().getYear());
             if (!ventasGuardadas.containsKey(keyMap)) {
                 ventasGuardadas.put(keyMap, totalVenta);
-            } else {
-                System.out.println("Ya esta: " + listaVentasTotalesFecha.get(i).getSemana() + listaVentasTotalesFecha.get(i).getOperationDate());
             }
-            System.out.println("Venta: " + ventasGuardadas);
         }
 
         listadoVentas.addAll(ventasGuardadas.values());
@@ -243,10 +237,10 @@ public class bBillServiceImpl implements bBillService {
         List<String> guardarDias = new ArrayList();
 
         for (int i = 0; i < listaCompras.size(); i++) {
-            String fecha = "Semana: " + listaCompras.get(i).getSemana() + " / " + listaCompras.get(i).getScheduledDeliveryDate().getYear();
+            String fecha = "Semana: " + listaCompras.get(i).getSemana() + " / " + listaCompras.get(i).getOperationDate().getYear();
             if (!guardarDias.contains(fecha)) {
                 guardarDias.add(fecha);
-                int numeroCompras = contarCompras(listaCompras.get(i).getSemana(), listaCompras.get(i).getScheduledDeliveryDate().getYear());
+                int numeroCompras = contarCompras(listaCompras.get(i).getSemana(), listaCompras.get(i).getOperationDate().getYear());
                 datosCompras.add(numeroCompras);
                 if (datosCompras == null) {
                     datosCompras.add(0);
@@ -264,16 +258,15 @@ public class bBillServiceImpl implements bBillService {
         List<Integer> listadoCompras = new ArrayList();
 
         for (int i = 0; i < listaComprasTotalesFecha.size(); i++) {
-            int totalCompras = contarComprasTotals(listaComprasTotalesFecha.get(i).getSemana(), listaComprasTotalesFecha.get(i).getScheduledDeliveryDate().getYear());
-            String keyCompras = listaComprasTotalesFecha.get(i).getScheduledDeliveryDate().getYear() + "/" + listaComprasTotalesFecha.get(i).getSemana();
-//            System.out.println(totalCompras);
+            int totalCompras = contarComprasTotals(listaComprasTotalesFecha.get(i).getSemana(), listaComprasTotalesFecha.get(i).getOperationDate().getYear());
+            String keyCompras = listaComprasTotalesFecha.get(i).getOperationDate().getYear() + "/" + listaComprasTotalesFecha.get(i).getSemana();
+
             if (!datosComprasTotales.containsKey(keyCompras)) {
                 datosComprasTotales.put(keyCompras, totalCompras);
                 listadoCompras.add(totalCompras);
             }
         }
 
-//        System.out.println(listadoCompras);
         model.addAttribute("totalCompras", listadoCompras);
 
     }
@@ -285,7 +278,6 @@ public class bBillServiceImpl implements bBillService {
 
         for (int i = 0; i < listaVentas.size(); i++) {
             String fecha = "Semana: " + listaVentas.get(i).getSemana() + " / " + listaVentas.get(i).getOperationDate().getYear();
-            System.out.println(fecha);
             if (!guardarDiasVentas.contains(fecha)) {
                 guardarDiasVentas.add(fecha);
                 int numeroVentas = contarVentas(listaVentas.get(i).getSemana(), listaVentas.get(i).getOperationDate().getYear());
@@ -308,10 +300,6 @@ public class bBillServiceImpl implements bBillService {
             if (!ventasGuardadas.containsKey(keyMap)) {
                 ventasGuardadas.put(keyMap, totalVenta);
             }
-            else{
-                System.out.println("Ya esta: " + listaVentasTotalesFecha.get(i).getSemana() + listaVentasTotalesFecha.get(i).getOperationDate());
-            }
-            System.out.println("Venta: "+ventasGuardadas);
         }
         
         listadoVentas.addAll(ventasGuardadas.values());
