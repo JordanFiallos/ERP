@@ -40,5 +40,15 @@ public interface bpurchaseDAO extends JpaRepository<bPurchase, Long> {
     
     @Query(value="SELECT SUM(b.quantity) FROM bPurchase b WHERE b.semana = ?1 AND YEAR(b.scheduledDaliveryDate) = ?2",nativeQuery=true)
     int sumaCantidadSemana(int semana, int año);
+
+    
+    @Query("SELECT b FROM bPurchase b WHERE b.scheduledDeliveryDate >= ?1 AND b.scheduledDeliveryDate <= ?2 ORDER BY b.scheduledDeliveryDate ASC")
+    List<bPurchase> listaComprasRango(LocalDateTime fecha1,LocalDateTime fecha2);
+
+    @Query("SELECT COUNT(*) FROM bPurchase b WHERE b.semana = ?1 AND YEAR(b.scheduledDeliveryDate) = ?2")
+    int contarCompras(int semana,int año);
+    
+    @Query("SELECT DISTINCT SUM(b.total) FROM bPurchase b WHERE b.semana = ?1 AND YEAR(b.scheduledDeliveryDate) = ?2")
+    int sumaTotalesGrafico(int semana,int año);
 }
 
