@@ -6,6 +6,7 @@ package com.pet_it.program.controller;
 
 import com.pet_it.program.services.bBillServiceImpl;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -115,4 +116,23 @@ public class ControllerProgram {
         model.addAttribute("sellQuantities", billService.ventasCantidades());
         return "comparacion";
     }
+    
+    @GetMapping("/grafico")
+    public String grafico(Model model) {
+        billService.getCompras(model);
+        billService.getTotalCompras(model);
+        billService.getVentas(model);
+        billService.getTotalVentas(model);
+        return "grafico";
+    }
+
+    @PostMapping("/grafico")
+    public String graficoPost(Model model, @RequestParam(name = "inicio") LocalDateTime fechaInicio, @RequestParam(name = "final") LocalDateTime fechaFinal) {
+        billService.postCompras(model, fechaInicio, fechaFinal);
+        billService.postComprasTotales(model, fechaInicio, fechaFinal);
+        billService.postVentas(model, fechaInicio, fechaFinal);
+        billService.postVentasTotales(model, fechaInicio, fechaFinal);
+        return "grafico";
+    }
+    
 }

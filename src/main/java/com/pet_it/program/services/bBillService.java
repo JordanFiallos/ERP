@@ -45,4 +45,21 @@ public interface bBillService {
     
     public int ventasCantidades();
     
+    public List<bPurchase> listaTodasCompras();
+    
+    public List<bSell> listaTodasVentas();
+    
+    public List<bPurchase> listaComprasRango(LocalDateTime fecha1,LocalDateTime fecha2);
+    
+    public int contarCompras(int semana,int año);
+    
+    public List<bSell> listaVentasRango(LocalDateTime fecha1,LocalDateTime fecha2);
+    
+    public int contarVentas(int semana,int año);
+    
+    public int contarVentasTotals(int semana,int año);
+    
+    public int contarComprasTotals(int semana,int año);
+    
+    
 }

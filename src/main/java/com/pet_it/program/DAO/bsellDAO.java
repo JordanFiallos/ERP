@@ -5,6 +5,7 @@
 package com.pet_it.program.DAO;
 
 import com.pet_it.program.domain.bSell;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -39,4 +40,14 @@ public interface bsellDAO extends JpaRepository<bSell, Long> {
     
     @Query("SELECT SUM(b.quantity) FROM bSell b WHERE b.semana = ?1 AND YEAR(b.operationDate) = ?2")
     int sumaCantidadSemanaVenta(int semana,int año);
+    
+    
+    @Query("SELECT b FROM bSell b WHERE b.operationDate >= ?1 AND b.operationDate <= ?2 ORDER BY b.operationDate ASC ")
+    List<bSell> listaVentasRango(LocalDateTime fecha1,LocalDateTime fecha2);
+
+    @Query("SELECT COUNT(*) FROM bSell b WHERE b.semana = ?1 AND YEAR(b.operationDate) = ?2")
+    int contarVentas(int semana,int año);
+    
+    @Query("SELECT DISTINCT SUM(b.total) FROM bSell b WHERE b.semana = ?1 AND YEAR(b.operationDate) = ?2")
+    int sumaTotalesGrafico(int semana,int año);
 }
