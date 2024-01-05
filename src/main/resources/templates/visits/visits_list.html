@@ -71,7 +71,7 @@
                                             <th>Id del empleado</th>
                                             <th>Id de la mascota</th>
                                             <th>Nombre de la mascota</th>
-                                            <th>Opcions</th>
+                                            <th>Opciones</th>
                                         </tr>
                                     </thead>
                                     <tbody id="filteredTableBody">
@@ -84,8 +84,16 @@
                                             <td><span class="visitaPetId" th:text="${visita.pet.id}"></span></td>
                                             <td><span class="visitaPetName" th:text="${visita.pet.name}"></span></td>
                                             <td>
-                                                <a th:href="@{'/visits/update/'+${visita.id}}"><button class="btn btn-primary btn-sm add mx-2">Update</button></a>
-                                                <a th:href="@{'/visits/delete/'+${visita.id}}"><button class="btn btn-danger btn-sm add mx-2">Delete</button></a>
+                                                <div>
+                                                    <button class="btn btn-primary btn-sm add mx-2">
+                                                        <a th:href="@{'/visits/update/'+${visita.id}}" th:style="'text-decoration: none; color: inherit;'">Update</a>
+                                                    </button>
+                                                    <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="@{'/visits/delete/'+${visita.id}}">
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                                <!--a th:href="@{'/visits/update/'+${visita.id}}"><button class="btn btn-primary btn-sm add mx-2">Update</button></a-->
+                                                <!--a th:href="@{'/visits/delete/'+${visita.id}}"><button class="btn btn-danger btn-sm add mx-2">Delete</button></a-->
                                             </td>
                                         </tr>
                                     </tbody>

@@ -99,18 +99,7 @@
         </style>
     </head>
     <body class="bg-light-blue">
-        <div class="sidebar"></div>
-        <div class="navbar">
-            <a th:href="@{/accounting}">Accounting</a>
-            <a th:href="@{/customer/list}">Seller</a>
-            <a th:href="@{/employee_list}">Human_resources</a>
-            <a th:href="@{/pet/pet-inicio}">Veterinarian</a>
-            <a th:href="@{/supplier}">Purchase_management</a>
-            <a th:href="@{/sells_listCompras}">Bills</a>
-            <div class="botonLogout">
-                <a th:href="@{/logout}" class="btn btn-dark">Logout</a>
-            </div>
-        </div>
+        <header th:replace="fragments/header :: header"></header>
 
         <div class="main-content">
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
@@ -122,12 +111,12 @@
                                     <table class="table table-bordered table-striped custom-table">
                                         <tbody>
                                             <tr>
-                                                <th colspan="2"><a th:href="@{/api/bills/generate}">List</a></th>
-                                                <th colspan="2"><a th:href="@{/api/bills/cost-effective}">Cost-effective</a></th>
-                                                <th colspan="2"><a th:href="@{/api/bills/operative-planning}">Viability</a></th>
-                                                <th colspan="2"><a th:href="@{/api/bills/viability}">Operative Planing</a></th>
-                                                <th><a th:href="@{/comparacion}">Comparacion</a></th>
-                                                <th><a th:href="@{/grafico}">Grafico</a></th>
+                                                <!--th colspan="2"><a th:href="@{/api/bills/generate}">List</a></th-->
+                                                <td class="col-md-3"><a th:href="@{/costEfective}">Cost Effective</a></td>
+                                                <!--th colspan="2"><a th:href="@{/api/bills/operative-planning}">Viability</a></th-->
+                                                <!--th colspan="2"><a th:href="@{/api/bills/viability}">Operative Planing</a></th-->
+                                                <td class="col-md-3"><a th:href="@{/comparacion}">Operative Planing</a></td>
+                                                <td class="col-md-3"><a th:href="@{/grafico}">Viability</a></td>
                                             </tr>
                                         </tbody>
                                     </table>

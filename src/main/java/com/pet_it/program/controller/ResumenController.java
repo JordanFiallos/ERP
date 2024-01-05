@@ -28,6 +28,10 @@ public class ResumenController {
      * String en que indicamos una fecha inicial, puede estar vacio.
      * @param operacio
      * String en que indicamos si debe realizarse una operacion, puede estar vacio.
+     * @param switchView
+     * checkSlide para cambiar entre graficos y lista
+     * @param switchStringView
+     * variable para conservar la vista
      * @param model
      * @return 
      * Vamos al metodo mostrar_lista donde usara los cambios en fecha para mostrar resumenes.
@@ -36,10 +40,16 @@ public class ResumenController {
     public String getFecha(
             @RequestParam(name="fechaInicio", required=false, defaultValue="no") String fechaInicio,
             @RequestParam(name="operacio", required=false, defaultValue="no") String operacio,
+            @RequestParam(name="switchView", required=false) boolean switchView,
+            @RequestParam(name="switchStringView", required=false, defaultValue="no") String switchStringView,
             Model model) {
+        if (switchStringView.equals("true")) {
+            switchView = true;
+        }
         String fechaString = resumenService.operarWeek(fechaInicio,operacio);
         model.addAttribute("fecha",fechaString);
-        return mostrarLista(fechaString, model);
+        model.addAttribute("tipeView",switchView);
+        return mostrarLista(fechaString, switchView, model);
     }
     
     /**
@@ -49,31 +59,44 @@ public class ResumenController {
      * Genera lista de Compras, Ventas y sus totales por semana indicada en la fecha.
      * @return html
      */
-    private String mostrarLista(String fecha, Model model){
-        List<ResumenSemanal> listaResumenCompras = resumenService.generarResumenCompras(fecha);
-        float totalCompras = resumenService.totalSemanal(listaResumenCompras);
+    private String mostrarLista(String fecha, boolean switchView, Model model){
+        int numeroSemana = resumenService.extraerWeek(fecha);
         
-        List<ResumenSemanal> listaResumenVentas = resumenService.generarResumenVentas(fecha);
+        List<ResumenSemanal> listaResumenCompras =  resumenService.generarResumenSemanal (fecha, "Compras");
+        float totalCompras = resumenService.totalSemanal(listaResumenCompras);
+        float porcentajeCalculadoCompras = resumenService.totalPorcentaje(listaResumenCompras);
+        
+        List<ResumenSemanal> listaResumenVentas =  resumenService.generarResumenSemanal (fecha, "Ventas");
         float totalVentas = resumenService.totalSemanal(listaResumenVentas);
+        float porcentajeCalculadoVentas = resumenService.totalPorcentaje(listaResumenVentas);
         
         model.addAttribute("listaResumenCompras",listaResumenCompras);
         model.addAttribute("totalCompras",totalCompras);
         model.addAttribute("listaResumenVentas",listaResumenVentas);
         model.addAttribute("totalVentas",totalVentas);
-        return "resumen/costEfective_list";
+        model.addAttribute("porcentajeCalculadoCompras",porcentajeCalculadoCompras);
+        model.addAttribute("porcentajeCalculadoVentas",porcentajeCalculadoVentas);
+        model.addAttribute("numeroSemana",numeroSemana);
+        
+        if(!switchView){
+            return "resumen/costEfective_list";
+        } else {
+            return "resumen/costEfective_graph";
+        }
     }
     
-    /*
-    //old
-    @GetMapping("/costEfective")
-    public String getFecha(
+    //Muestra total y cantidad de facturas por año y semana.
+    //FUNCIONA PERO NO ESTA COMO LINK, (el total entre semanas para el proyecto lo realiza Ruben.)
+    @GetMapping("/totalPorSemana")
+    public String totalPorSemana(
             @RequestParam(name="fechaInicio", required=false, defaultValue="no") String fechaInicio,
             @RequestParam(name="fechaFinal", required=false, defaultValue="no") String fechaFinal,
             Model model) {
-        List<ResumenGrafico> listaResumenes = resumenService.generarResumenCompras (fechaInicio, fechaFinal);
-        model.addAttribute("listaResumenes",listaResumenes);
-        model.addAttribute("totalCompras",totalCompras);
-        return "";
+        List<ResumenSemanal> listaResumenCompras = resumenService.generarTotalEntreFechas(fechaInicio,fechaFinal,"Compras");
+        List<ResumenSemanal> listaResumenVentas = resumenService.generarTotalEntreFechas(fechaInicio,fechaFinal,"Ventas");
+        model.addAttribute("listaResumenCompras",listaResumenCompras);
+        model.addAttribute("listaResumenVentas",listaResumenVentas);
+        return "resumen/totalPorSemana";
     }
-    */
+    //
 }
