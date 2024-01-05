@@ -23,32 +23,32 @@ public interface bpurchaseDAO extends JpaRepository<bPurchase, Long> {
     
     ///
     
-    @Query(value="SELECT COUNT(*) FROM bPurchase b",nativeQuery=true)
+    @Query(value="SELECT COUNT(*) FROM b_bill b WHERE dtype = \"Purchase\"",nativeQuery=true)
     int listaFacturasCompra();
     
-    @Query(value="SELECT COUNT(*) FROM bPurchase b WHERE b.semana = ?1 AND YEAR(b.scheduledDaliveryDate) = ?2",nativeQuery=true)
+    @Query(value="SELECT COUNT(*) FROM b_bill b WHERE dtype = \"Purchase\" AND b.semana = ?1 AND YEAR(b.scheduled_Delivery_Date) = ?2",nativeQuery=true)
     int listaComprasSemana(int semana, int año);
     
-    @Query(value="SELECT SUM(b.total) FROM bPurchase b",nativeQuery=true)
+    @Query(value="SELECT SUM(b.total) FROM b_bill b WHERE dtype = \"Purchase\"",nativeQuery=true)
     int sumaTotals();
     
-    @Query(value="SELECT SUM(b.total) FROM bPurchase b WHERE b.semana = ?1 AND YEAR(b.scheduledDaliveryDate) = ?2",nativeQuery=true)
+    @Query(value="SELECT SUM(b.total) FROM b_bill b WHERE dtype = \"Purchase\" AND b.semana = ?1 AND YEAR(b.scheduled_Delivery_Date) = ?2",nativeQuery=true)
     Integer sumaTotalsSemana(int semana, int año);
     
-    @Query(value="SELECT SUM(b.quantity) FROM bPurchase b",nativeQuery=true)
+    @Query(value="SELECT SUM(b.quantity) FROM b_bill b WHERE dtype = \"Purchase\"",nativeQuery=true)
     int sumaCantidad();
     
-    @Query(value="SELECT SUM(b.quantity) FROM bPurchase b WHERE b.semana = ?1 AND YEAR(b.scheduledDaliveryDate) = ?2",nativeQuery=true)
+    @Query(value="SELECT SUM(b.quantity) FROM b_bill b WHERE dtype = \"Purchase\" AND b.semana = ?1 AND YEAR(b.scheduled_Delivery_Date) = ?2",nativeQuery=true)
     int sumaCantidadSemana(int semana, int año);
 
     
-    @Query("SELECT b FROM bPurchase b WHERE b.scheduledDeliveryDate >= ?1 AND b.scheduledDeliveryDate <= ?2 ORDER BY b.scheduledDeliveryDate ASC")
+    @Query("SELECT b FROM bPurchase b WHERE b.operationDate >= ?1 AND b.operationDate <= ?2 ORDER BY b.operationDate ASC")
     List<bPurchase> listaComprasRango(LocalDateTime fecha1,LocalDateTime fecha2);
 
-    @Query("SELECT COUNT(*) FROM bPurchase b WHERE b.semana = ?1 AND YEAR(b.scheduledDeliveryDate) = ?2")
+    @Query("SELECT COUNT(*) FROM bPurchase b WHERE b.semana = ?1 AND YEAR(b.operationDate) = ?2")
     int contarCompras(int semana,int año);
     
-    @Query("SELECT DISTINCT SUM(b.total) FROM bPurchase b WHERE b.semana = ?1 AND YEAR(b.scheduledDeliveryDate) = ?2")
+    @Query("SELECT DISTINCT SUM(b.total) FROM bPurchase b WHERE b.semana = ?1 AND YEAR(b.operationDate) = ?2")
     int sumaTotalesGrafico(int semana,int año);
 }
 
