@@ -86,8 +86,7 @@ public class ResumenController {
     }
     
     //Muestra total y cantidad de facturas por año y semana.
-    //Funciona pero no está en uso, en el proyecto se usa el codigo de Ruben.
-    /*
+    //FUNCIONA PERO NO ESTA COMO LINK, (el total entre semanas para el proyecto lo realiza Ruben.)
     @GetMapping("/totalPorSemana")
     public String totalPorSemana(
             @RequestParam(name="fechaInicio", required=false, defaultValue="no") String fechaInicio,
@@ -99,5 +98,5 @@ public class ResumenController {
         model.addAttribute("listaResumenVentas",listaResumenVentas);
         return "resumen/totalPorSemana";
     }
-    */
+    //
 }

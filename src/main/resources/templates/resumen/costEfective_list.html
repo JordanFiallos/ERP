@@ -17,158 +17,181 @@
         <header th:replace="fragments/header :: header"></header>
         
         <div class="main-content">
-            <!--Change mode-->
-            <form th:action="@{/costEfective}" method="get">
-                <div class="custom-control custom-switch">
-                    <input type="hidden" name="fechaInicio" th:value="${fecha}">
-                    <input type="checkbox" class="custom-control-input" id="customSwitches" name="switchView" onChange="this.form.submit()">
-                    <label class="custom-control-label" for="customSwitches" style="color: white;">Ver gráfico</label>
-                </div>
-            </form>
-            
             <div class="table-responsive">
-                <!-- sub menu container -->
-                <!-- valores principales -->
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <table class="table text-center">
-                                <table class="table table-bordered table-striped custom-table">
-
-                                    <!-- Get formulario -->
-                                    <div class=" form-group row g-3">
-                                        <form th:action="@{/costEfective}" method="get">
-                                            <div class="col-md-9">
-                                                <input class="form-control" type="text" id="fechaInicio" name="fechaInicio"  placeholder="DD/MM/AAAA" th:value="${fecha}" required>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <button class="btn btn-dark btn-block" type="submit">Fecha a filtrar</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    
-                                    <!-- Get formulario -->
-                                    <div class=" form-group row g-3">
-                                        <form th:action="@{/costEfective}" method="get" >
-                                                <input type="hidden" id="fechaInicio" name="fechaInicio" th:value="${fecha}">
-                                                <input type="hidden" id="operacio" name="operacio" value="resta">
-                                            <div class="col-md-6">
-                                                <button class="btn btn-dark btn-block" type="submit"><</button>
-                                            </div>
-                                        </form>
-                                        <form th:action="@{/costEfective}" method="get" >
-                                                <input type="hidden" id="fechaInicio" name="fechaInicio" th:value="${fecha}">
-                                                <input type="hidden" id="operacio" name="operacio" value="suma">
-                                            <div class="col-md-6">
-                                                <button class="btn btn-dark btn-block" type="submit">></button>
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                    <!-- Search and filter section -->
-                                    <div class=" form-group row g-3">
-                                        <div class="col-md-9">
-                                            <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('resumenNombreProducto')">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <select id="selectInput" class="form-control">
-                                                <option value="resumenTipo">Tipo</option>
-                                                <option value="resumenIdProducto">Id Producto</option>
-                                                <option value="resumenNombreProducto" selected>Nombre Producto</option>
-                                                <option value="resumenCosteIndividual">Media</option>
-                                                <option value="resumenTotalCantidad">Total Cantidad</option>
-                                                <option value="resumenTotalCoste">Total Coste</option>
-                                                <option value="resumenPorcentaje">Porcentaje</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    
-                                    <!-- Compras list -->
-                                    <thead class="thead-dark">
+                            <table class="table grid" >
+                                <table class="table table-bordered table-striped custom-table text-center">
+                                    <tbody>
                                         <tr>
-                                            <th>Tipo</th>
-                                            <th>Year</th>
-                                            <th>Week</th>
-                                            <th>Id Producto</th>
-                                            <th>Nombre Producto</th>
-                                            <th>Media</th>
-                                            <th>Total Cantidad</th>
-                                            <th>Total Coste</th>
-                                            <th>Porcentaje</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="filteredTableBody1">
-                                        <tr th:each="resumen : ${listaResumenCompras}">
-                                            <td><span class="resumenTipo" th:text="${resumen.tipo}"></span></td>
-                                            <td><span class="" th:text="${resumen.year}"></span></td>
-                                            <td><span class="" th:text="${resumen.week}"></span></td>
-                                            <td><span class="resumenIdProducto" th:text="${resumen.idProducto}"></span></td>
-                                            <td><span class="resumenNombreProducto" th:text="${resumen.nombreProducto}"></span></td>
-                                            <td><span class="resumenCosteIndividual" th:text="${resumen.costeIndividual}"></span></td>
-                                            <td><span class="resumenTotalCantidad" th:text="${resumen.totalCantidad}"></span></td>
-                                            <td><span class="resumenTotalCoste" th:text="${resumen.totalCoste}"></span></td>
-                                            <td><span class="resumenPorcentaje" th:text="${resumen.porcentaje + '%'}"></span></td>
+                                            <td class="col-md-3"><a th:href="@{/costEfective}">Cost Effective</a></td>
+                                            <td class="col-md-3"><a th:href="@{/comparacion}">Operative Planing</a></td>
+                                            <td class="col-md-3"><a th:href="@{/grafico}">Viability</a></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </table>
-                            <table class="table text-center">
-                                <table class="table table-bordered table-striped custom-table">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Total compras</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="totales">
-                                    <td><span class="" th:text="${totalCompras + ' || ' + porcentajeCalculadoCompras + '%'}"></span></td>
-                                    </tbody>
-                                </table>
-                            </table>
+                        </div>
+                    </div>
+                </div>
 
-                            <!-- Ventas list -->
-                            <table class="table text-center">
-                                <table class="table table-bordered table-striped custom-table">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Tipo</th>
-                                            <th>Year</th>
-                                            <th>Week</th>
-                                            <th>Id Producto</th>
-                                            <th>Nombre Producto</th>
-                                            <th>Media</th>
-                                            <th>Total Cantidad</th>
-                                            <th>Total Coste</th>
-                                            <th>Porcentaje</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="filteredTableBody2">
-                                        <tr th:each="resumen : ${listaResumenVentas}">
-                                            <td><span class="resumenTipo" th:text="${resumen.tipo}"></span></td>
-                                            <td><span class="" th:text="${resumen.year}"></span></td>
-                                            <td><span class="" th:text="${resumen.week}"></span></td>
-                                            <td><span class="resumenIdProducto" th:text="${resumen.idProducto}"></span></td>
-                                            <td><span class="resumenNombreProducto" th:text="${resumen.nombreProducto}"></span></td>
-                                            <td><span class="resumenCosteIndividual" th:text="${resumen.costeIndividual}"></span></td>
-                                            <td><span class="resumenTotalCantidad" th:text="${resumen.totalCantidad}"></span></td>
-                                            <td><span class="resumenTotalCoste" th:text="${resumen.totalCoste}"></span></td>
-                                            <td><span class="resumenPorcentaje" th:text="${resumen.porcentaje + '%'}"></span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </table>
 
-                            <table class="table text-center">
-                                <table class="table table-bordered table-striped custom-table">
-                                    <thead class="thead-dark">
-                                        <tr>
-                                            <th>Total ventas</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="totales">
-                                    <td><span class="" th:text="${totalVentas + ' || ' + porcentajeCalculadoVentas + '%'}"></span></td>
-                                    </tbody>
-                                </table>
-                            </table>
+                <div class="content">
+                    <!--Change mode-->
+                    <form th:action="@{/costEfective}" method="get">
+                        <div class="custom-control custom-switch">
+                            <input type="hidden" name="fechaInicio" th:value="${fecha}">
+                            <input type="checkbox" class="custom-control-input" id="customSwitches" name="switchView" onChange="this.form.submit()">
+                            <label class="custom-control-label" for="customSwitches" style="color: white;">Ver gráfico</label>
+                        </div>
+                    </form>
+
+                    <div class="table-responsive">
+                        <!-- sub menu container -->
+                        <!-- valores principales -->
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table text-center">
+                                        <table class="table table-bordered table-striped custom-table">
+
+                                            <!-- Get formulario -->
+                                            <div class=" form-group row g-3">
+                                                <form th:action="@{/costEfective}" method="get">
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" type="text" id="fechaInicio" name="fechaInicio"  placeholder="DD/MM/AAAA" th:value="${fecha}" required>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <button class="btn btn-dark btn-block" type="submit">Fecha a filtrar</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <!-- Get formulario -->
+                                            <div class=" form-group row g-3">
+                                                <form th:action="@{/costEfective}" method="get" >
+                                                    <input type="hidden" id="fechaInicio" name="fechaInicio" th:value="${fecha}">
+                                                    <input type="hidden" id="operacio" name="operacio" value="resta">
+                                                    <div class="col-md-6">
+                                                        <button class="btn btn-dark btn-block" type="submit"><</button>
+                                                    </div>
+                                                </form>
+                                                <form th:action="@{/costEfective}" method="get" >
+                                                    <input type="hidden" id="fechaInicio" name="fechaInicio" th:value="${fecha}">
+                                                    <input type="hidden" id="operacio" name="operacio" value="suma">
+                                                    <div class="col-md-6">
+                                                        <button class="btn btn-dark btn-block" type="submit">></button>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                            <!-- Search and filter section -->
+                                            <div class=" form-group row g-3">
+                                                <div class="col-md-9">
+                                                    <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('resumenNombreProducto')">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <select id="selectInput" class="form-control">
+                                                        <option value="resumenTipo">Tipo</option>
+                                                        <option value="resumenIdProducto">Id Producto</option>
+                                                        <option value="resumenNombreProducto" selected>Nombre Producto</option>
+                                                        <option value="resumenCosteIndividual">Media</option>
+                                                        <option value="resumenTotalCantidad">Total Cantidad</option>
+                                                        <option value="resumenTotalCoste">Total Coste</option>
+                                                        <option value="resumenPorcentaje">Porcentaje</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- Compras list -->
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Tipo</th>
+                                                    <th>Year</th>
+                                                    <th>Week</th>
+                                                    <th>Id Producto</th>
+                                                    <th>Nombre Producto</th>
+                                                    <th>Media</th>
+                                                    <th>Total Cantidad</th>
+                                                    <th>Total Coste</th>
+                                                    <th>Porcentaje</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="filteredTableBody1">
+                                                <tr th:each="resumen : ${listaResumenCompras}">
+                                                    <td><span class="resumenTipo" th:text="${resumen.tipo}"></span></td>
+                                                    <td><span class="" th:text="${resumen.year}"></span></td>
+                                                    <td><span class="" th:text="${resumen.week}"></span></td>
+                                                    <td><span class="resumenIdProducto" th:text="${resumen.idProducto}"></span></td>
+                                                    <td><span class="resumenNombreProducto" th:text="${resumen.nombreProducto}"></span></td>
+                                                    <td><span class="resumenCosteIndividual" th:text="${resumen.costeIndividual}"></span></td>
+                                                    <td><span class="resumenTotalCantidad" th:text="${resumen.totalCantidad}"></span></td>
+                                                    <td><span class="resumenTotalCoste" th:text="${resumen.totalCoste}"></span></td>
+                                                    <td><span class="resumenPorcentaje" th:text="${resumen.porcentaje + '%'}"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </table>
+                                    <table class="table text-center">
+                                        <table class="table table-bordered table-striped custom-table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Total compras</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="totales">
+                                            <td><span class="" th:text="${totalCompras + ' || ' + porcentajeCalculadoCompras + '%'}"></span></td>
+                                            </tbody>
+                                        </table>
+                                    </table>
+
+                                    <!-- Ventas list -->
+                                    <table class="table text-center">
+                                        <table class="table table-bordered table-striped custom-table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Tipo</th>
+                                                    <th>Year</th>
+                                                    <th>Week</th>
+                                                    <th>Id Producto</th>
+                                                    <th>Nombre Producto</th>
+                                                    <th>Media</th>
+                                                    <th>Total Cantidad</th>
+                                                    <th>Total Coste</th>
+                                                    <th>Porcentaje</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="filteredTableBody2">
+                                                <tr th:each="resumen : ${listaResumenVentas}">
+                                                    <td><span class="resumenTipo" th:text="${resumen.tipo}"></span></td>
+                                                    <td><span class="" th:text="${resumen.year}"></span></td>
+                                                    <td><span class="" th:text="${resumen.week}"></span></td>
+                                                    <td><span class="resumenIdProducto" th:text="${resumen.idProducto}"></span></td>
+                                                    <td><span class="resumenNombreProducto" th:text="${resumen.nombreProducto}"></span></td>
+                                                    <td><span class="resumenCosteIndividual" th:text="${resumen.costeIndividual}"></span></td>
+                                                    <td><span class="resumenTotalCantidad" th:text="${resumen.totalCantidad}"></span></td>
+                                                    <td><span class="resumenTotalCoste" th:text="${resumen.totalCoste}"></span></td>
+                                                    <td><span class="resumenPorcentaje" th:text="${resumen.porcentaje + '%'}"></span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </table>
+
+                                    <table class="table text-center">
+                                        <table class="table table-bordered table-striped custom-table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Total ventas</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="totales">
+                                            <td><span class="" th:text="${totalVentas + ' || ' + porcentajeCalculadoVentas + '%'}"></span></td>
+                                            </tbody>
+                                        </table>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

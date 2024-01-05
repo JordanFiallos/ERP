@@ -40,7 +40,7 @@ public class AutenticacioConfiguracio {
                 .requestMatchers("/images/**").permitAll()
                 .requestMatchers("/inicio/**").permitAll()
                 .requestMatchers("/api/bills/**").hasAnyAuthority("ACCOUNTING")
-                .requestMatchers("/accounting/**").hasAnyAuthority("ACCOUNTING")
+                .requestMatchers("/bills/**").hasAnyAuthority("ACCOUNTING")
                 .requestMatchers("/commercial/**").hasAnyAuthority("COMMERCIAL")
                 .requestMatchers("/customer/list/**").hasAnyAuthority("SELLER")
                 .requestMatchers("/employee_list/**").hasAnyAuthority("HUMAN")
