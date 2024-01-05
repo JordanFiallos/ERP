@@ -53,8 +53,8 @@ public class Sells {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    @Column(name = "operation_date")
-    private LocalDate operationDate;
+    @Column(name = "sold_date")
+    private LocalDate sold_date;
 
     @Transient
     private String month;

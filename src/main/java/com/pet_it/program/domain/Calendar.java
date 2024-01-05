@@ -14,7 +14,11 @@ import lombok.Data;
 @Data
 public class Calendar{
     private Long id;
+    private String tipo;
+    
     private LocalDateTime scheduledDate;
+    private String scheduledDateString;
+    
     private Long employeeId;
     private String employeeName;
     

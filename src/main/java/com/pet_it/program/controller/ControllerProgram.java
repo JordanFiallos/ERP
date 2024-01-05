@@ -26,6 +26,11 @@ public class ControllerProgram {
     private bBillServiceImpl billService;
     
     
+    @GetMapping("/")
+    public String index() {
+        return "redirect:/calendar";
+    }
+    
     @GetMapping("/inicio")
     public String inicio() {
         return "inicio";

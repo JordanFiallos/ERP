@@ -14,8 +14,8 @@ function generalFilter(classFiltered) {
     classFiltered = "." + classFiltered;
     var input = document.getElementById('searchInput');
     var filter = input.value.toUpperCase();
-    var tableBody = document.getElementById('filteredTableBody');
-    var rows = tableBody.getElementsByTagName('tr');
+
+    var tableBodies = [document.getElementById('filteredTableBody1'), document.getElementById('filteredTableBody2')];
 
     if (seleccionActual == "") {
         seleccionActual = classFiltered;
@@ -23,20 +23,31 @@ function generalFilter(classFiltered) {
         classFiltered = "." + seleccionActual;
     }
 
-    for (let i = 0; i < rows.length; i++) {
-        const productName = rows[i].querySelector(classFiltered).innerText.toUpperCase();
-        if (productName.indexOf(filter) > -1) {
-            rows[i].style.display = '';
-        } else {
-            rows[i].style.display = 'none';
+    tableBodies.forEach(function(tableBody) {
+        var rows = tableBody.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            const productName = rows[i].querySelector(classFiltered).innerText.toUpperCase();
+            if (productName.indexOf(filter) > -1) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
         }
-    }
+    });
 }
 
 // FilterDate
+var originalRows = [];
+
 document.addEventListener("DOMContentLoaded", function () {
-    // Oculta el botón de restablecimiento al cargar la página
-    document.getElementById("resetFilter").style.display = "none";
+    // Obtiene todas las filas y las almacena en originalRows
+    var table = document.querySelector(".table");
+    var tr = table.getElementsByTagName("tr");
+
+    for (var i = 0; i < tr.length; i++) {
+        originalRows.push(tr[i].outerHTML);
+    }
 });
 
 function filterTable() {
@@ -46,7 +57,7 @@ function filterTable() {
     table = document.querySelector(".table");
     tr = table.getElementsByTagName("tr");
 
-    // Itera sobre todas las filas y muestra/oculta según la fecha de filtrado
+    // Itera sobre todas las filas y oculta aquellas que no coincidan con la fecha de filtrado
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[0]; // Cambia el índice a 0 para la columna "Month"
         if (td) {
@@ -60,18 +71,14 @@ function filterTable() {
         }
     }
 
-    // Muestra el botón de restablecimiento si hay filas filtradas
-    var filteredRows = Array.from(tr).filter(row => row.style.display === "none");
-    document.getElementById("resetFilter").style.display = filteredRows.length > 0 ? "inline" : "none";
+    // Muestra el botón de restablecimiento
+    document.getElementById("resetFilter").style.display = "inline";
 }
 
 function resetFilter() {
-    // Muestra todas las filas
+    // Muestra todas las filas originales
     var table = document.querySelector(".table");
-    var tr = table.getElementsByTagName("tr");
-    for (var i = 0; i < tr.length; i++) {
-        tr[i].style.display = "";
-    }
+    table.innerHTML = originalRows.join("");
 
     // Oculta el botón de restablecimiento
     document.getElementById("resetFilter").style.display = "none";

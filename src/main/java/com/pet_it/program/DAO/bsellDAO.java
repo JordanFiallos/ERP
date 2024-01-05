@@ -11,15 +11,23 @@ import org.springframework.data.jpa.repository.Query;
 
 /**
  *
- * @author Ricard
+ * @author Ricard & Ruben
  */
 public interface bsellDAO extends JpaRepository<bSell, Long> {
+    @Query(value="SELECT * FROM b_bill WHERE dtype = \"Sell\" AND id_visit IS NULL AND semana = ?1 AND YEAR(operation_date) = ?2",nativeQuery=true)
+    List<bSell> listSellsSinceSemana(int fechaSemana, int ano);
+    
+    @Query(value="SELECT * FROM b_bill WHERE dtype = \"Sell\" AND id_visit IS NOT NULL AND semana = ?1 AND YEAR(operation_date) = ?2",nativeQuery=true)
+    List<bSell> listSellsVisitasSinceSemana(int fechaSemana, int ano);
+    
+    ///
+    
     @Query("SELECT COUNT(*) FROM bSell b")
     int listaFacturasVenta();
     
     @Query("SELECT COUNT(*) FROM bSell b WHERE b.semana = ?1 AND YEAR(b.operationDate) = ?2")
     int listaVentaSemana(int semana,int año);
-
+    
     @Query("SELECT SUM(b.total) FROM bSell b")
     int sumaTotalsVenta();
     
