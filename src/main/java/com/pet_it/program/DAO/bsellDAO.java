@@ -21,6 +21,9 @@ public interface bsellDAO extends JpaRepository<bSell, Long> {
     @Query(value="SELECT * FROM b_bill WHERE dtype = \"Sell\" AND id_visit IS NOT NULL AND semana = ?1 AND YEAR(operation_date) = ?2",nativeQuery=true)
     List<bSell> listSellsVisitasSinceSemana(int fechaSemana, int ano);
     
+    @Query(value="SELECT * FROM b_bill WHERE dtype = \"Sell\" AND operation_date BETWEEN ?1 AND ?2",nativeQuery=true)
+    List<bSell> listSellsBetweenDates(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    
     ///
     
     @Query("SELECT COUNT(*) FROM bSell b")

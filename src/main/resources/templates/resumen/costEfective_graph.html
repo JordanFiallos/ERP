@@ -8,14 +8,15 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link th:href="@{css/main.css}" rel="stylesheet"/>
         <style>
-            .custom-control-input{
+            .custom-control-input:checked ~ .custom-control-label::before {
+                background-color: #ffca2c;
                 border-color: #ffc720;
             }
         </style>
     </head>
     <body class="bg-light-blue">
         <header th:replace="fragments/header :: header"></header>
-        
+
         <div class="main-content">
             <div class="table-responsive">
                 <div class="container">
@@ -42,8 +43,8 @@
                     <form th:action="@{/costEfective}" method="get">
                         <div class="custom-control custom-switch">
                             <input type="hidden" name="fechaInicio" th:value="${fecha}">
-                            <input type="checkbox" class="custom-control-input" id="customSwitches" name="switchView" onChange="this.form.submit()">
-                            <label class="custom-control-label" for="customSwitches" style="color: white;">Ver gráfico</label>
+                            <input type="checkbox" class="custom-control-input" id="customSwitches" name="switchView" onChange="this.form.submit()" checked>
+                            <label class="custom-control-label" for="customSwitches" style="color: white;">Ver listado</label>
                         </div>
                     </form>
 
@@ -59,8 +60,9 @@
                                             <!-- Get formulario -->
                                             <div class=" form-group row g-3">
                                                 <form th:action="@{/costEfective}" method="get">
+                                                    <input type="hidden" id="switchStringView" name="switchStringView" th:value="${tipeView}">
                                                     <div class="col-md-9">
-                                                        <input class="form-control" type="text" id="fechaInicio" name="fechaInicio"  placeholder="DD/MM/AAAA" th:value="${fecha}" required>
+                                                        <input class="form-control" type="text" id="fechaInicio" name="fechaInicio" placeholder="DD/MM/AAAA" th:value="${fecha}" required>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <button class="btn btn-dark btn-block" type="submit">Fecha a filtrar</button>
@@ -71,6 +73,7 @@
                                             <!-- Get formulario -->
                                             <div class=" form-group row g-3">
                                                 <form th:action="@{/costEfective}" method="get" >
+                                                    <input type="hidden" id="switchStringView" name="switchStringView" th:value="${tipeView}">
                                                     <input type="hidden" id="fechaInicio" name="fechaInicio" th:value="${fecha}">
                                                     <input type="hidden" id="operacio" name="operacio" value="resta">
                                                     <div class="col-md-6">
@@ -78,6 +81,7 @@
                                                     </div>
                                                 </form>
                                                 <form th:action="@{/costEfective}" method="get" >
+                                                    <input type="hidden" id="switchStringView" name="switchStringView" th:value="${tipeView}">
                                                     <input type="hidden" id="fechaInicio" name="fechaInicio" th:value="${fecha}">
                                                     <input type="hidden" id="operacio" name="operacio" value="suma">
                                                     <div class="col-md-6">
@@ -86,51 +90,15 @@
                                                 </form>
                                             </div>
 
-                                            <!-- Search and filter section -->
-                                            <div class=" form-group row g-3">
-                                                <div class="col-md-9">
-                                                    <input type="text" id="searchInput" class="form-control" placeholder="Search..." oninput="generalFilter('resumenNombreProducto')">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <select id="selectInput" class="form-control">
-                                                        <option value="resumenTipo">Tipo</option>
-                                                        <option value="resumenIdProducto">Id Producto</option>
-                                                        <option value="resumenNombreProducto" selected>Nombre Producto</option>
-                                                        <option value="resumenCosteIndividual">Media</option>
-                                                        <option value="resumenTotalCantidad">Total Cantidad</option>
-                                                        <option value="resumenTotalCoste">Total Coste</option>
-                                                        <option value="resumenPorcentaje">Porcentaje</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                        </table>
+                                    </table>
 
-                                            <!-- Compras list -->
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th>Tipo</th>
-                                                    <th>Year</th>
-                                                    <th>Week</th>
-                                                    <th>Id Producto</th>
-                                                    <th>Nombre Producto</th>
-                                                    <th>Media</th>
-                                                    <th>Total Cantidad</th>
-                                                    <th>Total Coste</th>
-                                                    <th>Porcentaje</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="filteredTableBody1">
-                                                <tr th:each="resumen : ${listaResumenCompras}">
-                                                    <td><span class="resumenTipo" th:text="${resumen.tipo}"></span></td>
-                                                    <td><span class="" th:text="${resumen.year}"></span></td>
-                                                    <td><span class="" th:text="${resumen.week}"></span></td>
-                                                    <td><span class="resumenIdProducto" th:text="${resumen.idProducto}"></span></td>
-                                                    <td><span class="resumenNombreProducto" th:text="${resumen.nombreProducto}"></span></td>
-                                                    <td><span class="resumenCosteIndividual" th:text="${resumen.costeIndividual}"></span></td>
-                                                    <td><span class="resumenTotalCantidad" th:text="${resumen.totalCantidad}"></span></td>
-                                                    <td><span class="resumenTotalCoste" th:text="${resumen.totalCoste}"></span></td>
-                                                    <td><span class="resumenPorcentaje" th:text="${resumen.porcentaje + '%'}"></span></td>
-                                                </tr>
-                                            </tbody>
+                                    <!-- Compras graph -->
+                                    <table class="table text-center">
+                                        <table class="table table-bordered table-striped custom-table">
+
+                                            <div id="chartCompras"></div>
+
                                         </table>
                                     </table>
                                     <table class="table text-center">
@@ -145,39 +113,14 @@
                                             </tbody>
                                         </table>
                                     </table>
-
-                                    <!-- Ventas list -->
+                                    <!-- Ventas graph -->
                                     <table class="table text-center">
                                         <table class="table table-bordered table-striped custom-table">
-                                            <thead class="thead-dark">
-                                                <tr>
-                                                    <th>Tipo</th>
-                                                    <th>Year</th>
-                                                    <th>Week</th>
-                                                    <th>Id Producto</th>
-                                                    <th>Nombre Producto</th>
-                                                    <th>Media</th>
-                                                    <th>Total Cantidad</th>
-                                                    <th>Total Coste</th>
-                                                    <th>Porcentaje</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="filteredTableBody2">
-                                                <tr th:each="resumen : ${listaResumenVentas}">
-                                                    <td><span class="resumenTipo" th:text="${resumen.tipo}"></span></td>
-                                                    <td><span class="" th:text="${resumen.year}"></span></td>
-                                                    <td><span class="" th:text="${resumen.week}"></span></td>
-                                                    <td><span class="resumenIdProducto" th:text="${resumen.idProducto}"></span></td>
-                                                    <td><span class="resumenNombreProducto" th:text="${resumen.nombreProducto}"></span></td>
-                                                    <td><span class="resumenCosteIndividual" th:text="${resumen.costeIndividual}"></span></td>
-                                                    <td><span class="resumenTotalCantidad" th:text="${resumen.totalCantidad}"></span></td>
-                                                    <td><span class="resumenTotalCoste" th:text="${resumen.totalCoste}"></span></td>
-                                                    <td><span class="resumenPorcentaje" th:text="${resumen.porcentaje + '%'}"></span></td>
-                                                </tr>
-                                            </tbody>
+
+                                            <div id="chartVentas"></div>
+
                                         </table>
                                     </table>
-
                                     <table class="table text-center">
                                         <table class="table table-bordered table-striped custom-table">
                                             <thead class="thead-dark">
@@ -196,7 +139,138 @@
                     </div>
                 </div>
             </div>
+        <a th:href="@{/totalPorSemana}" style="color:#4BA2CD">totalPorSemana</a>
         </div>
+        
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script th:inline="javascript">
+            (function () {
+                var pie = /*[[${listaResumenCompras}]]*/ [];
+
+                var series = [];
+                var data = [];
+                var iconoPorcentaje = '%';
+                var i = 0;
+                
+                pie.forEach(function(resumen) {
+                    var object = {};
+                    object.name = resumen.nombreProducto;
+                    object.y = resumen.porcentaje;
+                    if(object.name != "aproximado"){
+                        data.push(object);
+                    }
+                    i++;
+                });
+                
+                if(i>0){
+                    var seriesObject = {
+                    name: 'Course By Category',
+                            colorByPoint: true,
+                            data: data
+                        };
+                    
+                    series.push(seriesObject);
+                    drawPieChart(series);
+
+                    // draw the pie chart:
+                    function drawPieChart(series) {
+                        Highcharts.chart('chartCompras', {
+                            chart: {
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false,
+                                type: 'pie'
+                            },
+                            title: {
+                                text: 'Compras || semana: ' + /*[[${numeroSemana}]]*/
+                            },
+                            tooltip: {
+                                formatter: function () {
+                                    return '<strong>' + this.key + ': </strong>' + this.y;
+                                }
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '<b>{point.name}</b>: {point.y}%'
+                                    }
+                                }
+                            },
+                            // use the series data defined earlier:
+                            series: series
+                        });
+                    }
+                }
+            })();
+        </script>
+        
+        <script th:inline="javascript">
+            (function () {
+                var pie = /*[[${listaResumenVentas}]]*/ [];
+
+                var series = [];
+                var data = [];
+                var i = 0;
+                
+                pie.forEach(function(resumen) {
+                    var object = {};
+                    object.name = resumen.nombreProducto;
+                    object.y = resumen.porcentaje;
+                    if(object.name != "aproximado"){
+                        data.push(object);
+                    }
+                    i++;
+                });
+                
+                if(i>0){
+                    var seriesObject = {
+                    name: 'Course By Category',
+                            colorByPoint: true,
+                            data: data
+                        };
+                
+                    series.push(seriesObject);
+                    drawPieChart(series);
+                
+                    // draw the pie chart:
+                    function drawPieChart(series) {
+                        Highcharts.chart('chartVentas', {
+                            chart: {
+                                plotBackgroundColor: null,
+                                plotBorderWidth: null,
+                                plotShadow: false,
+                                type: 'pie'
+                            },
+                            title: {
+                                text: 'Ventas || semana: ' + /*[[${numeroSemana}]]*/
+                            },
+                            tooltip: {
+                                formatter: function () {
+                                    return '<strong>' + this.key + ': </strong>' + this.y;
+                                }
+                            },
+                            plotOptions: {
+                                pie: {
+                                    allowPointSelect: true,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: true,
+                                        format: '<b>{point.name}</b>: {point.y}%'
+                                  }
+                               }
+                            },
+                           // use the series data defined earlier:
+                          series: series
+                        });
+                    }
+                }
+            })();
+        </script>
     </body>
-    <script th:src="@{js/filter2tablas.js}"></script>
+<!--script th:src="@{js/filter2tablas.js}"></script-->
 </html>

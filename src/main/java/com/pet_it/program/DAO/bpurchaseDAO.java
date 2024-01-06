@@ -21,6 +21,9 @@ public interface bpurchaseDAO extends JpaRepository<bPurchase, Long> {
     @Query(value="SELECT * FROM b_bill WHERE dtype = \"Purchase\" AND semana = ?1 AND YEAR(operation_date) = ?2",nativeQuery=true)
     List<bPurchase> listPurchasesSinceSemana(int nSemana, int ano);
     
+    @Query(value="SELECT * FROM b_bill WHERE dtype = \"Purchase\" AND operation_date BETWEEN ?1 AND ?2",nativeQuery=true)
+    List<bPurchase> listPurchasesBetweenDates(LocalDateTime fechaInicio, LocalDateTime fechaFin);
+    
     ///
     
     @Query(value="SELECT COUNT(*) FROM b_bill b WHERE dtype = \"Purchase\"",nativeQuery=true)

@@ -19,6 +19,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -47,42 +48,18 @@ public class resumenSemanalServiceImpl  implements resumenSemanaService {
     }
     
     @Override
-    public List<ResumenSemanal> generarResumenCompras (String fechaInicio) {
-        int nyear = extraerYear (fechaInicio);
-        int nSemana = extraerWeek(fechaInicio);
-        log.info("Recibido year: "+nyear);
-        log.info("Recibido semana: "+nSemana);
-        List<ResumenSemanal> listaResumen = resumenSemanalCompras(nSemana, nyear);
-        return listaResumen;
-    }
-    
-    @Override
-    public List<ResumenSemanal> generarResumenVentas (String fechaInicio) {
-        int nyear = extraerYear (fechaInicio);
-        int nSemana = extraerWeek(fechaInicio);
-        log.info("Recibido year: "+nyear);
-        log.info("Recibido semana: "+nSemana);
-        List<ResumenSemanal> listaResumen = resumenSemanalVentas(nSemana, nyear);
-        return listaResumen;
-    }
-    
-    @Override
     public String operarWeek(String fecha, String opcio){
         int semanaAOperar = 7;
         String fechaString = consultarDataString(fecha);
         LocalDateTime fechaEnUso = prepararFecha(fechaString);
         switch (opcio) {
             case "suma":
-                log.info("Resumen. operacion fecha +.");
                 fechaEnUso = fechaEnUso.plusDays(semanaAOperar);
-                log.info("Resumen. operacion fecha :"+fechaEnUso);
             break;
             case "resta":
-                log.info("Resumen. operacion fecha -.");
                 fechaEnUso = fechaEnUso.minusDays(semanaAOperar);
             break;
             default:
-                log.info("Resumen. operacion fecha =.");
             break;
         }
         String nuevaFecha = localTimeToString(fechaEnUso);
@@ -99,16 +76,163 @@ public class resumenSemanalServiceImpl  implements resumenSemanaService {
         return totalResumen;
     }
     
-    private int extraerYear (String fechaInicio) {
-        LocalDateTime fechaEnUso = prepararFecha(fechaInicio);
-        return fechaEnUso.getYear();
+    @Override
+    public float totalPorcentaje(List<ResumenSemanal> listaResumen){
+        float porcentajeCalculado = 0;
+        float porcentajeFaltante = 0;
+        for (ResumenSemanal resumen : listaResumen) {
+            porcentajeCalculado = porcentajeCalculado + resumen.getPorcentaje(); 
+        }
+        if(porcentajeCalculado != 0){
+            porcentajeFaltante = 100 - porcentajeCalculado;
+        }
+        float porcentajeExacto = 100 - porcentajeFaltante;
+        return porcentajeExacto;
     }
     
-    private int extraerWeek(String fechaInicio){
-        LocalDateTime fechaEnUso = prepararFecha(fechaInicio);
-        //Para comenzar a contar cada semana desde el lunes.
-        WeekFields weekFields = WeekFields.of(Locale.getDefault());
-        return fechaEnUso.get(weekFields.weekOfYear());
+    @Override
+    public List<ResumenSemanal> generarResumenSemanal (String fechaInicio, String tipoFactura){
+        int nyear = extraerYear (fechaInicio);
+        int nSemana = extraerWeek(fechaInicio);
+        List<Object> objectList = new ArrayList<>();
+        if(tipoFactura.equals("Compras")){
+            List<bPurchase> lista = comprasPorSemana(nSemana, nyear);
+            for (bPurchase purchase : lista) {
+                objectList.add(purchase);
+            }
+        } else {
+            List<bSell> lista = ventasPorSemana(nSemana, nyear);
+            for (bSell venta : lista) {
+                objectList.add(venta);
+            }
+        }
+        List<ResumenSemanal> lista = listarFacturasPorSemana(nSemana, nyear, tipoFactura, objectList);
+        return lista;
+    }
+    
+    private List<ResumenSemanal> listarFacturasPorSemana(int nSemana, int nyear, String tipoFactura, List<Object> objectList){
+        List<ResumenSemanal> listaResumen = new ArrayList<>();
+        Long i = 0L;
+        for (Object factura : objectList) {
+            ResumenSemanal resumen = new ResumenSemanal();
+            String nameProducto = null;
+            if (factura instanceof bPurchase bCompra) {
+                nameProducto = bCompra.getProduct().getName();
+            } else if (factura instanceof bSell bventa) {
+                nameProducto = bventa.getProduct().getName();
+            }
+            boolean boo = false;
+            for (ResumenSemanal resumenHastaAhora : listaResumen) {
+                if (resumenHastaAhora.getNombreProducto().equals(nameProducto)) {
+                    boo = true;
+                    int oldTotalCantidad = resumenHastaAhora.getTotalCantidad();
+                    float oldTotalCoste = resumenHastaAhora.getTotalCoste();
+                    if (factura instanceof bPurchase bCompra) {
+                        resumenHastaAhora.setTotalCantidad(bCompra.getQuantity() + oldTotalCantidad);
+                        resumenHastaAhora.setTotalCoste(bCompra.getTotal() + oldTotalCoste);
+                    } else if (factura instanceof bSell bventa) {
+                        resumenHastaAhora.setTotalCantidad(bventa.getQuantity() + oldTotalCantidad);
+                        resumenHastaAhora.setTotalCoste(bventa.getTotal() + oldTotalCoste);
+                    }
+                }
+            }
+            if (!boo) {
+                i++;
+                resumen.setId(i);
+                resumen.setWeek(nSemana);
+                resumen.setYear(nyear);
+                resumen.setNombreProducto(nameProducto);
+                float costeBill = 0;
+                int cantidadBill = 0;
+                if (factura instanceof bPurchase bCompra) {
+                    resumen.setTipo("Compra");
+                    resumen.setIdProducto(bCompra.getProduct().getId());
+                    cantidadBill = bCompra.getQuantity();
+                    costeBill = bCompra.getTotal();
+                } else if (factura instanceof bSell bventa) {
+                    resumen.setTipo("Venta");
+                    resumen.setIdProducto(bventa.getProduct().getId());
+                    cantidadBill = bventa.getQuantity();
+                    costeBill = bventa.getTotal();
+                }
+                float costeOrientativo = reducirDecimales(costeBill / cantidadBill);
+                resumen.setTotalCantidad(cantidadBill);
+                resumen.setTotalCoste(costeBill);
+                resumen.setCosteIndividual(costeOrientativo);
+                listaResumen.add(resumen);
+            }
+        }
+        if(!tipoFactura.equals("Compras")){
+            listaResumen = resumenSemanalVisitas(nSemana, nyear, listaResumen);
+        }
+        List<ResumenSemanal> listaResumenConPorcentajes = porcentajeResumen(listaResumen);
+        return listaResumenConPorcentajes;
+    }
+    
+    @Override
+    public List<ResumenSemanal> generarTotalEntreFechas (String fechaInicio, String fechaFinal, String tipoFactura){
+        List<Object> lista = listarfacturas (fechaInicio, fechaFinal, tipoFactura);
+        List<ResumenSemanal> listaResumen = new ArrayList<>();
+        for (Object factura : lista){
+            String fechaDeCompra = null;
+            if (factura instanceof bPurchase bCompra) {
+                fechaDeCompra = localTimeToString(bCompra.getOperationDate());
+            } else if (factura instanceof bSell bventa) {
+                fechaDeCompra = localTimeToString(bventa.getOperationDate());
+            }
+            int numeroSemana = extraerWeek(fechaDeCompra);
+            int numeroYear = extraerYear(fechaDeCompra);
+            String claveFecha = numeroYear + "-" + numeroSemana;
+            
+            boolean boo = false;
+            for (ResumenSemanal resumen : listaResumen) {
+                if (resumen.getNombreProducto().equals(claveFecha)) {
+                    if (factura instanceof bPurchase bCompra) {
+                        resumen.setTotalCoste(resumen.getTotalCoste() + bCompra.getTotal());
+                        resumen.setTotalCantidad(resumen.getTotalCantidad() + 1);
+                    } else if (factura instanceof bSell bventa) {
+                        resumen.setTotalCoste(resumen.getTotalCoste() + bventa.getTotal());
+                        resumen.setTotalCantidad(resumen.getTotalCantidad() + 1);
+                    }
+                    boo = true;
+                    break;
+                }
+            }
+            if (!boo) {
+                ResumenSemanal resumen = new ResumenSemanal();
+                resumen.setNombreProducto(claveFecha);
+                resumen.setWeek(numeroSemana);
+                resumen.setYear(numeroYear);
+                if (factura instanceof bPurchase bCompra) {
+                    resumen.setTipo("Compra");
+                    resumen.setTotalCoste(bCompra.getTotal());
+                } else if (factura instanceof bSell bventa) {
+                    resumen.setTipo("Venta");
+                    resumen.setTotalCoste(bventa.getTotal());
+                }
+                resumen.setTotalCantidad(1);
+                listaResumen.add(resumen);
+            }
+        }
+        return listaResumen;
+    }
+    
+    private List<Object> listarfacturas (String fechaInicio, String fechaFinal, String tipoFactura) {
+        LocalDateTime fechaInicioSemana = extraerLocalDateTime(fechaInicio, true);
+        LocalDateTime fechaFinalSemana = extraerLocalDateTime(fechaFinal, false);
+        List<Object> objectList = new ArrayList<>();
+        if(tipoFactura.equals("Compras")){
+            List<bPurchase> lista = purchaseDao.listPurchasesBetweenDates(fechaInicioSemana, fechaFinalSemana);
+            for (bPurchase purchase : lista) {
+                objectList.add(purchase);
+            }
+        } else {
+            List<bSell> lista = sellDao.listSellsBetweenDates(fechaInicioSemana, fechaFinalSemana);
+            for (bSell venta : lista) {
+                objectList.add(venta);
+            }
+        }
+        return objectList;
     }
     
     private List<bPurchase> comprasPorSemana(int nSemana, int ano) {
@@ -123,87 +247,36 @@ public class resumenSemanalServiceImpl  implements resumenSemanaService {
         return sellDao.listSellsVisitasSinceSemana(nSemana, ano);
     }
     
-    private List<ResumenSemanal> resumenSemanalCompras(int nSemana, int nyear){
-        List<bPurchase> listaCompras = comprasPorSemana(nSemana, nyear);
-        List<ResumenSemanal> listaResumen = new ArrayList<>();
-        Long i = 0L;
-        for (bPurchase compra : listaCompras) {
-            ResumenSemanal resumen = new ResumenSemanal();
-            String nameProducto = compra.getProduct().getName();
-            boolean boo = false;
-            for (ResumenSemanal resumenHastaAhora : listaResumen) {
-                if (resumenHastaAhora.getNombreProducto().equals(nameProducto)) {
-                    boo = true;
-                    int oldTotalCantidad = resumenHastaAhora.getTotalCantidad();
-                    float oldTotalCoste = resumenHastaAhora.getTotalCoste();
-
-                    resumenHastaAhora.setTotalCantidad(compra.getQuantity() + oldTotalCantidad);
-                    resumenHastaAhora.setTotalCoste(compra.getTotal() + oldTotalCoste);
-                }
-            }
-            if (!boo) {
-                i++;
-                resumen.setId(i);
-                resumen.setTipo("Compra");
-                resumen.setWeek(nSemana);
-                resumen.setYear(nyear);
-                resumen.setIdProducto(compra.getProduct().getId());
-                resumen.setNombreProducto(nameProducto);
-
-                int cantidadBill = compra.getQuantity();
-                float costeBill = compra.getTotal();
-                float costeOrientativo = reducirDecimales(costeBill / cantidadBill);
-                
-                resumen.setTotalCantidad(cantidadBill);
-                resumen.setTotalCoste(costeBill);
-                resumen.setCosteIndividual(costeOrientativo);
-                listaResumen.add(resumen);
-            }
-        }
-        List<ResumenSemanal> listaResumenConPorcentajes = porcentajeResumen(listaResumen);
-        return listaResumenConPorcentajes;
+    private int extraerYear (String fechaInicio) {
+        LocalDateTime fechaEnUso = prepararFecha(fechaInicio);
+        return fechaEnUso.getYear();
     }
     
-    private List<ResumenSemanal> resumenSemanalVentas(int nSemana, int nyear){
-        List<bSell> listaVentas = ventasPorSemana(nSemana, nyear);
-        List<ResumenSemanal> listaResumen = new ArrayList<>();
-        Long i = 0L;
-        for (bSell venta : listaVentas) {
-            ResumenSemanal resumen = new ResumenSemanal();
-            String nameProducto = venta.getProduct().getName();
-            boolean boo = false;
-            for (ResumenSemanal resumenHastaAhora : listaResumen) {
-                if (resumenHastaAhora.getNombreProducto().equals(nameProducto)) {
-                    boo = true;
-                    int oldTotalCantidad = resumenHastaAhora.getTotalCantidad();
-                    float oldTotalCoste = resumenHastaAhora.getTotalCoste();
+    @Override
+    public int extraerWeek(String fechaInicio){
+        LocalDateTime fechaEnUso = prepararFecha(fechaInicio);
+        //Para comenzar a contar cada semana desde el lunes.
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        return fechaEnUso.get(weekFields.weekOfYear());
+    }
+    
+    private LocalDateTime extraerLocalDateTime(String fecha, boolean inicioFinal){
+        int yearEnUso = extraerYear(fecha);
+        int nSemanaEnUso = extraerWeek(fecha);
+        Calendar calendar = Calendar.getInstance();
+        calendar.clear();
+        calendar.set(Calendar.WEEK_OF_YEAR, nSemanaEnUso);
+        calendar.set(Calendar.YEAR, yearEnUso);
 
-                    resumenHastaAhora.setTotalCantidad(venta.getQuantity() + oldTotalCantidad);
-                    resumenHastaAhora.setTotalCoste(venta.getTotal() + oldTotalCoste);
-                }
-            }
-            if (!boo) {
-                i++;
-                resumen.setId(i);
-                resumen.setTipo("Venta");
-                resumen.setWeek(nSemana);
-                resumen.setYear(nyear);
-                resumen.setIdProducto(venta.getProduct().getId());
-                resumen.setNombreProducto(nameProducto);
-
-                int cantidadBill = venta.getQuantity();
-                float costeBill = venta.getTotal();
-                float costeOrientativo = reducirDecimales(costeBill / cantidadBill);
-                
-                resumen.setTotalCantidad(cantidadBill);
-                resumen.setTotalCoste(costeBill);
-                resumen.setCosteIndividual(costeOrientativo);
-                listaResumen.add(resumen);
-            }
+        Date date = calendar.getTime();
+        LocalDateTime localDateTime;
+        if(!inicioFinal) {
+            localDateTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime().with(LocalTime.MAX);
+            localDateTime = localDateTime.plusDays(6);
+        } else {
+            localDateTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
         }
-        List<ResumenSemanal> listaResumenConVisitas = resumenSemanalVisitas(nSemana, nyear, listaResumen);
-        List<ResumenSemanal> listaResumenConPorcentajes = porcentajeResumen(listaResumenConVisitas);
-        return listaResumenConPorcentajes;
+        return localDateTime;
     }
     
     private List<ResumenSemanal> resumenSemanalVisitas(int nSemana, int nyear, List<ResumenSemanal> listaResumen){
@@ -236,6 +309,8 @@ public class resumenSemanalServiceImpl  implements resumenSemanaService {
             resumen.setPorcentaje(porcentajeOrientativo);
             totalOrientativo = totalOrientativo + porcentajeOrientativo;
         }
+        /*
+        //En caso de querer mostrar una linea con el porcentaje faltante en el listado. /costEfective
         if(totalOrientativo != 100 && !listaResumen.isEmpty()) {
             ResumenSemanal resumen = new ResumenSemanal();
             resumen.setTipo("aproximado");
@@ -246,7 +321,14 @@ public class resumenSemanalServiceImpl  implements resumenSemanaService {
             resumen.setPorcentaje(reducirDecimales(100 - totalOrientativo));
             listaResumen.add(resumen);
         }
+        */
         return listaResumen;
+    }
+    
+    private float reducirDecimales(double valor){
+        BigDecimal valorBig = new BigDecimal(valor);
+        valorBig = valorBig.setScale(2, RoundingMode.DOWN);
+        return valorBig.floatValue();
     }
     
     private LocalDateTime prepararFecha(String fecha) {
@@ -256,12 +338,6 @@ public class resumenSemanalServiceImpl  implements resumenSemanaService {
             fechaActual = fechaFormatada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().atStartOfDay();
         }
         return fechaActual;
-    }
-    
-    private float reducirDecimales(double valor){
-        BigDecimal valorBig = new BigDecimal(valor);
-        valorBig = valorBig.setScale(2, RoundingMode.DOWN);
-        return valorBig.floatValue();
     }
     
     private String localTimeToString(LocalDateTime ldt) {
@@ -275,7 +351,6 @@ public class resumenSemanalServiceImpl  implements resumenSemanaService {
     }
     
     private Date stringToDate(String dateString) {
-        //log.info("Resumen. filtro fecha: "+dateString);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         formatter.setLenient(false);
         try {

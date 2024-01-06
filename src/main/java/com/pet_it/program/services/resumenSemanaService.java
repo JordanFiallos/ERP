@@ -13,8 +13,10 @@ import java.util.List;
  */
 public interface resumenSemanaService {
     public String consultarDataString(String fecha);
-    public List<ResumenSemanal> generarResumenCompras (String fechaInicio);
-    public List<ResumenSemanal> generarResumenVentas (String fechaInicio);
+    public List<ResumenSemanal> generarResumenSemanal (String fechaInicio, String tipoFactura);
     public String operarWeek(String fecha, String opcio);
     public float totalSemanal(List<ResumenSemanal> listaResumenes);
+    public float totalPorcentaje(List<ResumenSemanal> listaResumen);
+    public int extraerWeek(String fechaInicio);
+    public List<ResumenSemanal> generarTotalEntreFechas (String fechaInicio, String fechaFinal, String tipoFactura);
 }
