@@ -6,6 +6,7 @@ package com.pet_it.program.DAO;
 
 import com.pet_it.program.domain.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  *
@@ -15,4 +16,6 @@ public interface employeeDAO extends JpaRepository<Employee, Long> {
 
     Employee findByUsername(String username);
 
+    @Query("SELECT COUNT(*) FROM Employee e WHERE e.username = ?1 ")
+    int contarVecesUsuario(String username);
 }

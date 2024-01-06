@@ -30,10 +30,17 @@ public class employeeServiceImpl implements employeeService {
     }
 
     @Override
-    public void afegirUsuari(Employee employee) {
+    public boolean afegirUsuari(Employee employee) {
+        boolean userValid = false;
+        int comprovaUsuari = employeedao.contarVecesUsuario(employee.getUsername());
+        if(comprovaUsuari == 0){
         String pass = employee.getPassword();
         employee.setPassword(encriptadorService.encriptaPassw(pass));
         employeedao.save(employee);
+        userValid = true;
+        }
+       return userValid;
+
     }
     
     @Override
