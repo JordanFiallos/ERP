@@ -28,6 +28,8 @@ public class UserManagingController {
     
     @Autowired
     private roleService roleService;
+    
+    private String mensajeError = null;
 
     @GetMapping("/employee_form")
     public String ShowForm(Employee employee) {
@@ -35,14 +37,21 @@ public class UserManagingController {
     }
 
     @PostMapping("/SaveEmployees")
-    public String ShowResult(Employee employee) {
+    public String ShowResult(Employee employee) {   
         employee = roleService.getAllRolesWithEmployee(employee);
-        employeeService.afegirUsuari(employee);
+        boolean comprovaUsuari = employeeService.afegirUsuari(employee);
+        if(comprovaUsuari == false){
+            mensajeError = "El usuario ya existe";
+        }
         return "redirect:/employee_list";
     }
-
+            
     @GetMapping("/employee_list")
     public String ListEmployees(Model model) {
+        if(mensajeError != null){
+            model.addAttribute("errorMessage",mensajeError);
+            mensajeError = null;
+        }
         List<Employee> employees = employeeService.llistarUsuaris();
         model.addAttribute("employees", employees);
         return "employees/employee_list";
