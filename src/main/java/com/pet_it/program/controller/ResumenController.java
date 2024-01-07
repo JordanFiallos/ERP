@@ -36,7 +36,7 @@ public class ResumenController {
      * @return 
      * Vamos al metodo mostrar_lista donde usara los cambios en fecha para mostrar resumenes.
      */
-    @GetMapping("/costEfective")
+    @GetMapping("/bills/costEfective")
     public String getFecha(
             @RequestParam(name="fechaInicio", required=false, defaultValue="no") String fechaInicio,
             @RequestParam(name="operacio", required=false, defaultValue="no") String operacio,
@@ -87,7 +87,7 @@ public class ResumenController {
     
     //Muestra total y cantidad de facturas por año y semana.
     //FUNCIONA PERO NO ESTA COMO LINK, (el total entre semanas para el proyecto lo realiza Ruben.)
-    @GetMapping("/totalPorSemana")
+    @GetMapping("/bills/totalPorSemana")
     public String totalPorSemana(
             @RequestParam(name="fechaInicio", required=false, defaultValue="no") String fechaInicio,
             @RequestParam(name="fechaFinal", required=false, defaultValue="no") String fechaFinal,

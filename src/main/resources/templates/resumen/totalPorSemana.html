@@ -6,7 +6,7 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <link th:href="@{css/main.css}" rel="stylesheet"/>
+        <link th:href="@{../css/main.css}" rel="stylesheet"/>
         <style>
             .custom-control-input{
                 border-color: #ffc720;
@@ -25,9 +25,9 @@
                                 <table class="table table-bordered table-striped custom-table text-center">
                                     <tbody>
                                         <tr>
-                                            <td class="col-md-3"><a th:href="@{/costEfective}">Cost Effective</a></td>
-                                            <td class="col-md-3"><a th:href="@{/comparacion}">Operative Planing</a></td>
-                                            <td class="col-md-3"><a th:href="@{/grafico}">Viability</a></td>
+                                            <td class="col-md-3"><a th:href="@{/bills/costEfective}">Cost Effective</a></td>
+                                            <td class="col-md-3"><a th:href="@{/bills/comparacion}">Operative Planing</a></td>
+                                            <td class="col-md-3"><a th:href="@{/bills/grafico}">Viability</a></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -50,7 +50,7 @@
 
                                             <!-- Get formulario -->
                                             <div class=" form-group row g-3">
-                                                <form th:action="@{/totalPorSemana}" method="get">
+                                                <form th:action="@{/bills/totalPorSemana}" method="get">
                                                     <div class="col-md-4">
                                                         <input class="form-control" type="text" id="fechaInicio" name="fechaInicio"  placeholder="DD/MM/AAAA" required>
                                                     </div>
