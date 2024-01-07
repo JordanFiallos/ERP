@@ -15,9 +15,9 @@ public interface employeeService {
     
     public List<Employee> llistarUsuaris(); //Metodo para listar Personas tipo Empleados
     
-    public void afegirUsuari(Employee employee); //Metodo para añadir Personas tipo Empleados
+    public boolean afegirUsuari(Employee employee); //Metodo para añadir Personas tipo Empleados
     
-    public void actualizarUsuari(Employee employee);
+    public boolean actualizarUsuari(Employee employee);
     
     public void eliminarUsuari(Long id); //Metodo para eliminar Personas tipo Empleados
     

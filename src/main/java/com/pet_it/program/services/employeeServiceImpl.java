@@ -9,6 +9,7 @@ import com.pet_it.program.domain.Employee;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -30,16 +31,31 @@ public class employeeServiceImpl implements employeeService {
     }
 
     @Override
-    public void afegirUsuari(Employee employee) {
-        String pass = employee.getPassword();
-        employee.setPassword(encriptadorService.encriptaPassw(pass));
-        employeedao.save(employee);
+    public boolean afegirUsuari(Employee employee) {
+        boolean userValid = false;
+        int comprovaUsuari = employeedao.contarVecesUsuario(employee.getUsername());
+        if (comprovaUsuari == 0) {
+            String pass = employee.getPassword();
+            employee.setPassword(encriptadorService.encriptaPassw(pass));
+            employeedao.save(employee);
+            userValid = true;
+        }
+        return userValid;
+
     }
-    
+
     @Override
-    public void actualizarUsuari(Employee employee){
-        employee = cercarUsuari(employee);
-        employeedao.save(employee);
+    public boolean actualizarUsuari(Employee employee) {
+        boolean userValid = false;
+        String pass = employee.getPassword();
+        String username = employee.getUsername();
+        String usernameExistent = employeedao.ExistentNombre(username,employee.getId());
+        if(usernameExistent == null){
+            employee.setPassword(encriptadorService.encriptaPassw(pass));
+            employeedao.save(employee);
+            userValid = true;
+        }
+        return userValid;
     }
 
     @Override

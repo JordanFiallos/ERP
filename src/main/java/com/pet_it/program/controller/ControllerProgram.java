@@ -7,6 +7,7 @@ package com.pet_it.program.controller;
 import com.pet_it.program.services.bBillServiceImpl;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -119,19 +120,38 @@ public class ControllerProgram {
     
     @GetMapping("/bills/grafico")
     public String grafico(Model model) {
-        billService.getCompras(model);
-        billService.getTotalCompras(model);
-        billService.getVentas(model);
-        billService.getTotalVentas(model);
+        List<List<?>> listaGetCompras = billService.getCompras();
+        model.addAttribute("diasCompras",listaGetCompras.get(0));
+        model.addAttribute("datosDias",listaGetCompras.get(1));
+        
+        List<List<?>> listaGetTotalCompras = billService.getTotalCompras();
+        model.addAttribute("totalCompras",listaGetTotalCompras.get(0));
+        
+        List<List<?>> listaGetVentas = billService.getVentas();
+        model.addAttribute("diasVentas",listaGetVentas.get(1));
+        model.addAttribute("datosDiasVentas",listaGetVentas.get(0));
+        
+        List<List<?>> listaGetTotalVentas = billService.getTotalVentas();
+        model.addAttribute("totalVentas",listaGetTotalVentas.get(0));
+        
         return "grafico";
     }
 
     @PostMapping("/bills/grafico")
     public String graficoPost(Model model, @RequestParam(name = "inicio") LocalDateTime fechaInicio, @RequestParam(name = "final") LocalDateTime fechaFinal) {
-        billService.postCompras(model, fechaInicio, fechaFinal);
-        billService.postComprasTotales(model, fechaInicio, fechaFinal);
-        billService.postVentas(model, fechaInicio, fechaFinal);
-        billService.postVentasTotales(model, fechaInicio, fechaFinal);
+        List<List<?>> listaGetCompras = billService.postCompras(fechaInicio, fechaFinal);
+        model.addAttribute("diasCompras",listaGetCompras.get(0));
+        model.addAttribute("datosDias",listaGetCompras.get(1));
+        
+        List<List<?>> listaGetTotalCompras = billService.postComprasTotales(fechaInicio, fechaFinal);
+        model.addAttribute("totalCompras",listaGetTotalCompras.get(0));
+        
+        List<List<?>> listaGetVentas = billService.postVentas(fechaInicio, fechaFinal);
+        model.addAttribute("diasVentas",listaGetVentas.get(1));
+        model.addAttribute("datosDiasVentas",listaGetVentas.get(0));
+        
+        List<List<?>> listaGetTotalVentas = billService.postVentasTotales(fechaInicio, fechaFinal);
+        model.addAttribute("totalVentas",listaGetTotalVentas.get(0));
         return "grafico";
     }
     
