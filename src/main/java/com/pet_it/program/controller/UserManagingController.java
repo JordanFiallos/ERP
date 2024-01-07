@@ -4,6 +4,7 @@
  */
 package com.pet_it.program.controller;
 
+import com.pet_it.program.DAO.employeeDAO;
 import com.pet_it.program.domain.Employee;
 import com.pet_it.program.services.employeeService;
 import com.pet_it.program.services.roleService;
@@ -35,7 +36,7 @@ public class UserManagingController {
     public String ShowForm(Employee employee) {
         return "employees/employee_form";
     }
-
+    
     @PostMapping("/SaveEmployees")
     public String ShowResult(Employee employee) {   
         employee = roleService.getAllRolesWithEmployee(employee);
@@ -45,7 +46,7 @@ public class UserManagingController {
         }
         return "redirect:/employee_list";
     }
-            
+    
     @GetMapping("/employee_list")
     public String ListEmployees(Model model) {
         if(mensajeError != null){
@@ -56,13 +57,24 @@ public class UserManagingController {
         model.addAttribute("employees", employees);
         return "employees/employee_list";
     }
-
+    
     @GetMapping("/update/{id}")
     public String Update(Employee employee, Model model) {
         employee = employeeService.cercarUsuari(employee);
         model.addAttribute("employee", employee);
-        return "employees/employee_form";
+        return "employees/employee_form_1";
     }
+    
+    @PostMapping("/employee_form_1")
+    public String actualizarUsuario(Employee employee){
+        employee = roleService.getAllRolesWithEmployee(employee);
+        boolean comprovaActualitzacio = employeeService.actualizarUsuari(employee);
+        if(comprovaActualitzacio == false){
+            mensajeError = "El nombre de usuario escrito al actualizar ya existe";
+        }
+        return "redirect:/employee_list";
+    }
+    
     
     @GetMapping("/employee_list/delete/{id}")
     public String Delete(@PathVariable Long id) {

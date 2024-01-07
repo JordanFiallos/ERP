@@ -170,7 +170,6 @@ public class bBillServiceImpl implements bBillService {
                 guardarDias.add(fecha);
                 int numeroCompras = contarCompras(listaCompras.get(i).getSemana(), listaCompras.get(i).getOperationDate().getYear());
                 datosCompras.add(numeroCompras);
-                System.out.println(fecha);
             }
         }
         return List.of(guardarDias,datosCompras);

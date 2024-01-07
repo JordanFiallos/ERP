@@ -18,4 +18,7 @@ public interface employeeDAO extends JpaRepository<Employee, Long> {
 
     @Query("SELECT COUNT(*) FROM Employee e WHERE e.username = ?1 ")
     int contarVecesUsuario(String username);
+    
+    @Query("SELECT e.username FROM Employee e WHERE e.username = ?1 AND e.id != ?2")
+    String ExistentNombre(String username,Long idUsuario);
 }
