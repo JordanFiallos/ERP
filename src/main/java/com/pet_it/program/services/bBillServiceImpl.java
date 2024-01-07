@@ -159,7 +159,7 @@ public class bBillServiceImpl implements bBillService {
         return sellDao.sumaTotalesGrafico(semana, año);
     }
 
-    public void getCompras(Model model) {
+    public List<List<?>> getCompras() {
         List<bPurchase> listaCompras = listaComprasRango(LocalDateTime.of(2023, Month.JANUARY, 1, 20, 30), LocalDateTime.of(2025, Month.JANUARY, 1, 20, 30));
         List<Integer> datosCompras = new ArrayList();
         List<String> guardarDias = new ArrayList();
@@ -170,14 +170,12 @@ public class bBillServiceImpl implements bBillService {
                 guardarDias.add(fecha);
                 int numeroCompras = contarCompras(listaCompras.get(i).getSemana(), listaCompras.get(i).getOperationDate().getYear());
                 datosCompras.add(numeroCompras);
-                System.out.println(fecha);
             }
         }
-        model.addAttribute("diasCompras", guardarDias);
-        model.addAttribute("datosDias", datosCompras);
+        return List.of(guardarDias,datosCompras);
     }
 
-    public void getVentas(Model model) {
+    public List<List<?>> getVentas() {
         List<bSell> listaVentas = listaVentasRango(LocalDateTime.of(2023, Month.JANUARY, 1, 20, 30), LocalDateTime.of(2025, Month.JANUARY, 1, 20, 30));
         List<Integer> datosVentas = new ArrayList();
         List<String> guardarDiasVentas = new ArrayList();
@@ -191,11 +189,11 @@ public class bBillServiceImpl implements bBillService {
                 datosVentas.add(numeroVentas);
             }
         }
-        model.addAttribute("diasVentas", guardarDiasVentas);
-        model.addAttribute("datosDiasVentas", datosVentas);
+        
+        return List.of(datosVentas,guardarDiasVentas);
     }
 
-    public void getTotalCompras(Model model) {
+    public List<List<?>> getTotalCompras() {
         List<bPurchase> listaComprasTotalesFecha = listaComprasRango(LocalDateTime.of(2023, Month.JANUARY, 1, 20, 30), LocalDateTime.of(2025, Month.JANUARY, 1, 20, 30));
         HashMap<String, Integer> datosComprasTotales = new HashMap<>();
         List<Integer> listadoCompras = new ArrayList();
@@ -209,10 +207,10 @@ public class bBillServiceImpl implements bBillService {
                 listadoCompras.add(totalCompras);
             }
         }
-        model.addAttribute("totalCompras", listadoCompras);
+        return List.of(listadoCompras);
     }
 
-    public void getTotalVentas(Model model) {
+    public List<List<?>> getTotalVentas() {
         List<bSell> listaVentasTotalesFecha = listaVentasRango(LocalDateTime.of(2023, Month.JANUARY, 1, 20, 30), LocalDateTime.of(2025, Month.JANUARY, 1, 20, 30));
         List<Integer> listadoVentas = new ArrayList();
         LinkedHashMap<String, Integer> ventasGuardadas = new LinkedHashMap<>();
@@ -226,12 +224,12 @@ public class bBillServiceImpl implements bBillService {
         }
 
         listadoVentas.addAll(ventasGuardadas.values());
-
-        model.addAttribute("totalVentas", listadoVentas);
+        return List.of(listadoVentas);
+       
 
     }
 
-    public void postCompras(Model model, LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
+    public List<List<?>> postCompras(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
         List<bPurchase> listaCompras = listaComprasRango(fechaInicio, fechaFinal);
         List<Integer> datosCompras = new ArrayList();
         List<String> guardarDias = new ArrayList();
@@ -247,12 +245,11 @@ public class bBillServiceImpl implements bBillService {
                 }
             }
         }
-        model.addAttribute("diasCompras", guardarDias);
-        model.addAttribute("datosDias", datosCompras);
-
+        
+        return List.of(guardarDias,datosCompras);
     }
 
-    public void postComprasTotales(Model model, LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
+    public List<List<?>> postComprasTotales(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
         List<bPurchase> listaComprasTotalesFecha = listaComprasRango(fechaInicio, fechaFinal);
         HashMap<String, Integer> datosComprasTotales = new HashMap<>();
         List<Integer> listadoCompras = new ArrayList();
@@ -267,11 +264,10 @@ public class bBillServiceImpl implements bBillService {
             }
         }
 
-        model.addAttribute("totalCompras", listadoCompras);
-
+        return List.of(listadoCompras);
     }
 
-    public void postVentas(Model model, LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
+    public List<List<?>> postVentas(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
         List<bSell> listaVentas = listaVentasRango(fechaInicio, fechaFinal);
         List<Integer> datosVentas = new ArrayList();
         List<String> guardarDiasVentas = new ArrayList();
@@ -284,12 +280,10 @@ public class bBillServiceImpl implements bBillService {
                 datosVentas.add(numeroVentas);
             }
         }
-        model.addAttribute("diasVentas", guardarDiasVentas);
-        model.addAttribute("datosDiasVentas", datosVentas);
-
+        return List.of(datosVentas,guardarDiasVentas);
     }
 
-    public void postVentasTotales(Model model, LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
+    public List<List<?>> postVentasTotales(LocalDateTime fechaInicio, LocalDateTime fechaFinal) {
         List<bSell> listaVentasTotalesFecha = listaVentasRango(fechaInicio, fechaFinal);
         List<Integer> listadoVentas = new ArrayList();
         LinkedHashMap<String, Integer> ventasGuardadas = new LinkedHashMap<>();
@@ -304,7 +298,7 @@ public class bBillServiceImpl implements bBillService {
         
         listadoVentas.addAll(ventasGuardadas.values());
         
-        model.addAttribute("totalVentas", listadoVentas);
+       return List.of(listadoVentas);
     }
     
 }
