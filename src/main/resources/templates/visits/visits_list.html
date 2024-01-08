@@ -88,8 +88,8 @@
                                                     <button class="btn btn-primary btn-sm add mx-2">
                                                         <a th:href="@{'/visits/update/'+${visita.id}}" th:style="'text-decoration: none; color: inherit;'">Update</a>
                                                     </button>
-                                                    <button class="btn btn-danger btn-sm remove mx-2" data-toggle="modal" data-target="#confirmDeleteModal" th:data-id="@{'/visits/delete/'+${visita.id}}">
-                                                        Delete
+                                                    <button class="btn btn-danger btn-sm remove mx-2">
+                                                        <a th:href="@{'/visits/delete/'+${visita.id}}" th:style="'text-decoration: none; color: inherit;'">Delete</a>
                                                     </button>
                                                 </div>
                                                 <!--a th:href="@{'/visits/update/'+${visita.id}}"><button class="btn btn-primary btn-sm add mx-2">Update</button></a-->
