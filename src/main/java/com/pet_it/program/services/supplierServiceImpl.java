@@ -26,6 +26,7 @@ public class supplierServiceImpl implements supplierService {
     
     @Override
     public Supplier savePerson(Supplier supplier) {
+        supplier.setState(3);
         return supplierDAO.save(supplier);
     }
 
@@ -53,7 +54,7 @@ public class supplierServiceImpl implements supplierService {
     }
     
     /**
-     * Debuelve una lista de numeros desde el min a max para el select de 
+     * Devuelve una lista de numeros desde el min a max para el select de 
      * semanas para la recepcion de un envio
      * @return List<String>
      */

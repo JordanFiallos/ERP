@@ -19,5 +19,5 @@ public interface roleDAO  extends JpaRepository<Role, Long>{
     int countRolesByIdEmployee(Long id);
     
     @Query(value="SELECT * FROM rols WHERE id_usuari = ?1",nativeQuery=true)
-    List<Role> findByIdEmployee(Long id);  
+    List<Role> findByIdEmployee(Long id);
 }
