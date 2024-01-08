@@ -26,6 +26,11 @@ public class petServiceImpl implements petService{
         return pets;
     
     }
+    public List<Pet> llistarPetsHabilitats(){
+        List<Pet> pets = petdao.llistaPetsHabilitats();
+        return pets;
+    }
+    
 
     @Override
     public void afegirPets(Pet pets) {
@@ -47,6 +52,5 @@ public class petServiceImpl implements petService{
         return petdao.findById(id).orElse(null);
     }
 
-  
     
 }

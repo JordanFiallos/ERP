@@ -4,12 +4,10 @@
  */
 package com.pet_it.program.controller;
 
-import com.pet_it.program.DAO.petDAO;
 import com.pet_it.program.domain.Employee;
 import com.pet_it.program.domain.Pet;
 import com.pet_it.program.domain.Visit;
 import com.pet_it.program.services.employeeServiceImpl;
-import com.pet_it.program.services.petService;
 import com.pet_it.program.services.petServiceImpl;
 import com.pet_it.program.services.visitServiceImpl;
 import java.util.List;
@@ -31,9 +29,6 @@ public class VisitsController {
 
     @Autowired
     private visitServiceImpl visitService;
-
-    @Autowired
-    private petDAO petDao;
     
     @Autowired
     private employeeServiceImpl employeeService;
@@ -51,7 +46,7 @@ public class VisitsController {
     @GetMapping("/visits/visits_form")
     public String añadirVisita(Model model) {
         List<Employee> OpcionesEmpleados = employeeService.llistarUsuaris();
-        List<Pet> OpcionesPet = petDao.llistaPetsHabilitats();
+        List<Pet> OpcionesPet = petService.llistarPetsHabilitats();
         model.addAttribute("empleats", OpcionesEmpleados);
         model.addAttribute("pets", OpcionesPet);
         return "visits/visits_form";
@@ -76,7 +71,7 @@ public class VisitsController {
     @GetMapping("/visits/update/{id}")
     public String actualitzarVisita(Visit visita, Model model) {
         List<Employee> OpcionesEmpleados = employeeService.llistarUsuaris();
-        List<Pet> OpcionesPet = petDao.llistaPetsHabilitats();
+        List<Pet> OpcionesPet = petService.llistarPetsHabilitats();
         visita = visitService.getVisitById(visita.getId());
         String employeeUsername = visita.getEmployee().getUsername();
         model.addAttribute("selectedUserName", employeeUsername);
