@@ -4,7 +4,6 @@
  */
 package com.pet_it.program.controller;
 
-import com.pet_it.program.DAO.petDAO;
 import com.pet_it.program.domain.Customer;
 import com.pet_it.program.domain.Pet;
 import com.pet_it.program.services.customerServiceImpl;
@@ -29,14 +28,11 @@ public class PetController {
     private petServiceImpl petService;
     
     @Autowired
-    private petDAO petDao;
-    
-    @Autowired
     private customerServiceImpl customerService;
     
     @GetMapping("/pet/pet-inicio")
     public String veterinarian(Model model) {
-        List<Pet> pets = petDao.llistaPetsHabilitats();
+        List<Pet> pets = petService.llistarPetsHabilitats();
         model.addAttribute("pets", pets);
         return "pet/pet-inicio";
     }
@@ -59,7 +55,7 @@ public class PetController {
     public String eliminarPet(Pet pets) {
         pets = petService.getPetById(pets.getId());
         pets.setEstat("false");
-        petDao.save(pets);
+        petService.afegirPets(pets);
         return "redirect:/pet/pet-inicio";
     }
 
