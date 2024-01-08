@@ -79,7 +79,7 @@ public class ControllerProgram {
     }
    
 
-    @GetMapping("/comparacion")
+    @GetMapping("/bills/comparacion")
     public String comparacion(Model model) {
         //Purchases
         model.addAttribute("bills", billService.getAllbPurchases());
@@ -99,7 +99,7 @@ public class ControllerProgram {
         return "comparacion";
     }
 
-    @PostMapping("/comparacion")
+    @PostMapping("/bills/comparacion")
     public String comparacionBusqueda(@RequestParam(name = "semana") int semana, @RequestParam(name = "anyo") int año, Model model) {
         //Purchases
         model.addAttribute("bills", billService.getAllbPurchases());
@@ -118,7 +118,7 @@ public class ControllerProgram {
         return "comparacion";
     }
     
-     @GetMapping("/grafico")
+    @GetMapping("/bills/grafico")
     public String grafico(Model model) {
         List<List<?>> listaGetCompras = billService.getCompras();
         model.addAttribute("diasCompras",listaGetCompras.get(0));
@@ -137,7 +137,7 @@ public class ControllerProgram {
         return "grafico";
     }
 
-    @PostMapping("/grafico")
+    @PostMapping("/bills/grafico")
     public String graficoPost(Model model, @RequestParam(name = "inicio") LocalDateTime fechaInicio, @RequestParam(name = "final") LocalDateTime fechaFinal) {
         List<List<?>> listaGetCompras = billService.postCompras(fechaInicio, fechaFinal);
         model.addAttribute("diasCompras",listaGetCompras.get(0));

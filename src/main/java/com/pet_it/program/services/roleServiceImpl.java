@@ -48,7 +48,11 @@ public class roleServiceImpl implements roleService {
     
     @Override
     public void deleteRolesById(Long id) {
-        roleDAO.deleteById(id);
+        List<Role> listaRoles = roleDAO.findByIdEmployee(id);
+        for(Role rol : listaRoles){
+            Long idRol = rol.getIdRol();
+            roleDAO.deleteById(idRol);
+        }
     }
     
     @Override

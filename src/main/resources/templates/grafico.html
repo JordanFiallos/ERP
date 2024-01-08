@@ -48,7 +48,7 @@
                 width: 200px;
                 position: fixed;
                 height: 100%;
-                background-image: url("images/i-Login.jpg");
+                background-image: url("../images/i-Login.jpg");
                 background-size: cover;
                 overflow-x: hidden;
                 padding-top: 60px;
@@ -95,7 +95,6 @@
                 width: 100%;
                 max-width: 1000px;
             }
-
         </style>
     </head>
     <body class="bg-light-blue">
@@ -112,11 +111,11 @@
                                         <tbody>
                                             <tr>
                                                 <!--th colspan="2"><a th:href="@{/api/bills/generate}">List</a></th-->
-                                                <td class="col-md-3"><a th:href="@{/costEfective}">Cost Effective</a></td>
+                                                <td class="col-md-3"><a th:href="@{/bills/costEfective}">Cost Effective</a></td>
                                                 <!--th colspan="2"><a th:href="@{/api/bills/operative-planning}">Viability</a></th-->
                                                 <!--th colspan="2"><a th:href="@{/api/bills/viability}">Operative Planing</a></th-->
-                                                <td class="col-md-3"><a th:href="@{/comparacion}">Operative Planing</a></td>
-                                                <td class="col-md-3"><a th:href="@{/grafico}">Viability</a></td>
+                                                <td class="col-md-3"><a th:href="@{/bills/comparacion}">Operative Planing</a></td>
+                                                <td class="col-md-3"><a th:href="@{/bills/grafico}">Viability</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -125,7 +124,7 @@
                         </div>
                     </div>
                     <section class="jumbotron text-center">
-                        <form method="POST" th:action="@{/grafico}">
+                        <form method="POST" th:action="@{/bills/grafico}">
                             <div>
                                 <label for="inicio">Fecha inicio</label>
                                 <input type="datetime-local" name="inicio"/>
