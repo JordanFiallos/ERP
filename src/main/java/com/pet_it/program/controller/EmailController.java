@@ -8,7 +8,6 @@ package com.pet_it.program.controller;
  *
  * @author Jordan
  */
-import com.pet_it.program.domain.EmailRequest;
 import com.pet_it.program.services.EmailService;
 import jakarta.mail.MessagingException;
 import java.io.IOException;
